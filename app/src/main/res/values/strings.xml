@@ -25,4 +25,8 @@
     <string name="confirmPassword">تأكيد كلمة السر</string>
     <string name="reset">اعادة تعين</string>
     <string name="ResetPassword2">استعادة كلمة السر</string>
+    <string name="mateches">المباريات</string>
+    <string name="latestNews">اخر الاخبار</string>
+    <string name="order">الترتيب</string>
+    <string name="players">اللاعبون</string>
 </resources>

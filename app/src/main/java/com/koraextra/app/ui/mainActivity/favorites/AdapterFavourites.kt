@@ -8,7 +8,7 @@ class AdapterFavourites: BaseQuickAdapter<String, BaseViewHolder>(R.layout.favor
 
     override fun convert(helper: BaseViewHolder, item: String) {
 
-
+        helper.addOnClickListener(R.id.favouritesCardView)
     }
 
 }

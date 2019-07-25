@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.koraextra.app.R
 import kotlinx.android.synthetic.main.favorites_fragment.*
@@ -20,7 +21,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private lateinit var viewModel: FavoritesViewModel
-    private val adapterFavourites= AdapterFavourites()
+    private val adapterFavourites = AdapterFavourites()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +68,14 @@ class FavoritesFragment : Fragment() {
         list.add("a")
 
         adapterFavourites.replaceData(list)
-
+        adapterFavourites.onItemChildClickListener =
+            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                when (view?.id) {
+                    R.id.favouritesCardView -> {
+                    findNavController().navigate(R.id.teamFragment)
+                    }
+                }
+            }
         favouritesRv.adapter = adapterFavourites
         favouritesRv.setHasFixedSize(true)
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.koraextra.app.R
+import kotlinx.android.synthetic.main.team_matches_fragment.*
 
 class TeamMatchesFragment : Fragment() {
 
@@ -27,7 +28,9 @@ class TeamMatchesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamMatchesViewModel::class.java)
-        // TODO: Use the ViewModel
+
+//        root.rotationY = 180F
+
     }
 
 }
