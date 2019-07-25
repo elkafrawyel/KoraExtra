@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">KoraExtra</string>
+    <string name="firstName">اسم المتخدم</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="singUp">تسجيل حساب جديد</string>
+    <string name="alreadyHaveAccount">امتلك حساب بالعفل, </string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="login1">تسجيل دخول</string>
+    <string name="newAccount">حساب جديد</string>
+    <string name="loginWith">الدخول بواسطة</string>
+    <string name="google">جوجل</string>
+    <string name="facebook">فيس بوك</string>
+    <string name="home">الرئيسية</string>
+    <string name="notifications">الاشعارات</string>
+    <string name="favourites">المفضلة</string>
+    <string name="newsPaper">الاخبار</string>
+    <string name="champoins">البطولات</string>
+    <string name="topScorer">ترتيب الهدافين</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="settings">الاعدادات</string>
+    <string name="outFacebook">حسابنا علي الفيس بوك</string>
+    <string name="ResetPassword">اعادة تعين كلمة السر</string>
+    <string name="confirmPassword">تأكيد كلمة السر</string>
+    <string name="reset">اعادة تعين</string>
+    <string name="ResetPassword2">استعادة كلمة السر</string>
+</resources>

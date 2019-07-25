@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navgraph"
+            app:startDestination="@id/homeFragment">
+
+    <fragment android:id="@+id/homeFragment" android:name="com.koraextra.app.ui.mainActivity.home.HomeFragment"
+              android:label="home_fragment" tools:layout="@layout/home_fragment">
+        <action android:id="@+id/action_homeFragment_to_loginFragment" app:destination="@id/loginFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_latestNewsFragment"
+            app:destination="@id/latestNewsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_matchNewsFragment"
+            app:destination="@id/matchNewsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_teamLatestNewsFragment"
+            app:destination="@id/teamLatestNewsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_matchTopsFragment"
+            app:destination="@id/matchTopsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_topScorersFragment"
+            app:destination="@id/topScorersFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_tournamentsFragment"
+            app:destination="@id/tournamentsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment android:id="@+id/loginFragment" android:name="com.koraextra.app.ui.mainActivity.auth.login.LoginFragment"
+              android:label="login_fragment" tools:layout="@layout/login_fragment">
+        <action android:id="@+id/action_loginFragment_to_signUpFragment" app:destination="@id/signUpFragment"/>
+        <action
+            android:id="@+id/action_loginFragment_to_forgetPassFragment"
+            app:destination="@id/forgetPassFragment" />
+    </fragment>
+    <fragment android:id="@+id/signUpFragment"
+              android:name="com.koraextra.app.ui.mainActivity.auth.signUp.signUpFragment"
+              android:label="sign_up_fragment" tools:layout="@layout/sign_up_fragment">
+        <action android:id="@+id/action_signUpFragment_to_homeFragment" app:destination="@id/homeFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPassFragment"
+        android:name="com.koraextra.app.ui.mainActivity.auth.forgetPass.ForgetPassFragment"
+        android:label="forget_pass_fragment"
+        tools:layout="@layout/forget_pass_fragment" />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.koraextra.app.ui.mainActivity.auth.resetPassword.ResetPasswordFragment"
+        android:label="reset_password_fragment"
+        tools:layout="@layout/reset_password_fragment" >
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/latestNewsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.latestNews.LatestNewsFragment"
+        android:label="latest_news_fragment"
+        tools:layout="@layout/latest_news_fragment" />
+    <fragment
+        android:id="@+id/matchNewsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.match.matchNews.MatchNewsFragment"
+        android:label="match_news_fragment"
+        tools:layout="@layout/match_news_fragment" />
+    <fragment
+        android:id="@+id/teamLatestNewsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.team.teamLatestNews.TeamLatestNewsFragment"
+        android:label="team_latest_news_fragment"
+        tools:layout="@layout/team_latest_news_fragment" />
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.koraextra.app.ui.mainActivity.team.TeamFragment"
+        android:label="team_fragment"
+        tools:layout="@layout/team_fragment" />
+    <fragment
+        android:id="@+id/teamMatchesFragment"
+        android:name="com.koraextra.app.ui.mainActivity.team.teamMatches.TeamMatchesFragment"
+        android:label="team_matches_fragment"
+        tools:layout="@layout/team_matches_fragment" />
+    <fragment
+        android:id="@+id/teamOrderFragment"
+        android:name="com.koraextra.app.ui.mainActivity.team.teamOrder.TeamOrderFragment"
+        android:label="team_order_fragment"
+        tools:layout="@layout/team_order_fragment" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.koraextra.app.ui.mainActivity.favorites.FavoritesFragment"
+        android:label="favorites_fragment"
+        tools:layout="@layout/favorites_fragment" />
+    <fragment
+        android:id="@+id/matchTopsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.match.matchTops.MatchTopsFragment"
+        android:label="match_tops_fragment"
+        tools:layout="@layout/match_tops_fragment" />
+    <fragment
+        android:id="@+id/topScorersFragment"
+        android:name="com.koraextra.app.ui.mainActivity.topScorers.TopScorersFragment"
+        android:label="top_scorers_fragment"
+        tools:layout="@layout/top_scorers_fragment" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.notifications.NotificationsFragment"
+        android:label="notifications_fragment"
+        tools:layout="@layout/notifications_fragment" />
+    <fragment
+        android:id="@+id/playersDetailsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.players.playersDetails.PlayersDetailsFragment"
+        android:label="players_details_fragment"
+        tools:layout="@layout/players_details_fragment" />
+    <fragment
+        android:id="@+id/playersMatchesFragment"
+        android:name="com.koraextra.app.ui.mainActivity.players.playersMatches.PlayersMatchesFragment"
+        android:label="players_matches_fragment"
+        tools:layout="@layout/players_matches_fragment" />
+    <fragment
+        android:id="@+id/teamPlayersFragment"
+        android:name="com.koraextra.app.ui.mainActivity.team.teamPlayers.TeamPlayersFragment"
+        android:label="team_players_fragment"
+        tools:layout="@layout/team_players_fragment" />
+    <fragment
+        android:id="@+id/playersOrderFragment"
+        android:name="com.koraextra.app.ui.mainActivity.players.playersOrder.PlayersOrderFragment"
+        android:label="players_order_fragment"
+        tools:layout="@layout/players_order_fragment" />
+    <fragment
+        android:id="@+id/tournamentsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.tournaments.TournamentsFragment"
+        android:label="tournaments_fragment"
+        tools:layout="@layout/tournaments_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.settings.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment" />
+</navigation>
