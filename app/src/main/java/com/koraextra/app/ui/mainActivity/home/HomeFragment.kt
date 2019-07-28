@@ -1,28 +1,23 @@
 package com.koraextra.app.ui.mainActivity.home
 
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.navigation.fragment.findNavController
-
-import com.koraextra.app.R
-import kotlinx.android.synthetic.main.home_fragment.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
+import com.koraextra.app.R
 import com.koraextra.app.utily.toast
-import android.view.animation.Animation
-import android.R.attr.pivotY
-import android.R.attr.pivotX
-import android.view.animation.AnimationUtils
-import android.view.animation.RotateAnimation
+import kotlinx.android.synthetic.main.home_fragment.*
 
 
 class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +28,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private lateinit var viewModel: HomeViewModel
+    private val adapterMatches = AdapterMatches()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,6 +80,9 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         }
 
         animateImage(homeFragmentAppName)
+
+        setUpMatches()
+
     }
 
     private fun animateImage(image: ImageView) {
@@ -127,5 +127,16 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun setUpMatches(){
+        val list = ArrayList<String>()
+        list.add("a")
+        list.add("a")
+        list.add("a")
+
+        adapterMatches.replaceData(list)
+        matchesRv.adapter = adapterMatches
+        matchesRv.setHasFixedSize(true)
     }
 }

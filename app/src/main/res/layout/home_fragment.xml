@@ -12,9 +12,9 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentHome"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/contentHome">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -35,11 +35,11 @@
                         android:id="@+id/drawerToggleImgBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:paddingHorizontal="@dimen/dp_10"
                         android:src="@drawable/ic_menu_white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:paddingHorizontal="@dimen/dp_10"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/homeFragmentAppName"
@@ -67,8 +67,8 @@
                     <ImageView
                         android:id="@+id/homeFragmentSearch"
                         android:layout_width="wrap_content"
-                        android:layout_marginEnd="12dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
                         android:src="@drawable/ic_search_white_24dp"
                         android:textAppearance="?attr/textAppearanceBody1"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,22 +79,80 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
 
-           <androidx.constraintlayout.widget.ConstraintLayout
-               android:layout_width="0dp"
-               android:layout_height="0dp"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintBottom_toBottomOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/toolbar">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-               <TextView
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:text="Home"
-                   android:background="@color/colorText"
-                   android:gravity="center"
-                   android:textAppearance="?attr/textAppearanceHeadline3"/>
-           </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/linearHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/date_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:drawableStart="@drawable/calendar"
+                        android:drawablePadding="12dp"
+                        android:padding="8dp"
+                        android:text="04/04/2019"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/dayName_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="الاربعاء"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/next" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/previous" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/matchesRv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingBottom="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearHeader"
+                    tools:listitem="@layout/match_live_item_view" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -109,6 +167,5 @@
         app:headerLayout="@layout/nav_header_main"
         app:itemIconTint="@color/colorTextOnViewWhite"
         app:itemTextColor="@color/colorTextOnViewWhite"
-        app:menu="@menu/drawer_menu"
-        />
+        app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
