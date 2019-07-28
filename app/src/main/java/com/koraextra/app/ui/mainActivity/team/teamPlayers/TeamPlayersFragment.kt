@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.koraextra.app.R
+import kotlinx.android.synthetic.main.team_players_fragment.*
 
 class TeamPlayersFragment : Fragment() {
 
@@ -16,6 +17,7 @@ class TeamPlayersFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamPlayersViewModel
+    private val adapterTeamPlayers = AdapterteamPlayers()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +29,17 @@ class TeamPlayersFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamPlayersViewModel::class.java)
-        // TODO: Use the ViewModel
+        val players = ArrayList<String>()
+        players.add("a")
+        players.add("a")
+        players.add("a")
+        players.add("a")
+        players.add("a")
+
+        adapterTeamPlayers.replaceData(players)
+
+        teamPlayerRv.adapter = adapterTeamPlayers
+        teamPlayerRv.setHasFixedSize(true)
     }
 
 }

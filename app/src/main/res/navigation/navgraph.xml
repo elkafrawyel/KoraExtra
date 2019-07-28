@@ -91,9 +91,9 @@
         tools:layout="@layout/team_matches_fragment" />
     <fragment
         android:id="@+id/teamOrderFragment"
-        android:name="com.koraextra.app.ui.mainActivity.team.teamOrder.TeamOrderFragment"
+        android:name="com.koraextra.app.ui.mainActivity.team.teamGroup.TeamGroupFragment"
         android:label="team_order_fragment"
-        tools:layout="@layout/team_order_fragment" />
+        tools:layout="@layout/team_group_fragment" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.koraextra.app.ui.mainActivity.favorites.FavoritesFragment"

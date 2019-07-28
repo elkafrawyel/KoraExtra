@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.koraextra.app.R
+import kotlinx.android.synthetic.main.team_latest_news_fragment.*
 
 class TeamLatestNewsFragment : Fragment() {
 
@@ -16,6 +17,7 @@ class TeamLatestNewsFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamLatestNewsViewModel
+    private val adapterTeamNews = AdapterTeamNews()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +29,30 @@ class TeamLatestNewsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamLatestNewsViewModel::class.java)
-        // TODO: Use the ViewModel
+        val news = ArrayList<String>()
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+        news.add("a")
+
+
+        adapterTeamNews.replaceData(news)
+
+        teamNewsRv.adapter = adapterTeamNews
+        teamNewsRv.setHasFixedSize(true)
     }
 
 }

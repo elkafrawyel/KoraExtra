@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.MatchModel
+import com.koraextra.app.ui.mainActivity.home.AdapterMatches
 import kotlinx.android.synthetic.main.team_matches_fragment.*
 
 class TeamMatchesFragment : Fragment() {
@@ -17,6 +19,9 @@ class TeamMatchesFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamMatchesViewModel
+    private val list: ArrayList<MatchModel> = arrayListOf()
+    private val adapterMatches = AdapterMatches(list)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +34,19 @@ class TeamMatchesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamMatchesViewModel::class.java)
 
-//        root.rotationY = 180F
-
+        setUpMatches()
     }
 
+    private fun setUpMatches() {
+
+        list.add(MatchModel(0))
+        list.add(MatchModel(1))
+        list.add(MatchModel(0))
+        list.add(MatchModel(2))
+
+        adapterMatches.notifyDataSetChanged()
+
+        teamMatchesRv.adapter = adapterMatches
+        teamMatchesRv.setHasFixedSize(true)
+    }
 }

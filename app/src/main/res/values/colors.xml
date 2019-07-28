@@ -12,4 +12,9 @@
 
     <color name="colorTextOnViewWhite">#FFFFFF</color>
     <color name="colorSideMenuBgColor">#0D0139</color>
+
+
+
+    <color name="colorGreen">#0DC23D</color>
+    <color name="colorGray">#F1F1F1</color>
 </resources>

@@ -29,4 +29,15 @@
     <string name="latestNews">اخر الاخبار</string>
     <string name="order">الترتيب</string>
     <string name="players">اللاعبون</string>
+    <string name="order_tv">ت</string>
+    <string name="order_name_tv">الفريق</string>
+    <string name="played_tv">لعب</string>
+    <string name="win_tv">ف</string>
+    <string name="lose_tv">خ</string>
+    <string name="draw_tv">ت</string>
+    <string name="goals_tv">اهداف</string>
+    <string name="points_tv">نقاط</string>
+    <string name="player_name_tv">اللاعب</string>
+    <string name="the_goals_tv">الاهداف</string>
+    <string name="freeKiks_tv">ضربات الجزاء</string>
 </resources>

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.koraextra.app.R
+import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -28,7 +29,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private lateinit var viewModel: HomeViewModel
-    private val adapterMatches = AdapterMatches()
+    private val list: ArrayList<MatchModel> = arrayListOf()
+    private val adapterMatches = AdapterMatches(list)
 
 
     override fun onCreateView(
@@ -82,7 +84,6 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         animateImage(homeFragmentAppName)
 
         setUpMatches()
-
     }
 
     private fun animateImage(image: ImageView) {
@@ -129,13 +130,15 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         return true
     }
 
-    private fun setUpMatches(){
-        val list = ArrayList<String>()
-        list.add("a")
-        list.add("a")
-        list.add("a")
+    private fun setUpMatches() {
 
-        adapterMatches.replaceData(list)
+        list.add(MatchModel(0))
+        list.add(MatchModel(1))
+        list.add(MatchModel(0))
+        list.add(MatchModel(2))
+
+        adapterMatches.notifyDataSetChanged()
+
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
     }

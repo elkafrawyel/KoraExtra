@@ -1,12 +1,11 @@
 package com.koraextra.app.ui.mainActivity.team
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.koraextra.app.ui.mainActivity.team.teamLatestNews.TeamLatestNewsFragment
 import com.koraextra.app.ui.mainActivity.team.teamMatches.TeamMatchesFragment
-import com.koraextra.app.ui.mainActivity.team.teamOrder.TeamOrderFragment
+import com.koraextra.app.ui.mainActivity.team.teamGroup.TeamGroupFragment
 import com.koraextra.app.ui.mainActivity.team.teamPlayers.TeamPlayersFragment
 
 class TeamsViewPagerAdapter(
@@ -16,7 +15,7 @@ class TeamsViewPagerAdapter(
     private val fragmentList = listOf(
         TeamMatchesFragment(),
         TeamLatestNewsFragment(),
-        TeamOrderFragment(),
+        TeamGroupFragment(),
         TeamPlayersFragment()
     )
 
