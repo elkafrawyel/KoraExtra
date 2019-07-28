@@ -3,6 +3,8 @@ package com.koraextra.app.ui.mainActivity.team
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.koraextra.app.MyApp
+import com.koraextra.app.R
 import com.koraextra.app.ui.mainActivity.team.teamLatestNews.TeamLatestNewsFragment
 import com.koraextra.app.ui.mainActivity.team.teamMatches.TeamMatchesFragment
 import com.koraextra.app.ui.mainActivity.team.teamGroup.TeamGroupFragment
@@ -28,16 +30,16 @@ class TeamsViewPagerAdapter(
     override fun getPageTitle(position: Int): String? {
         when (position) {
             0 -> {
-                return "المباريات"
+                return MyApp.instance.getString(R.string.mateches)
             }
             1 -> {
-                return "اخر الاخبار"
+                return MyApp.instance.getString(R.string.latestNews)
             }
             2 -> {
-                return "الترتيب"
+                return MyApp.instance.getString(R.string.order)
             }
             3 -> {
-                return "اللاعبون"
+                return MyApp.instance.getString(R.string.players)
             }
             else -> {
                 return "كورة اكستراا"
