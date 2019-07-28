@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/dp_10"
+    android:id="@+id/matchItem"
     android:layout_marginTop="@dimen/dp_10">
 
     <LinearLayout

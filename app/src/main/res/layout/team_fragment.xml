@@ -119,7 +119,7 @@
     <!--app:layout_constraintTop_toBottomOf="@id/teamsTabs"-->
     <!--app:navGraph="@navigation/navgraph" />-->
 
-    <androidx.viewpager.widget.ViewPager
+    <com.duolingo.open.rtlviewpager.RtlViewPager
         android:id="@+id/view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"

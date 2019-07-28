@@ -1,17 +1,13 @@
 package com.koraextra.app.ui.mainActivity.team
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-
 import com.koraextra.app.R
 import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.team_fragment.*
@@ -23,7 +19,6 @@ class TeamFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamViewModel
-    private lateinit var mPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

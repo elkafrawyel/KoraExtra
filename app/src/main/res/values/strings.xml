@@ -40,4 +40,7 @@
     <string name="player_name_tv">اللاعب</string>
     <string name="the_goals_tv">الاهداف</string>
     <string name="freeKiks_tv">ضربات الجزاء</string>
+    <string name="match_events">احداث المبارة</string>
+    <string name="match_details">التفاصيل</string>
+    <string name="scorers">الهدافون</string>
 </resources>

@@ -16,6 +16,8 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
     }
 
     override fun convert(helper: BaseViewHolder?, item: MatchModel?) {
+
+        helper?.addOnClickListener(R.id.matchItem)
         when (helper?.itemViewType) {
             0 -> {
 

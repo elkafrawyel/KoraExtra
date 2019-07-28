@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_matchFragment"
+            app:destination="@id/matchFragment" />
     </fragment>
     <fragment android:id="@+id/loginFragment" android:name="com.koraextra.app.ui.mainActivity.auth.login.LoginFragment"
               android:label="login_fragment" tools:layout="@layout/login_fragment">
@@ -144,4 +147,9 @@
         android:name="com.koraextra.app.ui.mainActivity.settings.SettingsFragment"
         android:label="settings_fragment"
         tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/matchFragment"
+        android:name="com.koraextra.app.ui.mainActivity.match.MatchFragment"
+        android:label="match_fragment"
+        tools:layout="@layout/match_fragment" />
 </navigation>

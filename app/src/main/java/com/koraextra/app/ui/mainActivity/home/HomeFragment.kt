@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.android.material.navigation.NavigationView
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
@@ -138,7 +139,14 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         list.add(MatchModel(2))
 
         adapterMatches.notifyDataSetChanged()
-
+        adapterMatches.onItemChildClickListener =
+            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                when (view?.id) {
+                    R.id.matchItem -> {
+                        findNavController().navigate(R.id.matchFragment)
+                    }
+                }
+            }
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
     }
