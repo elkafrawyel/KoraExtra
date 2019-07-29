@@ -85,6 +85,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         animateImage(homeFragmentAppName)
 
         setUpMatches()
+//        findNavController().navigate(R.id.settingsFragment)
     }
 
     private fun animateImage(image: ImageView) {
@@ -96,33 +97,26 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_notification -> {
-                activity?.toast("nav_notification")
                 findNavController().navigate(R.id.notificationsFragment)
             }
             R.id.nav_favourites -> {
-                activity?.toast("nav_favourites")
                 findNavController().navigate(R.id.favoritesFragment)
             }
             R.id.nav_newsPaper -> {
-                activity?.toast("nav_newsPaper")
                 findNavController().navigate(R.id.latestNewsFragment)
             }
             R.id.nav_champions -> {
-                activity?.toast("nav_champions")
                 findNavController().navigate(
                     R.id.tournamentsFragment
                 )
             }
             R.id.nav_TopScorer -> {
-                activity?.toast("nav_TopScorer")
                 findNavController().navigate(R.id.topScorersFragment)
             }
             R.id.nav_settings -> {
-                activity?.toast("nav_settings")
                 findNavController().navigate(R.id.settingsFragment)
             }
             R.id.nav_login -> {
-                activity?.toast("nav_login")
                 findNavController().navigate(R.id.loginFragment)
             }
 

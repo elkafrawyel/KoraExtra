@@ -49,4 +49,7 @@
     <string name="commentator">معلق المباراة</string>
     <string name="match_time">وقت المباراة</string>
     <string name="match_date">تاريخ المباراة</string>
+    <string name="reminder_matches">تذكير بالمباريات</string>
+    <string name="activate_notifications">تفعيل الاشعارات</string>
+    <string name="silence">وضع عدم الازعاج</string>
 </resources>

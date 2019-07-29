@@ -8,6 +8,7 @@ class AdapterNews : BaseQuickAdapter<String, BaseViewHolder>(R.layout.team_news_
 
     override fun convert(helper: BaseViewHolder, item: String) {
 
+        helper.addOnClickListener(R.id.newsViewCl)
 
     }
 

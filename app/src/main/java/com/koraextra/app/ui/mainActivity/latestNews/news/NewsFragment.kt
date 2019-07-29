@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
+import kotlinx.android.synthetic.main.news_fragment.*
 
 class NewsFragment : Fragment() {
 
@@ -28,6 +30,10 @@ class NewsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
         // TODO: Use the ViewModel
+
+        backImage.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 }

@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
+import kotlinx.android.synthetic.main.notifications_fragment.*
 
 class NotificationsFragment : Fragment() {
 
@@ -16,7 +18,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private lateinit var viewModel: NotificationsViewModel
-
+    private val adapterNotification = AdapterNotification()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,6 +30,42 @@ class NotificationsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         // TODO: Use the ViewModel
+
+        backImage.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        val list = ArrayList<String>()
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+        list.add("a")
+
+        adapterNotification.replaceData(list)
+        notificationRv.adapter = adapterNotification
+        notificationRv.setHasFixedSize(true)
     }
 
 }

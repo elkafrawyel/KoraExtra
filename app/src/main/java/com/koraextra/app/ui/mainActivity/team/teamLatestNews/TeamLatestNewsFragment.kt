@@ -42,11 +42,6 @@ class TeamLatestNewsFragment : Fragment() {
         news.add("a")
         news.add("a")
         news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
 
 
         adapterNews.replaceData(news)
