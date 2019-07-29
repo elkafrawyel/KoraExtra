@@ -34,16 +34,16 @@ class MatchViewPagerAdapter(
     override fun getPageTitle(position: Int): String? {
         when (position) {
             0 -> {
-                return MyApp.instance.resources.getString(R.string.match_events)
+                return MyApp.instance.resources.getString(R.string.scorers)
             }
             1 -> {
-                return MyApp.instance.resources.getString(R.string.match_details)
-            }
-            2 -> {
                 return MyApp.instance.resources.getString(R.string.newsPaper)
             }
+            2 -> {
+                return MyApp.instance.resources.getString(R.string.match_details)
+            }
             3 -> {
-                return MyApp.instance.resources.getString(R.string.scorers)
+                return MyApp.instance.resources.getString(R.string.match_events)
             }
             else -> {
                 return "كورة اكستراا"

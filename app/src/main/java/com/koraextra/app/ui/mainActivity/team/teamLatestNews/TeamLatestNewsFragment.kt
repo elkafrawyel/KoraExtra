@@ -17,7 +17,7 @@ class TeamLatestNewsFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamLatestNewsViewModel
-    private val adapterTeamNews = AdapterTeamNews()
+    private val adapterNews = AdapterNews()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,9 +49,9 @@ class TeamLatestNewsFragment : Fragment() {
         news.add("a")
 
 
-        adapterTeamNews.replaceData(news)
+        adapterNews.replaceData(news)
 
-        teamNewsRv.adapter = adapterTeamNews
+        teamNewsRv.adapter = adapterNews
         teamNewsRv.setHasFixedSize(true)
     }
 

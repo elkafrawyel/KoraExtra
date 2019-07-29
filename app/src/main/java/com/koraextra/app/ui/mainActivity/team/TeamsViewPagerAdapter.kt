@@ -30,16 +30,16 @@ class TeamsViewPagerAdapter(
     override fun getPageTitle(position: Int): String? {
         when (position) {
             0 -> {
-                return MyApp.instance.getString(R.string.mateches)
+                return MyApp.instance.getString(R.string.players)
             }
             1 -> {
-                return MyApp.instance.getString(R.string.latestNews)
-            }
-            2 -> {
                 return MyApp.instance.getString(R.string.order)
             }
+            2 -> {
+                return MyApp.instance.getString(R.string.latestNews)
+            }
             3 -> {
-                return MyApp.instance.getString(R.string.players)
+                return MyApp.instance.getString(R.string.mateches)
             }
             else -> {
                 return "كورة اكستراا"

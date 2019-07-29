@@ -17,7 +17,7 @@ class TeamPlayersFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamPlayersViewModel
-    private val adapterTeamPlayers = AdapterteamPlayers()
+    private val adapterPlayers = AdapterPlayers()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,9 +36,9 @@ class TeamPlayersFragment : Fragment() {
         players.add("a")
         players.add("a")
 
-        adapterTeamPlayers.replaceData(players)
+        adapterPlayers.replaceData(players)
 
-        teamPlayerRv.adapter = adapterTeamPlayers
+        teamPlayerRv.adapter = adapterPlayers
         teamPlayerRv.setHasFixedSize(true)
     }
 
