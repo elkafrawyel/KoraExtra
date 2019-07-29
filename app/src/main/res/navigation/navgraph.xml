@@ -71,7 +71,11 @@
         android:id="@+id/latestNewsFragment"
         android:name="com.koraextra.app.ui.mainActivity.latestNews.LatestNewsFragment"
         android:label="latest_news_fragment"
-        tools:layout="@layout/latest_news_fragment" />
+        tools:layout="@layout/latest_news_fragment" >
+        <action
+            android:id="@+id/action_latestNewsFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/matchNewsFragment"
         android:name="com.koraextra.app.ui.mainActivity.match.matchNews.MatchNewsFragment"
@@ -152,4 +156,9 @@
         android:name="com.koraextra.app.ui.mainActivity.match.MatchFragment"
         android:label="match_fragment"
         tools:layout="@layout/match_fragment" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.latestNews.news.NewsFragment"
+        android:label="news_fragment"
+        tools:layout="@layout/news_fragment" />
 </navigation>
