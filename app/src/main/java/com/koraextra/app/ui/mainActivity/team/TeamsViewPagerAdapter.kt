@@ -27,6 +27,12 @@ class TeamsViewPagerAdapter(
     override fun getCount(): Int =
         fragmentList.size
 
+    override fun getItemPosition(`object`: Any): Int {
+        return fragmentList.size - count - 1
+    }
+
+
+
     override fun getPageTitle(position: Int): String? {
         when (position) {
             0 -> {

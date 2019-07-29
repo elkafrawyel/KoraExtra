@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.MatchEventsModel
+import kotlinx.android.synthetic.main.match_events_fragment.*
 
 class MatchEventsFragment : Fragment() {
 
@@ -16,7 +18,8 @@ class MatchEventsFragment : Fragment() {
     }
 
     private lateinit var viewModel: MatchEventsViewModel
-
+    private val list: ArrayList<MatchEventsModel> = arrayListOf()
+    private val adapterMatchEvents= AdapterMatchEvents(list)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,7 +30,26 @@ class MatchEventsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MatchEventsViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        setUpMatchEvents()
+    }
+
+    private fun setUpMatchEvents() {
+        list.clear()
+        list.add(MatchEventsModel(0))
+        list.add(MatchEventsModel(1))
+        list.add(MatchEventsModel(2))
+        list.add(MatchEventsModel(1))
+        list.add(MatchEventsModel(2))
+        list.add(MatchEventsModel(3))
+        list.add(MatchEventsModel(1))
+        list.add(MatchEventsModel(1))
+        list.add(MatchEventsModel(3))
+
+        adapterMatchEvents.notifyDataSetChanged()
+        matchEventsRv.adapter = adapterMatchEvents
+        matchEventsRv.setHasFixedSize(true)
+
     }
 
 }

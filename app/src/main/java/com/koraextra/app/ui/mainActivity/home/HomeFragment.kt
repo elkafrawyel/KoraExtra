@@ -133,6 +133,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     private fun setUpMatches() {
 
+        list.clear()
         list.add(MatchModel(0))
         list.add(MatchModel(1))
         list.add(MatchModel(0))

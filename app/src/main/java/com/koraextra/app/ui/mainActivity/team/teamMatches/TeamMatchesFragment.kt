@@ -38,6 +38,7 @@ class TeamMatchesFragment : Fragment() {
     }
 
     private fun setUpMatches() {
+        list.clear()
 
         list.add(MatchModel(0))
         list.add(MatchModel(1))
