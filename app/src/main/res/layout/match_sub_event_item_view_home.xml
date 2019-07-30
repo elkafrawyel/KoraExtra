@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:drawableStart="@drawable/goal"
+        android:drawableStart="@drawable/ic_goal"
         android:gravity="center"
         android:drawablePadding="8dp"
         android:text="محمد صلاح"

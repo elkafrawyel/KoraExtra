@@ -85,7 +85,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         animateImage(homeFragmentAppName)
 
         setUpMatches()
-//        findNavController().navigate(R.id.settingsFragment)
+//        findNavController().navigate(R.id.playersFragment)
     }
 
     private fun animateImage(image: ImageView) {

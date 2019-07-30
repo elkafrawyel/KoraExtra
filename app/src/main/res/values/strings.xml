@@ -53,4 +53,10 @@
     <string name="activate_notifications">تفعيل الاشعارات</string>
     <string name="silence">وضع عدم الازعاج</string>
     <string name="details">التفاصيل</string>
+    <string name="goals_tv2">الاهداف</string>
+    <string name="reverse_goals">الاهداف العكسيه</string>
+    <string name="successful_penalty">ضربات جزاء ناجحة</string>
+    <string name="missed_penalty">ضربات جزاء ضائعة</string>
+    <string name="yellow_Card">الكروت الصفراء</string>
+    <string name="red_Card">الكروت الحمراء</string>
 </resources>
