@@ -52,4 +52,5 @@
     <string name="reminder_matches">تذكير بالمباريات</string>
     <string name="activate_notifications">تفعيل الاشعارات</string>
     <string name="silence">وضع عدم الازعاج</string>
+    <string name="details">التفاصيل</string>
 </resources>

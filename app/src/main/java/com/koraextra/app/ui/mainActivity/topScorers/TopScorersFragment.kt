@@ -63,6 +63,13 @@ class TopScorersFragment : Fragment() {
         list.add("a")
         list.add("a")
 
+        adapterTopScorer.setOnItemChildClickListener { adapter, view, position ->
+            when(view.id){
+                R.id.topScorerRoot -> {
+                    findNavController().navigate(R.id.playersFragment)
+                }
+            }
+        }
         adapterTopScorer.replaceData(list)
         topScorerRv.adapter = adapterTopScorer
         topScorerRv.setHasFixedSize(true)

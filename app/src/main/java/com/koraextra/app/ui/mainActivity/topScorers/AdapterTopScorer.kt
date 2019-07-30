@@ -8,6 +8,7 @@ class AdapterTopScorer: BaseQuickAdapter<String, BaseViewHolder>(R.layout.top_sc
 
     override fun convert(helper: BaseViewHolder, item: String) {
 
+        helper.addOnClickListener(R.id.topScorerRoot)
     }
 
 }

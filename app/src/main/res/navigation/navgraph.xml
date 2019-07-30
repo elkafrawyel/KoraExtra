@@ -115,7 +115,11 @@
         android:id="@+id/topScorersFragment"
         android:name="com.koraextra.app.ui.mainActivity.topScorers.TopScorersFragment"
         android:label="top_scorers_fragment"
-        tools:layout="@layout/top_scorers_fragment" />
+        tools:layout="@layout/top_scorers_fragment" >
+        <action
+            android:id="@+id/action_topScorersFragment_to_playersFragment"
+            app:destination="@id/playersFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.koraextra.app.ui.mainActivity.notifications.NotificationsFragment"
@@ -161,4 +165,9 @@
         android:name="com.koraextra.app.ui.mainActivity.latestNews.news.NewsFragment"
         android:label="news_fragment"
         tools:layout="@layout/news_fragment" />
+    <fragment
+        android:id="@+id/playersFragment"
+        android:name="com.koraextra.app.ui.mainActivity.players.PlayersFragment"
+        android:label="players_fragment"
+        tools:layout="@layout/players_fragment" />
 </navigation>
