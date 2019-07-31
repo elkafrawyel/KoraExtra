@@ -1,18 +1,19 @@
 package com.koraextra.app.ui.mainActivity.latestNews
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-
 import com.koraextra.app.R
 import com.koraextra.app.data.models.NewsModel
 import com.koraextra.app.ui.mainActivity.team.teamLatestNews.AdapterNews
 import kotlinx.android.synthetic.main.latest_news_fragment.*
-import kotlinx.android.synthetic.main.team_latest_news_fragment.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.timerTask
 
 class LatestNewsFragment : Fragment() {
 
@@ -23,6 +24,7 @@ class LatestNewsFragment : Fragment() {
     private lateinit var viewModel: LatestNewsViewModel
     private val latestNewsSliderAdapter = LatestNewsSliderAdapter()
     private val adapterNews = AdapterNews()
+    private var timer: Timer? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +37,9 @@ class LatestNewsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(LatestNewsViewModel::class.java)
         // TODO: Use the ViewModel
 
+        backImage.setOnClickListener {
+            findNavController().navigateUp()
+        }
         newsViewPager.adapter = latestNewsSliderAdapter
         val mainNews = ArrayList<NewsModel>()
         mainNews.add(
@@ -94,7 +99,28 @@ class LatestNewsFragment : Fragment() {
         }
         latestNewsRv.adapter = adapterNews
         latestNewsRv.setHasFixedSize(true)
+        newsViewPager.setCurrentItem(0, true)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        timer = Timer()
+        timer?.scheduleAtFixedRate(timerTask {
+            requireActivity().runOnUiThread {
+                if (newsViewPager != null) {
+                    if (newsViewPager.currentItem < latestNewsSliderAdapter.count - 1) {
+                        newsViewPager.setCurrentItem(newsViewPager.currentItem + 1, true)
+                    } else {
+                        newsViewPager.setCurrentItem(0, true)
+                    }
+                }
+            }
+        }, 5000, 5000)
+    }
+
+    override fun onPause() {
+        timer?.cancel()
+        super.onPause()
     }
 
 }

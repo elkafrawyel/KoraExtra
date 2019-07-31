@@ -35,28 +35,11 @@ class PlayersDetailsFragment : Fragment() {
         val mainNews = ArrayList<NewsModel>()
         mainNews.add(
             NewsModel(
-                "https://fos.cmb.ac.lk/blog/wp-content/uploads/2019/04/Football.jpg",
-                "صفقة انتقال بيبي  "
+                "https://upload.wikimedia.org/wikipedia/ar/5/5f/African_Nations_Championship_official_logo.png",
+                "كأس أمم افريقيا"
             )
         )
-        mainNews.add(
-            NewsModel(
-                "https://www.raf.mod.uk/aircadets/raf-aircadets/assets/Image/Football.jpg",
-                "كوتروني يعلن انضمامه "
-            )
-        )
-        mainNews.add(
-            NewsModel(
-                "https://images.performgroup.com/di/library/GOAL/f3/95/football-rule-changes_1sq9naux6zqbf13gxeov5833fa.jpg?t=-2038154983&quality=60&w=1408",
-                "آخر أخبار صفقات وسوق"
-            )
-        )
-        mainNews.add(
-            NewsModel(
-                "https://images.performgroup.com/di/library/GOAL/7f/ea/willian-chelsea-manchester-united-free-kick_1sx72o7v2m2im1cf1kqvboht0r.jpg?t=-2034903303&quality=60&w=1600",
-                "خاميس ينضم لتدريبات "
-            )
-        )
+
 
         val spinnerAdapter = ChampionSpinnerAdapter(context!!, mainNews)
         spinnerChampion.adapter = spinnerAdapter
