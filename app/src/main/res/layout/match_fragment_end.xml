@@ -3,10 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.mainActivity.match.MatchFragment"
-    app:layoutDescription="@xml/scene_collapsing_match"
-    android:background="@color/colorPrimary">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1horizontal"
@@ -20,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.224" />
+        app:layout_constraintGuide_percent="0.073" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3horizontal"
@@ -43,10 +40,98 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.855" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/backImage"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_keyboard_backspace_white_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/teamShareImage"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_share_white_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
 
 
+    <LinearLayout
+        android:id="@+id/teamImage1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:src="@drawable/liverpool"
+        app:layout_constraintStart_toEndOf="@id/guideline1vertical"
+        app:layout_constraintEnd_toStartOf="@id/guideline2vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline1horizontal"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/senegal"
+            android:layout_marginStart="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"/>
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="76:33"
+            android:padding="@dimen/dp_4"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/egypt"
+            android:layout_marginEnd="8dp"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/teamImage"
         android:layout_width="0dp"
@@ -56,7 +141,7 @@
         android:src="@drawable/liverpool"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline1horizontal"
+        app:layout_constraintBottom_toTopOf="parent"
         android:background="@color/colorPrimary">
         <LinearLayout
             android:layout_width="match_parent"
@@ -170,94 +255,7 @@
 
         </LinearLayout>
     </LinearLayout>
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/backImage"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_keyboard_backspace_white_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <ImageView
-                android:id="@+id/teamShareImage"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_share_white_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-    <LinearLayout
-        android:id="@+id/teamImage1"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:padding="8dp"
-        android:orientation="horizontal"
-        android:src="@drawable/liverpool"
-        app:layout_constraintStart_toEndOf="@id/guideline1vertical"
-        app:layout_constraintEnd_toStartOf="@id/guideline2vertical"
-        app:layout_constraintBottom_toTopOf="parent"
-        android:background="@color/colorPrimary"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/senegal"
-            android:layout_marginStart="8dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="76:33"
-            android:padding="@dimen/dp_4"
-            android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp" />
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/egypt"
-            android:layout_marginEnd="8dp"/>
-    </LinearLayout>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/matchTabs"
         android:layout_width="match_parent"
@@ -295,6 +293,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/matchTabs"
-        android:background="@color/colorBackground"/>
+        app:layout_constraintTop_toBottomOf="@+id/matchTabs" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

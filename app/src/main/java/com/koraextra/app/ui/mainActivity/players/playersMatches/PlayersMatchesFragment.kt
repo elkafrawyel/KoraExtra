@@ -43,6 +43,10 @@ class PlayersMatchesFragment : Fragment() {
         list.add(MatchModel(1))
         list.add(MatchModel(0))
         list.add(MatchModel(2))
+        list.add(MatchModel(0))
+        list.add(MatchModel(1))
+        list.add(MatchModel(0))
+        list.add(MatchModel(2))
 
         adapterMatches.notifyDataSetChanged()
 

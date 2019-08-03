@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 
@@ -41,6 +42,14 @@ class PlayersFragment : Fragment() {
             playerTabs.setupWithViewPager(view_pager)
             view_pager.adapter = it
         }
-    }
 
+    }
+    fun changeState() {
+        val motionLayout = motionLayout as? MotionLayout ?: return
+        if (motionLayout.progress > 0.5f) {
+            motionLayout.transitionToStart()
+        } else {
+            motionLayout.transitionToEnd()
+        }
+    }
 }

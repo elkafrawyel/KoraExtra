@@ -2,12 +2,12 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    app:layoutDescription="@xml/scene_collapsing_players"
-    tools:context=".ui.mainActivity.players.PlayersFragment">
+    >
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1horizontal"
@@ -21,33 +21,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.073"  />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.065" />
+        app:layout_constraintGuide_percent="0.145" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.269" />
+        app:layout_constraintGuide_percent="0.26" />
+
 
 
     <ImageView
         android:id="@+id/backImage"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="12dp"
+        android:layout_height="wrap_content"
         android:padding="8dp"
         android:src="@drawable/ic_keyboard_backspace_white_24dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline1horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="12dp" />
+
 
 
     <TextView
@@ -58,9 +60,9 @@
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:textColor="@android:color/white"
         android:textStyle="bold"
+        android:layout_marginStart="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline1horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline2vertical"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -76,13 +78,15 @@
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/playerImg"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:scaleType="centerInside"
         android:src="@drawable/test_player"
         app:layout_constraintStart_toEndOf="@+id/guideline1vertical"
-        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline1horizontal"
+        app:layout_constraintEnd_toStartOf="@id/guideline2vertical"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/playerNumberTv"
@@ -94,14 +98,14 @@
         android:text="11"
         android:textAppearance="?attr/textAppearanceCaption"
         android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="@+id/guideline1vertical"
-        app:layout_constraintStart_toStartOf="@+id/guideline1vertical"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal" />
 
     <TextView
         android:id="@+id/playerAgeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_yellow"
         android:gravity="center"
         android:paddingStart="12dp"
@@ -109,33 +113,33 @@
         android:text="26 عام"
         android:textAppearance="?attr/textAppearanceCaption"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2vertical"
-        app:layout_constraintStart_toEndOf="@+id/guideline1vertical" />
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal" />
 
 
     <TextView
         android:id="@+id/playerPositionTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
         android:text="المركز : جناج ايمن"
         android:textAppearance="?attr/textAppearanceBody1"
         android:textColor="@android:color/white"
-        app:layout_constraintStart_toEndOf="@+id/guideline2vertical"
-        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal" />
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="32dp"
+        />
 
 
     <LinearLayout
-        android:id="@+id/playerClubs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="45dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/guideline2vertical"
-        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal">
+        android:id="@+id/playerClubs"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="32dp">
 
         <ImageView
             android:id="@+id/playerClubImg"
@@ -188,8 +192,7 @@
         app:tabIndicatorColor="@color/colorAccent"
         app:tabIndicatorHeight="5dp"
         app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextAppearance="@style/TabStyle"
-        app:tabTextColor="@android:color/white">
+        app:tabTextAppearance="@style/TabStyle">
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -197,10 +200,11 @@
         android:id="@+id/view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerTabs" />
+        app:layout_constraintTop_toBottomOf="@+id/playerTabs"
+        android:background="@color/colorBackground"/>
+
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
