@@ -59,4 +59,5 @@
     <string name="missed_penalty">ضربات جزاء ضائعة</string>
     <string name="yellow_Card">الكروت الصفراء</string>
     <string name="red_Card">الكروت الحمراء</string>
+    <string name="error_general">حدث خطأ ما</string>
 </resources>

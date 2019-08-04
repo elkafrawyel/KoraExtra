@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
-import com.cezma.store.utiles.Injector
 import com.google.android.material.snackbar.Snackbar
 import com.koraextra.app.R
 import java.util.*

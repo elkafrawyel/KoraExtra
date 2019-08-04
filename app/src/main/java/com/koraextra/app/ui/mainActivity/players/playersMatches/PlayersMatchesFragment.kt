@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.koraextra.app.R
-import com.koraextra.app.data.models.MatchModel
+import com.koraextra.app.data.models.testMatchModel
 import com.koraextra.app.ui.mainActivity.home.AdapterMatches
 import kotlinx.android.synthetic.main.players_matches_fragment.*
 
@@ -19,7 +19,7 @@ class PlayersMatchesFragment : Fragment() {
     }
 
     private lateinit var viewModel: PlayersMatchesViewModel
-    private val list: ArrayList<MatchModel> = arrayListOf()
+    private val list: ArrayList<testMatchModel> = arrayListOf()
     private val adapterMatches = AdapterMatches(list)
 
     override fun onCreateView(
@@ -39,14 +39,14 @@ class PlayersMatchesFragment : Fragment() {
     private fun setUpMatches() {
         list.clear()
 
-        list.add(MatchModel(0))
-        list.add(MatchModel(1))
-        list.add(MatchModel(0))
-        list.add(MatchModel(2))
-        list.add(MatchModel(0))
-        list.add(MatchModel(1))
-        list.add(MatchModel(0))
-        list.add(MatchModel(2))
+        list.add(testMatchModel(0))
+        list.add(testMatchModel(1))
+        list.add(testMatchModel(0))
+        list.add(testMatchModel(2))
+        list.add(testMatchModel(0))
+        list.add(testMatchModel(1))
+        list.add(testMatchModel(0))
+        list.add(testMatchModel(2))
 
         adapterMatches.notifyDataSetChanged()
 

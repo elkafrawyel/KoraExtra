@@ -12,12 +12,15 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.cobonee.app.utily.MyUiStates
 import com.google.android.material.navigation.NavigationView
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
+import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -30,8 +33,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private lateinit var viewModel: HomeViewModel
-    private val list: ArrayList<MatchModel> = arrayListOf()
-    private val adapterMatches = AdapterMatches(list)
+    private val matchesList: ArrayList<MatchModel> = arrayListOf()
+    private val adapterMatches = AdapterMatches(matchesList)
 
 
     override fun onCreateView(
@@ -45,14 +48,15 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
+        viewModel.uiState.observe(this, object : Observer<MyUiStates?> {
+            override fun onChanged(it: MyUiStates?) {
+                onMatchesChanged(it)
+            }
+        })
         navigationView.setNavigationItemSelectedListener(this)
 
         drawerToggleImgBtn.setOnClickListener {
-            //            if(drawerLayout.isDrawerOpen(drawerLayout)){
-//                drawerLayout.openDrawer(GravityCompat.END)
-//            }else{
             drawerLayout.openDrawer(GravityCompat.START)
-//            }
         }
 
         val actionBarDrawerToggle =
@@ -84,8 +88,41 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         animateImage(homeFragmentAppName)
 
-        setUpMatches()
-//        findNavController().navigate(R.id.playersFragment)
+
+        viewModel.getMatchesList()
+    }
+
+    private fun onMatchesChanged(state: MyUiStates?) {
+        when (state) {
+            MyUiStates.Loading -> {
+
+            }
+            MyUiStates.Success -> {
+                viewModel.storedMatchesLiveData?.let {
+                    it.observe(this@HomeFragment, Observer {
+                        onStoredMatchesChanged(it)
+                    })
+                }
+            }
+            MyUiStates.LastPage -> {
+
+            }
+            is MyUiStates.Error -> {
+                activity?.snackBar(state.message,contentHome)
+            }
+            MyUiStates.NoConnection -> {
+                //show no connect view
+            }
+            MyUiStates.Empty -> {
+                //show Empty view
+            }
+            null -> {
+            }
+        }
+    }
+
+    private fun onStoredMatchesChanged(matchesList: List<MatchModel>) {
+        setUpMatches(matchesList)
     }
 
     private fun animateImage(image: ImageView) {
@@ -125,13 +162,10 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         return true
     }
 
-    private fun setUpMatches() {
+    private fun setUpMatches(matchesList: List<MatchModel>) {
 
-        list.clear()
-        list.add(MatchModel(0))
-        list.add(MatchModel(1))
-        list.add(MatchModel(0))
-        list.add(MatchModel(2))
+        this.matchesList.clear()
+        this.matchesList.addAll(matchesList)
 
         adapterMatches.notifyDataSetChanged()
         adapterMatches.onItemChildClickListener =

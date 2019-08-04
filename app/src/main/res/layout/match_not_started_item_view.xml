@@ -30,12 +30,14 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/senegal" />
+                    android:src="@drawable/senegal"
+                    android:id="@+id/homeImg"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="السنغال"
+                    android:id="@+id/homeName"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="@android:color/black"
                     android:gravity="center"/>
@@ -57,6 +59,7 @@
                     android:paddingEnd="12dp"
                     android:text="لم تبدأ"
                     android:textStyle="bold"
+                    android:id="@+id/statusTv"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"
                     android:textAppearance="?attr/textAppearanceBody1"
@@ -106,12 +109,14 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/egypt" />
+                    android:src="@drawable/egypt"
+                    android:id="@+id/awayImg"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="مصر"
+                    android:id="@+id/awayName"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="@android:color/black"
                     android:gravity="center"/>

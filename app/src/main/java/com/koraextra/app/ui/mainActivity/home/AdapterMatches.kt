@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
+import com.koraextra.app.data.models.testMatchModel
 
 
 class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter<MatchModel, BaseViewHolder>(data) {
@@ -20,6 +21,8 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
         helper?.addOnClickListener(R.id.matchItem)
         when (helper?.itemViewType) {
             0 -> {
+                helper.setText(R.id.homeName,item?.homeTeam?.teamName)
+                helper.setText(R.id.awayName,item?.awayTeam?.teamName)
 
             }
 

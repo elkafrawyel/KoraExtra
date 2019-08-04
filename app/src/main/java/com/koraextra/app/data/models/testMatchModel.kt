@@ -4,7 +4,7 @@ package com.koraextra.app.data.models
 import com.chad.library.adapter.base.entity.MultiItemEntity
 
 
-class MatchModel(
+class testMatchModel(
     val type: Int
 ) : MultiItemEntity {
 
