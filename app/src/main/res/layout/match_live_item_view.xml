@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/matchItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -28,11 +29,13 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/homeImg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/senegal" />
 
                 <TextView
+                    android:id="@+id/homeName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -49,6 +52,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/timeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -69,9 +73,10 @@
                     android:layout_marginTop="@dimen/dp_4">
 
                     <TextView
+                        android:id="@+id/homeScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
+                        tools:text="1"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@android:color/black" />
 
@@ -81,14 +86,15 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="@dimen/dp_4"
-                        android:text="76:33"
+                        tools:text="76:33"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
+                        android:id="@+id/awayScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3"
+                        tools:text="3"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -103,15 +109,17 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/awayImg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/egypt" />
 
                 <TextView
+                    android:id="@+id/awayName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="مصر"
+                    tools:text="مصر"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="@android:color/black" />
             </LinearLayout>
@@ -119,11 +127,12 @@
 
 
         <TextView
+            android:id="@+id/matchTitleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="8dp"
-            android:text="بداية الشوط الثاني"
+            tools:text="بداية الشوط الثاني"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@android:color/black" />
 

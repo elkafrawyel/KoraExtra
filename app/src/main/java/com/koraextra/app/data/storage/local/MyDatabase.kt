@@ -9,7 +9,6 @@ import com.koraextra.app.data.models.AwayTeam
 //import com.koraextra.app.data.models.HomeTeam
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.data.models.Score
-import com.koraextra.app.data.repo.Converters
 
 @Database(
 entities = [MatchModel::class,

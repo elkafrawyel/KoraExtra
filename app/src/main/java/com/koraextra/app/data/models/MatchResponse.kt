@@ -1,11 +1,8 @@
 package com.koraextra.app.data.models
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.koraextra.app.data.repo.Converters
 import com.squareup.moshi.Json
 
 
@@ -56,10 +53,12 @@ data class MatchModel(
     @field:Json(name = "statusShort")
     val statusShort: String?,
     @field:Json(name = "venue")
-    val venue: String?
+    val venue: String?,
+    @field:Json(name = "statuskey")
+    val statuskey: Int
 ) : MultiItemEntity {
     override fun getItemType(): Int {
-        return 0
+        return statuskey
     }
 }
 
@@ -97,3 +96,24 @@ data class Score(
     @field:Json(name = "penalty")
     val penalty: String?
 )
+
+//match status
+//Not Started                           1
+//Match Finished                        2
+//Time To Be Defined                    3
+//Halftime                              4
+//Second Half, 2nd Half Started         5
+//Extra Time                            6
+//Penalty In Progress                   7
+//Match Finished After Extra Time       8
+//Match Finished After Penalty          9
+//Break Time (in Extra Time)            10
+//Match Suspended                       11
+//Match Interrupted                     12
+//Match Postponed                       13
+//Match Cancelled                       14
+//Match Abandoned                       15
+//Technical Loss                        16
+//WalkOver                              17
+//First Half, Kick Off                  18
+//Second half                           19

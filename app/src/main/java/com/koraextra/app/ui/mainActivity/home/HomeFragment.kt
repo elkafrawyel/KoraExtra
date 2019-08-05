@@ -1,5 +1,6 @@
 package com.koraextra.app.ui.mainActivity.home
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -18,11 +18,11 @@ import androidx.navigation.fragment.findNavController
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cobonee.app.utily.MyUiStates
 import com.google.android.material.navigation.NavigationView
-import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
-import com.koraextra.app.utily.snackBar
-import com.koraextra.app.utily.toast
+import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.home_fragment.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
@@ -41,7 +41,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        return inflater.inflate(com.koraextra.app.R.layout.home_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,7 +60,12 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         }
 
         val actionBarDrawerToggle =
-            object : ActionBarDrawerToggle(activity!!, drawerLayout, R.string.open, R.string.close) {
+            object : ActionBarDrawerToggle(
+                activity!!,
+                drawerLayout,
+                com.koraextra.app.R.string.open,
+                com.koraextra.app.R.string.close
+            ) {
                 private val scaleFactor = 6f
 
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
@@ -81,40 +86,132 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         val socialItemId = 8
         val viewClicked = navigationView.menu.getItem(socialItemId).actionView
-        viewClicked.findViewById<LinearLayout>(R.id.facebookView).setOnClickListener {
+        viewClicked.findViewById<LinearLayout>(com.koraextra.app.R.id.facebookView).setOnClickListener {
             activity?.toast("Facebook")
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
-        animateImage(homeFragmentAppName)
+//        animateView(homeFragmentAppName)
 
+        date_tv.setOnClickListener {
+            openDatePicker()
+        }
 
+        dayName_tv.setOnClickListener {
+            openDatePicker()
+        }
+
+        //start with current date
+        val date = activity?.getCurrentDate()
+        viewModel.date = date
+        dayName_tv.text = activity?.getDayName(date!!)
+        date_tv.text = activity?.getDateStringFromString(date!!)
+
+        // get normal matches with above date
         viewModel.getMatchesList()
+
+        liveSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                //today live
+                viewModel.getMatchesList(true)
+                linearHeader.visibility = View.GONE
+            } else {
+                //today normal
+                viewModel.getMatchesList()
+                linearHeader.visibility = View.VISIBLE
+
+            }
+        }
+
+        nextImg.setOnClickListener {
+            changeDay(true)
+        }
+
+        previousImg.setOnClickListener {
+            changeDay()
+        }
+    }
+
+    private fun changeDay(next:Boolean = false) {
+        val date = activity?.getDateFromString(viewModel.date!!)
+        val c = Calendar.getInstance()
+        c.setTime(date)
+        if(next) {
+            c.add(Calendar.DATE, 1)
+        }else{
+            c.add(Calendar.DATE, -1)
+        }
+        val timeFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
+        val dateString = timeFormat.format(c.time)
+        viewModel.date = dateString
+        dayName_tv.text = activity?.getDayName(dateString)
+        date_tv.text = activity?.getDateStringFromString(dateString)
+        viewModel.getMatchesList()
+    }
+
+
+
+    private fun openDatePicker() {
+        val date = activity?.getDateFromString(viewModel.date!!)
+        val c = Calendar.getInstance()
+        c.time = date
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val datePicker = DatePickerDialog(
+            context!!,
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                val date = "$year-${monthOfYear + 1}-$dayOfMonth"
+                activity?.toast(date)
+
+
+                viewModel.date = date
+                viewModel.getMatchesList()
+
+                dayName_tv.text = activity?.getDayName(date)
+                date_tv.text = activity?.getDateStringFromString(date)
+
+            }, year, month, day
+        )
+
+        datePicker.show()
     }
 
     private fun onMatchesChanged(state: MyUiStates?) {
         when (state) {
             MyUiStates.Loading -> {
-
+                loading.visibility = View.VISIBLE
+                matchesRv.visibility = View.GONE
             }
             MyUiStates.Success -> {
+                loading.visibility = View.GONE
+                matchesRv.visibility = View.VISIBLE
                 viewModel.storedMatchesLiveData?.let {
                     it.observe(this@HomeFragment, Observer {
                         onStoredMatchesChanged(it)
                     })
                 }
             }
+
             MyUiStates.LastPage -> {
+                loading.visibility = View.GONE
 
             }
             is MyUiStates.Error -> {
-                activity?.snackBar(state.message,contentHome)
+                loading.visibility = View.GONE
+
+                activity?.snackBar(state.message, contentHome)
             }
             MyUiStates.NoConnection -> {
                 //show no connect view
+                loading.visibility = View.GONE
+
             }
             MyUiStates.Empty -> {
                 //show Empty view
+                loading.visibility = View.GONE
+
             }
             null -> {
             }
@@ -125,36 +222,36 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         setUpMatches(matchesList)
     }
 
-    private fun animateImage(image: ImageView) {
+    private fun animateView(image: View) {
 
-        val rotateAnimation = AnimationUtils.loadAnimation(activity, R.anim.rotate)
+        val rotateAnimation = AnimationUtils.loadAnimation(activity, com.koraextra.app.R.anim.rotate)
         image.startAnimation(rotateAnimation)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_notification -> {
-                findNavController().navigate(R.id.notificationsFragment)
+            com.koraextra.app.R.id.nav_notification -> {
+                findNavController().navigate(com.koraextra.app.R.id.notificationsFragment)
             }
-            R.id.nav_favourites -> {
-                findNavController().navigate(R.id.favoritesFragment)
+            com.koraextra.app.R.id.nav_favourites -> {
+                findNavController().navigate(com.koraextra.app.R.id.favoritesFragment)
             }
-            R.id.nav_newsPaper -> {
-                findNavController().navigate(R.id.latestNewsFragment)
+            com.koraextra.app.R.id.nav_newsPaper -> {
+                findNavController().navigate(com.koraextra.app.R.id.latestNewsFragment)
             }
-            R.id.nav_champions -> {
+            com.koraextra.app.R.id.nav_champions -> {
                 findNavController().navigate(
-                    R.id.tournamentsFragment
+                    com.koraextra.app.R.id.tournamentsFragment
                 )
             }
-            R.id.nav_TopScorer -> {
-                findNavController().navigate(R.id.topScorersFragment)
+            com.koraextra.app.R.id.nav_TopScorer -> {
+                findNavController().navigate(com.koraextra.app.R.id.topScorersFragment)
             }
-            R.id.nav_settings -> {
-                findNavController().navigate(R.id.settingsFragment)
+            com.koraextra.app.R.id.nav_settings -> {
+                findNavController().navigate(com.koraextra.app.R.id.settingsFragment)
             }
-            R.id.nav_login -> {
-                findNavController().navigate(R.id.loginFragment)
+            com.koraextra.app.R.id.nav_login -> {
+                findNavController().navigate(com.koraextra.app.R.id.loginFragment)
             }
 
         }
@@ -166,17 +263,20 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         this.matchesList.clear()
         this.matchesList.addAll(matchesList)
+        activity?.toast("${matchesList.size}")
 
         adapterMatches.notifyDataSetChanged()
         adapterMatches.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when (view?.id) {
-                    R.id.matchItem -> {
-                        findNavController().navigate(R.id.matchFragment)
+                    com.koraextra.app.R.id.matchItem -> {
+                        findNavController().navigate(com.koraextra.app.R.id.matchFragment)
                     }
                 }
             }
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
     }
+
+
 }

@@ -2,7 +2,8 @@
     android:viewportWidth="51.437"
     android:viewportHeight="38"
     android:width="51.437dp"
-    android:height="38dp">
+    android:height="38dp"
+    android:autoMirrored="true">
     <group
         android:translateX="9.459"
         android:translateY="13">

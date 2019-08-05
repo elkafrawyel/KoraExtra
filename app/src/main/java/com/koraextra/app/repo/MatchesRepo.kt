@@ -1,10 +1,9 @@
-package com.koraextra.app.data.repo
+package com.koraextra.app.repo
 
 import com.cobonee.app.utily.DataResource
 import com.cobonee.app.utily.safeApiCall
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
-import com.koraextra.app.data.models.MatchResponse
 import com.koraextra.app.data.storage.local.AppDatabase
 import com.koraextra.app.data.storage.remote.RetrofitApiService
 import com.koraextra.app.utily.Injector
@@ -23,6 +22,7 @@ class MatchesRepo(
 
     private suspend fun matchCall(go: String): DataResource<Boolean> {
         val response = retrofitApiService.getMatchesAsync(go).await()
+        appDatabase.myDao().deleteMatches()
         if(response.response?.count!!>0){
             val matches= response.response.matchModels
 //            matches?.forEach {
@@ -33,6 +33,7 @@ class MatchesRepo(
             appDatabase.myDao().insertMatches(matches as List<MatchModel>)
             return DataResource.Success(true)
         }else{
+
             return DataResource.Success(false)
         }
     }

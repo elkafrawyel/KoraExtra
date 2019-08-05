@@ -1,15 +1,11 @@
-package com.koraextra.app.data.repo
+package com.koraextra.app.data.storage.local
 
 import androidx.room.TypeConverter
 import com.koraextra.app.data.models.AwayTeam
 import com.koraextra.app.data.models.HomeTeam
-import java.time.Instant
 import com.google.gson.reflect.TypeToken
-import java.util.Collections.emptyList
 import com.google.gson.Gson
-import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.data.models.Score
-import java.util.*
 
 
 class Converters {

@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.koraextra.app.R
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun Context.changeLanguage() {
@@ -49,5 +51,40 @@ fun Context.snackBar(message: String, rootView: View) {
     snackBar.show()
 }
 
+fun Context.getCurrentDate(): String {
 
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
+    val currentDate = sdf.format(Date())
+    return currentDate
+}
+
+fun Context.getDateStringFromString(oldDate: String): String {
+    var date = ""
+    val oldFormat = "yyyy-MM-dd"
+    val newFormat = "dd/MM/yyyy"
+    val dateFormat = SimpleDateFormat(oldFormat, Locale("en"))
+    val myDate = dateFormat.parse(oldDate)
+    val timeFormat = SimpleDateFormat(newFormat, Locale("en"))
+    date = timeFormat.format(myDate)
+    return date
+}
+
+fun Context.getDayName(oldDate: String): String {
+    var day = ""
+    val oldFormat = "yyyy-MM-dd"
+    val newFormat = "EEEE"
+    val dateFormat = SimpleDateFormat(oldFormat, Locale("en"))
+    val myDate = dateFormat.parse(oldDate)
+    val timeFormat = SimpleDateFormat(newFormat, Locale(Injector.getPreferenceHelper().language))
+    day = timeFormat.format(myDate)
+    return day
+}
+
+fun Context.getDateFromString(oldDate: String): Date {
+    var date = ""
+    val oldFormat = "yyyy-MM-dd"
+    val dateFormat = SimpleDateFormat(oldFormat, Locale("en"))
+    val myDate = dateFormat.parse(oldDate)
+    return myDate
+}
 

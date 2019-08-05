@@ -3,8 +3,8 @@ package com.koraextra.app.utily
 import com.cobonee.app.utily.CoroutinesDispatcherProvider
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.koraextra.app.MyApp
-import com.koraextra.app.data.repo.MatchesRepo
-import com.koraextra.app.data.repo.StoredMatchesRepo
+import com.koraextra.app.repo.MatchesRepo
+import com.koraextra.app.repo.StoredMatchesRepo
 import com.koraextra.app.data.storage.local.AppDatabase
 import com.koraextra.app.data.storage.local.PreferencesHelper
 import com.koraextra.app.data.storage.remote.RetrofitApiService

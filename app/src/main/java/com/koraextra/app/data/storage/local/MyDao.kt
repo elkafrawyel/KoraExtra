@@ -12,4 +12,7 @@ interface MyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMatches(item: List<MatchModel>)
+
+    @Query("DELETE FROM MatchModel")
+    fun deleteMatches()
 }

@@ -41,16 +41,21 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/homeFragmentAppName"
-                        android:layout_width="150dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/app_name_img"
-                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:gravity="center"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="@string/kora_extra"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/homeFragmentLogo"
                         app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/drawerToggleImgBtn"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
@@ -60,9 +65,24 @@
                         android:src="@drawable/logo"
                         android:textAppearance="?attr/textAppearanceBody1"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/liveSwitch"
+                        app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toEndOf="@id/homeFragmentAppName"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <Switch
+                        android:theme="@style/switchStyle"
+                        android:id="@+id/liveSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:text="@string/live"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="@id/homeFragmentSearch"
+                        app:layout_constraintEnd_toStartOf="@id/homeFragmentSearch"
+                        app:layout_constraintTop_toTopOf="@id/homeFragmentSearch" />
 
                     <ImageView
                         android:id="@+id/homeFragmentSearch"
@@ -91,9 +111,10 @@
                     android:id="@+id/linearHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:orientation="horizontal"
                     android:padding="8dp"
-                    android:layout_marginTop="4dp"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -128,23 +149,25 @@
                         android:textColor="@android:color/black" />
 
                     <ImageView
+                        android:id="@+id/previousImg"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/next" />
+                        android:src="@drawable/previous" />
 
                     <ImageView
+                        android:id="@+id/nextImg"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
-                        android:src="@drawable/previous" />
+                        android:src="@drawable/next" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/matchesRv"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:paddingEnd="8dp"
                     android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:paddingBottom="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -153,6 +176,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearHeader"
                     tools:listitem="@layout/match_live_item_view" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

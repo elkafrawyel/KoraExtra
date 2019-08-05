@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/dp_10"
     android:id="@+id/matchItem"
@@ -36,7 +37,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="السنغال"
+                    tools:text="السنغال"
                     android:id="@+id/homeName"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="@android:color/black"
@@ -80,11 +81,12 @@
                         android:textColor="@android:color/black" />
 
                     <TextView
+                        android:id="@+id/timeTv"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="10:33 pm"
+                        tools:text="10:33 pm"
                         android:padding="@dimen/dp_4"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="@android:color/black" />
@@ -115,7 +117,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="مصر"
+                    tools:text="مصر"
                     android:id="@+id/awayName"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="@android:color/black"

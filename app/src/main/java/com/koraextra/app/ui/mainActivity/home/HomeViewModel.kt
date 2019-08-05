@@ -23,23 +23,28 @@ class HomeViewModel : KoraViewModel() {
         get() = _uiState
 
     var storedMatchesLiveData: LiveData<List<MatchModel>>? = null
-
+    var date: String? = null
     var matchesList: ArrayList<MatchModel> = arrayListOf()
 
-    fun getMatchesList() {
+    fun getMatchesList(isLive: Boolean = false) {
         if (NetworkUtils.isConnected()) {
             if (job?.isActive == true)
                 return
-            job = launchJob()
+            job = launchJob(isLive)
         } else {
             _uiState.value = MyUiStates.NoConnection
         }
     }
 
-    private fun launchJob(): Job {
+    private fun launchJob(isLive: Boolean): Job {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
-            val result = getMatchesRepo().getMatches(makeParameter())
+            var result: DataResource<Boolean>? = null
+            if (isLive) {
+                result = getMatchesRepo().getMatches(getLiveMatches())
+            } else {
+                result = getMatchesRepo().getMatches(getMatchesOfDate(date!!))
+            }
 
             when (result) {
                 is DataResource.Success -> {
@@ -78,7 +83,7 @@ class HomeViewModel : KoraViewModel() {
                 is DataResource.Error -> {
 
                     withContext(dispatcherProvider.main) {
-                    _uiState.value = MyUiStates.Error(result.exception.message!!)
+                        _uiState.value = MyUiStates.Error(result.exception.message!!)
                     }
                 }
             }
@@ -105,8 +110,13 @@ class HomeViewModel : KoraViewModel() {
         }
     }
 
-    private fun makeParameter(): String {
-        return "fixtures/live"
+    private fun getMatchesOfDate(
+        date: String
+    ): String {
+        return "fixtures/date/$date"
     }
 
+    private fun getLiveMatches(): String {
+        return "fixtures/live"
+    }
 }

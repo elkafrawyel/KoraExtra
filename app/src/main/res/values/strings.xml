@@ -60,4 +60,6 @@
     <string name="yellow_Card">الكروت الصفراء</string>
     <string name="red_Card">الكروت الحمراء</string>
     <string name="error_general">حدث خطأ ما</string>
+    <string name="live">مباشر</string>
+    <string name="kora_extra">Kora Extra</string>
 </resources>
