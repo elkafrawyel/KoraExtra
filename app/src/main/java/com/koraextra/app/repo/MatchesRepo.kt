@@ -1,7 +1,7 @@
 package com.koraextra.app.repo
 
-import com.cobonee.app.utily.DataResource
-import com.cobonee.app.utily.safeApiCall
+import com.koraextra.app.utily.DataResource
+import com.koraextra.app.utily.safeApiCall
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.data.storage.local.AppDatabase

@@ -3,8 +3,8 @@ package com.koraextra.app.ui.mainActivity.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.NetworkUtils
-import com.cobonee.app.utily.DataResource
-import com.cobonee.app.utily.MyUiStates
+import com.koraextra.app.utily.DataResource
+import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.ui.KoraViewModel
 import com.koraextra.app.utily.Injector
@@ -14,6 +14,10 @@ import kotlinx.coroutines.withContext
 
 class HomeViewModel : KoraViewModel() {
 
+    var opened: Boolean = false
+    var allowSwitch: Boolean = true
+
+    //==============================================================
     private var job: Job? = null
     private fun getMatchesRepo() = Injector.getMatchesRepo()
     private fun getStoredMatches() = Injector.getStoredMatchesRepo()
@@ -27,6 +31,7 @@ class HomeViewModel : KoraViewModel() {
     var matchesList: ArrayList<MatchModel> = arrayListOf()
 
     fun getMatchesList(isLive: Boolean = false) {
+//        _uiState.value = MyUiStates.NoConnection
         if (NetworkUtils.isConnected()) {
             if (job?.isActive == true)
                 return

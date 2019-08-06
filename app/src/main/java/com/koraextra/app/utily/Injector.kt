@@ -1,6 +1,5 @@
 package com.koraextra.app.utily
 
-import com.cobonee.app.utily.CoroutinesDispatcherProvider
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.koraextra.app.MyApp
 import com.koraextra.app.repo.MatchesRepo

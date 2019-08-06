@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.koraextra.app.R
 import java.text.DateFormat
@@ -56,7 +57,8 @@ fun Context.snackBarWithAction(message: String?, rootView: View,action: () -> Un
     val view = snackBar.view
     val textView = view.findViewById<View>(R.id.snackbar_text)
     textView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-
+//    snackBar.view.setBackgroundColor(ContextCompat.getColor(rootView.context,android.R.color.white))
+//    = ContextCompat.getColor(rootView.context,android.R.color.white)
     snackBar.duration = 20000
     snackBar.setAction(getString(R.string.refresh)) {
         action.invoke()

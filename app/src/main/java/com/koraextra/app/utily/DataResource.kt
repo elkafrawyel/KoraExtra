@@ -1,4 +1,4 @@
-package com.cobonee.app.utily
+package com.koraextra.app.utily
 
 sealed class DataResource<out T : Any> {
     data class Success<out T : Any>(val data: T) : DataResource<T>()

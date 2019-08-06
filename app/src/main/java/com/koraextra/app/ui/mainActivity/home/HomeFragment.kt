@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.cobonee.app.utily.MyUiStates
+import com.koraextra.app.utily.MyUiStates
 import com.google.android.material.navigation.NavigationView
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
@@ -45,33 +45,36 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(com.koraextra.app.R.layout.home_fragment, container, false)
+        return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        viewModel.uiState.observe(this, object : Observer<MyUiStates?> {
-            override fun onChanged(it: MyUiStates?) {
-                onMatchesChanged(it)
-            }
-        })
+        if (!viewModel.opened) {
+            viewModel.opened = true
+            getTodayMatches()
+        }
+
         navigationView.setNavigationItemSelectedListener(this)
 
         drawerToggleImgBtn.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
+        viewModel.uiState.observe(this, object : Observer<MyUiStates?> {
+            override fun onChanged(it: MyUiStates?) {
+                onMatchesChanged(it)
+            }
+        })
+
         val actionBarDrawerToggle =
             object : ActionBarDrawerToggle(
                 activity!!,
-                drawerLayout,
-                com.koraextra.app.R.string.open,
-                com.koraextra.app.R.string.close
+                drawerLayout, R.string.open, R.string.close
             ) {
                 private val scaleFactor = 6f
-
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                     super.onDrawerSlide(drawerView, slideOffset)
                     val slideX = (drawerView.width * slideOffset * -1)
@@ -80,51 +83,41 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 //                    contentHome.scaleY = 1 - slideOffset / scaleFactor
                 }
             }
-
         drawerLayout.setScrimColor(Color.TRANSPARENT)
-
 //        drawerLayout.setScrimColor(activity!!.resources.getColor(R.color.colorPrimary))
         drawerLayout.drawerElevation = 0f
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
-
         val socialItemId = 8
         val viewClicked = navigationView.menu.getItem(socialItemId).actionView
-        viewClicked.findViewById<LinearLayout>(com.koraextra.app.R.id.facebookView).setOnClickListener {
+        viewClicked.findViewById<LinearLayout>(R.id.facebookView).setOnClickListener {
             activity?.toast("Facebook")
             drawerLayout.closeDrawer(GravityCompat.START)
         }
-
-        animateView(homeFragmentAppName)
+        liveSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (viewModel.allowSwitch) {
+                if (viewModel.opened){
+                    viewModel.allowSwitch = false
+                }
+                if (isChecked) {
+                    //today live
+                    viewModel.getMatchesList(true)
+                    linearHeader.visibility = View.GONE
+                } else {
+                    //today normal
+                    viewModel.getMatchesList()
+                    linearHeader.visibility = View.VISIBLE
+                }
+            }else{
+                viewModel.allowSwitch = true
+            }
+        }
 
         date_tv.setOnClickListener {
             openDatePicker()
         }
-
         dayName_tv.setOnClickListener {
             openDatePicker()
-        }
-
-        //start with current date
-        val date = activity?.getCurrentDate()
-        viewModel.date = date
-        dayName_tv.text = activity?.getDayName(date!!)
-        date_tv.text = activity?.getDateStringFromString(date!!)
-
-        // get normal matches with above date
-        viewModel.getMatchesList()
-
-        liveSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                //today live
-                viewModel.getMatchesList(true)
-                linearHeader.visibility = View.GONE
-            } else {
-                //today normal
-                viewModel.getMatchesList()
-                linearHeader.visibility = View.VISIBLE
-
-            }
         }
 
         nextImg.setOnClickListener {
@@ -134,8 +127,26 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         previousImg.setOnClickListener {
             changeDay()
         }
+        animateView(homeFragmentAppName)
 
         homeSwipe.setOnRefreshListener(this)
+
+        homeSwipe.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+    }
+
+    private fun getTodayMatches() {
+        //start with current date
+        val date = activity?.getCurrentDate()
+        viewModel.date = date
+        dayName_tv.text = activity?.getDayName(date!!)
+        date_tv.text = activity?.getDateStringFromString(date!!)
+        // get normal matches with above date
+        viewModel.getMatchesList()
     }
 
     override fun onRefresh() {
@@ -313,10 +324,11 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         matchesRv.setHasFixedSize(true)
         matchesRv.visibility = View.VISIBLE
 
+        if (!viewModel.opened) {
 //      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_top)
-        runLayoutAnimationFromBottom(matchesRv, R.anim.layout_animation_from_bottom)
+            runLayoutAnimationFromBottom(matchesRv, R.anim.layout_animation_from_bottom)
 //      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_right)
-
+        }
     }
 
     private fun runLayoutAnimationFromBottom(
