@@ -39,9 +39,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    tools:text="السنغال"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="@android:color/black" />
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@android:color/black"
+                    tools:text="السنغال" />
             </LinearLayout>
 
             <LinearLayout
@@ -51,55 +51,61 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/statusTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@android:color/darker_gray"
-                    android:gravity="center"
-                    android:paddingStart="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="8dp"
-                    android:text="انتهي"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_4">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/homeScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="1"
+                        android:layout_marginEnd="8dp"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textColor="@android:color/black" />
-
+                        android:textColor="@android:color/black"
+                        tools:text="1" />
 
                     <TextView
-                        android:id="@+id/timeTv"
-                        android:layout_width="0dp"
+                        android:id="@+id/statusTv"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/darker_gray"
                         android:gravity="center"
-                        android:padding="@dimen/dp_4"
-                        tools:text="10:33 pm"
+                        android:paddingStart="12dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="8dp"
+                        android:text="انتهي"
                         android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
 
                     <TextView
                         android:id="@+id/awayScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="3"
+                        android:layout_marginStart="8dp"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        tools:text="3" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/timeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_4"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="@android:color/black"
+                    tools:text="10:33 pm" />
+
+
             </LinearLayout>
 
 
@@ -111,19 +117,19 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/awayImg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/egypt"
-                    android:id="@+id/awayImg"/>
+                    android:src="@drawable/egypt" />
 
                 <TextView
                     android:id="@+id/awayName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    tools:text="مصر"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="@android:color/black" />
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@android:color/black"
+                    tools:text="مصر" />
             </LinearLayout>
         </LinearLayout>
 
@@ -136,9 +142,9 @@
             android:maxWidth="200dp"
             android:maxLines="2"
             android:padding="8dp"
-            tools:text="انتهاء الماتش بضربات الجزاء النتيجه 3 مصر 1 سنجال"
-            android:textAppearance="?attr/textAppearanceCaption"
-            android:textColor="@android:color/black" />
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@android:color/black"
+            tools:text="انتهاء الماتش بضربات الجزاء النتيجه 3 مصر 1 سنجال" />
 
 
     </LinearLayout>

@@ -87,26 +87,6 @@ class HomeViewModel : KoraViewModel() {
                     }
                 }
             }
-
-            withContext(dispatcherProvider.main) {
-                when (result) {
-                    is DataResource.Success -> {
-
-
-//                        matchesList.clear()
-//                        result.data.response?.matchModels?.forEach {
-//                            matchesList.add(it!!)
-//                        }
-
-//                        matchesList.addAll(result.data.response?.matchModels as List<MatchModel>)
-
-                        _uiState.value = MyUiStates.Success
-                    }
-                    is DataResource.Error -> {
-                        _uiState.value = MyUiStates.Error(result.exception.message!!)
-                    }
-                }
-            }
         }
     }
 

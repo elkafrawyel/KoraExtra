@@ -87,4 +87,21 @@ fun Context.getDateFromString(oldDate: String): Date {
     val myDate = dateFormat.parse(oldDate)
     return myDate
 }
+fun Context.getTimeFromMills(mills :Long):String{
+    val m =  mills.toLong()
+    val newFormat = "hh:mm a"
+    val date = Date(m* 1000)
+    val dateFormat = SimpleDateFormat(newFormat, Locale("en"))
+    val myDate = dateFormat.format(date)
+    return  myDate
+}
+fun Context.getTimeAgoAsMills(time: Long): Long {
+    var time = time
+    if (time < 1000000000000L) {
+        // if timestamp given in seconds, convert to millis
+        time *= 1000
+    }
+    val now = System.currentTimeMillis()
+    return  now - time
 
+}

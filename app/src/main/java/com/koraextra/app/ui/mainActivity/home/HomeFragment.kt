@@ -186,7 +186,6 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
-                matchesRv.visibility = View.VISIBLE
                 viewModel.storedMatchesLiveData?.let {
                     it.observe(this@HomeFragment, Observer {
                         onStoredMatchesChanged(it)
@@ -196,21 +195,25 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
             MyUiStates.LastPage -> {
                 loading.visibility = View.GONE
+                matchesRv.visibility = View.GONE
 
             }
             is MyUiStates.Error -> {
                 loading.visibility = View.GONE
+                matchesRv.visibility = View.GONE
 
                 activity?.snackBar(state.message, contentHome)
             }
             MyUiStates.NoConnection -> {
                 //show no connect view
                 loading.visibility = View.GONE
+                matchesRv.visibility = View.GONE
 
             }
             MyUiStates.Empty -> {
                 //show Empty view
                 loading.visibility = View.GONE
+                matchesRv.visibility = View.GONE
 
             }
             null -> {
@@ -266,7 +269,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         activity?.toast("${matchesList.size}")
 
         adapterMatches.notifyDataSetChanged()
-        adapterMatches.onItemChildClickListener =
+
+                adapterMatches.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when (view?.id) {
                     com.koraextra.app.R.id.matchItem -> {
@@ -276,6 +280,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
+        matchesRv.visibility = View.VISIBLE
     }
 
 

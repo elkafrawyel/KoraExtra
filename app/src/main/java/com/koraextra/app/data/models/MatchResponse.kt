@@ -29,13 +29,13 @@ data class MatchModel(
     @field:Json(name = "event_date")
     val eventDate: String?,
     @field:Json(name = "event_timestamp")
-    val eventTimestamp: Int?,
+    val eventTimestamp: Long?,
     @field:Json(name = "firstHalfStart")
-    val firstHalfStart: Int?,
+    val firstHalfStart: Long?,
     @field:Json(name = "goalsAwayTeam")
-    val goalsAwayTeam: Int?,
+    val goalsAwayTeam: Int? = 0,
     @field:Json(name = "goalsHomeTeam")
-    val goalsHomeTeam: Int?,
+    val goalsHomeTeam: Int? = 0,
     @field:Json(name = "homeTeam")
     val homeTeam: HomeTeam?,
     @field:Json(name = "league_id")
@@ -47,7 +47,7 @@ data class MatchModel(
     @field:Json(name = "score")
     val score: Score?,
     @field:Json(name = "secondHalfStart")
-    val secondHalfStart: Int?,
+    val secondHalfStart: Long?,
     @field:Json(name = "status")
     val status: String?,
     @field:Json(name = "statusShort")

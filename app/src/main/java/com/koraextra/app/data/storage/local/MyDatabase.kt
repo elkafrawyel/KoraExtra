@@ -11,10 +11,7 @@ import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.data.models.Score
 
 @Database(
-entities = [MatchModel::class,
-        AwayTeam::class,
-//        HomeTeam::class,
-    Score::class], version = 1
+entities = [MatchModel::class], version = 1
 )@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -31,7 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context,
-            AppDatabase::class.java, "mydatabase.db"
+            AppDatabase::class.java, "mydatabasea.db"
         ).build()
     }
 }

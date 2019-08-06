@@ -1,14 +1,19 @@
 package com.koraextra.app.ui.mainActivity.home
 
+import android.os.SystemClock
 import android.util.Log
+import android.widget.Chronometer
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
-import com.koraextra.app.data.models.testMatchModel
 import com.koraextra.app.utily.Injector
+import com.koraextra.app.utily.getTimeFromMills
 import com.koraextra.app.utily.toast
+import java.text.SimpleDateFormat
+import java.util.*
+import android.os.Build.VERSION_CODES.M
+import com.koraextra.app.utily.getTimeAgoAsMills
 
 
 class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter<MatchModel, BaseViewHolder>(data) {
@@ -16,74 +21,113 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
 
     init {
         //used
-        addItemType(1, R.layout.match_not_started_item_view)
+        addItemType(1, com.koraextra.app.R.layout.match_not_started_item_view)
+        addItemType(3, com.koraextra.app.R.layout.match_not_started_item_view)
+        addItemType(13, com.koraextra.app.R.layout.match_not_started_item_view)
 
-        addItemType(2, R.layout.match_ended_item_view)
-        addItemType(8, R.layout.match_ended_item_view)
-        addItemType(9, R.layout.match_ended_item_view)
+        addItemType(2, com.koraextra.app.R.layout.match_ended_item_view)
+        addItemType(8, com.koraextra.app.R.layout.match_ended_item_view)
+        addItemType(9, com.koraextra.app.R.layout.match_ended_item_view)
 
-        addItemType(3, R.layout.match_live_item_view)
-        addItemType(4, R.layout.match_live_item_view)
-        addItemType(5, R.layout.match_live_item_view)
-        addItemType(6, R.layout.match_live_item_view)
-        addItemType(7, R.layout.match_live_item_view)
-        addItemType(10, R.layout.match_live_item_view)
-        addItemType(18, R.layout.match_live_item_view)
-        addItemType(19, R.layout.match_live_item_view)
+        addItemType(4, com.koraextra.app.R.layout.match_live_item_view)
+        addItemType(5, com.koraextra.app.R.layout.match_live_item_view)
+        addItemType(6, com.koraextra.app.R.layout.match_live_item_view)
+        addItemType(7, com.koraextra.app.R.layout.match_live_item_view)
+        addItemType(10, com.koraextra.app.R.layout.match_live_item_view)
+        addItemType(18, com.koraextra.app.R.layout.match_live_item_view)
+        addItemType(19, com.koraextra.app.R.layout.match_live_item_view)
         //not used
-        addItemType(11, R.layout.match_ended_item_view)
-        addItemType(12, R.layout.match_ended_item_view)
-        addItemType(13, R.layout.match_ended_item_view)
-        addItemType(14, R.layout.match_ended_item_view)
-        addItemType(15, R.layout.match_ended_item_view)
-        addItemType(16, R.layout.match_ended_item_view)
-        addItemType(17, R.layout.match_ended_item_view)
+        addItemType(11, com.koraextra.app.R.layout.match_ended_item_view)
+        addItemType(12, com.koraextra.app.R.layout.match_ended_item_view)
+        addItemType(14, com.koraextra.app.R.layout.match_ended_item_view)
+        addItemType(15, com.koraextra.app.R.layout.match_ended_item_view)
+        addItemType(16, com.koraextra.app.R.layout.match_ended_item_view)
+        addItemType(17, com.koraextra.app.R.layout.match_ended_item_view)
 
     }
 
     override fun convert(helper: BaseViewHolder?, item: MatchModel?) {
 
-        helper?.addOnClickListener(R.id.matchItem)
+        helper?.addOnClickListener(com.koraextra.app.R.id.matchItem)
 
         when (helper?.itemViewType) {
-            1 -> {
-                helper.setText(R.id.homeName, item?.homeTeam?.teamName)
-                helper.setText(R.id.awayName, item?.awayTeam?.teamName)
+            1, 3 -> {
+                helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
+                helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
                 Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
-                    .into(helper.getView(R.id.homeImg))
+                    .into(helper.getView(com.koraextra.app.R.id.homeImg))
                 Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
-                    .into(helper.getView(R.id.awayImg))
+                    .into(helper.getView(com.koraextra.app.R.id.awayImg))
+
+                helper.setText(com.koraextra.app.R.id.timeTv, mContext.getTimeFromMills(item?.eventTimestamp!!))
             }
 
             2, 8, 9 -> {
-                helper.setText(R.id.homeName, item?.homeTeam?.teamName)
-                helper.setText(R.id.awayName, item?.awayTeam?.teamName)
+                helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
+                helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
                 Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
-                    .into(helper.getView(R.id.homeImg))
+                    .into(helper.getView(com.koraextra.app.R.id.homeImg))
                 Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
-                    .into(helper.getView(R.id.awayImg))
-                helper.setText(R.id.homeScore,item?.goalsHomeTeam!!.toString())
-                helper.setText(R.id.awayScore,item.goalsAwayTeam!!.toString())
-                helper.setText(R.id.matchTitleTv,item.status!!)
+                    .into(helper.getView(com.koraextra.app.R.id.awayImg))
+                if (item?.goalsHomeTeam != null) {
+                    helper.setText(com.koraextra.app.R.id.homeScore, item.goalsHomeTeam.toString())
+                } else {
+                    helper.setText(com.koraextra.app.R.id.homeScore, "0")
+                }
+                if (item?.goalsAwayTeam != null) {
+                    helper.setText(com.koraextra.app.R.id.awayScore, item.goalsAwayTeam.toString())
+                } else {
+                    helper.setText(com.koraextra.app.R.id.awayScore, "0")
+                }
+                helper.setText(com.koraextra.app.R.id.matchTitleTv, item?.status!!)
+                helper.setText(com.koraextra.app.R.id.timeTv, mContext.getTimeFromMills(item.eventTimestamp!!))
 
             }
-            3, 4, 5, 6, 7, 10, 18,19 -> {
-                helper.setText(R.id.homeName, item?.homeTeam?.teamName)
-                helper.setText(R.id.awayName, item?.awayTeam?.teamName)
+            4, 5, 6, 7, 10, 18, 19 -> {
+                helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
+                helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
                 Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
-                    .into(helper.getView(R.id.homeImg))
+                    .into(helper.getView(com.koraextra.app.R.id.homeImg))
                 Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
-                    .into(helper.getView(R.id.awayImg))
-                helper.setText(R.id.homeScore,item?.goalsHomeTeam!!.toString())
-                helper.setText(R.id.awayScore,item.goalsAwayTeam!!.toString())
-                helper.setText(R.id.matchTitleTv,item.status!!)
+                    .into(helper.getView(com.koraextra.app.R.id.awayImg))
+                if (item?.goalsHomeTeam != null) {
+                    helper.setText(com.koraextra.app.R.id.homeScore, item.goalsHomeTeam.toString())
+                } else {
+                    helper.setText(com.koraextra.app.R.id.homeScore, "0")
+                }
+                if (item?.goalsAwayTeam != null) {
+                    helper.setText(com.koraextra.app.R.id.awayScore, item.goalsAwayTeam.toString())
+                } else {
+                    helper.setText(com.koraextra.app.R.id.awayScore, "0")
+                }
 
+                helper.setText(com.koraextra.app.R.id.matchTitleTv, item?.status!!)
+
+
+                val timer = helper.getView<Chronometer>(com.koraextra.app.R.id.timer)
+                timer.base = SystemClock.elapsedRealtime() - mContext.getTimeAgoAsMills(item.eventTimestamp!!)
+                timer.setOnChronometerTickListener {
+                    val time = SystemClock.elapsedRealtime() - it.base
+                    var Seconds = (time / 1000).toInt()
+                    val Minutes = Seconds / 60
+                    Seconds = Seconds % 60
+                    val timer2 = String.format("%02d:%02d", Minutes, Seconds)
+                    it.setText(timer2)
+                }
+                timer.start()
             }
-            11,12,13,14,15,16,17 -> {
-                val a:Int = helper.itemViewType
+            11, 12, 13, 14, 15, 16, 17 -> {
+                val a: Int = helper.itemViewType
                 val b: Int? = item?.fixtureId
                 mContext.toast("$a - $b")
-                Log.e("koraGol","$a - $b")
+                helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
+                helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
+                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
+                    .into(helper.getView(com.koraextra.app.R.id.homeImg))
+                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
+                    .into(helper.getView(com.koraextra.app.R.id.awayImg))
+
+                helper.setText(com.koraextra.app.R.id.timeTv, mContext.getTimeFromMills(item?.eventTimestamp!!))
             }
             else -> {
                 mContext.toast("حاله غير معروفه")

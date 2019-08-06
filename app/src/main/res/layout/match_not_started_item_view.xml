@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/matchItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="@dimen/dp_10"
     android:orientation="vertical"
-    app:cardCornerRadius="@dimen/dp_10"
-    android:id="@+id/matchItem"
-    android:layout_marginTop="@dimen/dp_10">
+    app:cardCornerRadius="@dimen/dp_10">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="8dp">
 
         <LinearLayout
@@ -29,19 +29,19 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/homeImg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/senegal"
-                    android:id="@+id/homeImg"/>
+                    android:src="@drawable/senegal" />
 
                 <TextView
+                    android:id="@+id/homeName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="السنغال"
-                    android:id="@+id/homeName"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:gravity="center"
+                    android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="@android:color/black"
-                    android:gravity="center"/>
+                    tools:text="السنغال" />
             </LinearLayout>
 
             <LinearLayout
@@ -51,53 +51,62 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:text="لم تبدأ"
-                    android:textStyle="bold"
-                    android:id="@+id/statusTv"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textColor="@android:color/white"
-                    android:background="@color/colorPrimary"
-                    />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_4">
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="-"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginEnd="8dp"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@android:color/black" />
 
                     <TextView
-                        android:id="@+id/timeTv"
-                        android:layout_width="0dp"
+                        android:id="@+id/statusTv"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/colorPrimary"
                         android:gravity="center"
-                        tools:text="10:33 pm"
-                        android:padding="@dimen/dp_4"
+                        android:paddingStart="12dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="8dp"
+                        android:text="لم تبدأ"
                         android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="-"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/timeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_4"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="@android:color/black"
+                    tools:text="10:33 pm" />
+
+
             </LinearLayout>
 
 
@@ -109,19 +118,19 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/awayImg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/egypt"
-                    android:id="@+id/awayImg"/>
+                    android:src="@drawable/egypt" />
 
                 <TextView
+                    android:id="@+id/awayName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="مصر"
-                    android:id="@+id/awayName"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:gravity="center"
+                    android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="@android:color/black"
-                    android:gravity="center"/>
+                    tools:text="مصر" />
             </LinearLayout>
         </LinearLayout>
 
