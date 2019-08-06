@@ -1,5 +1,6 @@
 package com.koraextra.app.ui.mainActivity.home
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -15,9 +16,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cobonee.app.utily.MyUiStates
 import com.google.android.material.navigation.NavigationView
+import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -25,7 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
+class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     companion object {
@@ -33,8 +37,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private lateinit var viewModel: HomeViewModel
-    private val matchesList: ArrayList<MatchModel> = arrayListOf()
-    private val adapterMatches = AdapterMatches(matchesList)
+//    private val matchesList: ArrayList<MatchModel> = arrayListOf()
+//    private val adapterMatches = AdapterMatches(matchesList)
 
 
     override fun onCreateView(
@@ -71,7 +75,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                     super.onDrawerSlide(drawerView, slideOffset)
                     val slideX = (drawerView.width * slideOffset * -1)
-                    contentHome.translationX = slideX
+                    homeRootView.translationX = slideX
 //                    contentHome.scaleX = 1 - slideOffset / scaleFactor
 //                    contentHome.scaleY = 1 - slideOffset / scaleFactor
                 }
@@ -91,7 +95,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
-//        animateView(homeFragmentAppName)
+        animateView(homeFragmentAppName)
 
         date_tv.setOnClickListener {
             openDatePicker()
@@ -130,15 +134,23 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         previousImg.setOnClickListener {
             changeDay()
         }
+
+        homeSwipe.setOnRefreshListener(this)
     }
 
-    private fun changeDay(next:Boolean = false) {
+    override fun onRefresh() {
+        viewModel.getMatchesList(liveSwitch.isChecked)
+        homeSwipe.isRefreshing = false
+
+    }
+
+    private fun changeDay(next: Boolean = false) {
         val date = activity?.getDateFromString(viewModel.date!!)
         val c = Calendar.getInstance()
         c.setTime(date)
-        if(next) {
+        if (next) {
             c.add(Calendar.DATE, 1)
-        }else{
+        } else {
             c.add(Calendar.DATE, -1)
         }
         val timeFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
@@ -149,8 +161,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         viewModel.getMatchesList()
     }
 
-
-
+    @SuppressLint("PrivateResource")
     private fun openDatePicker() {
         val date = activity?.getDateFromString(viewModel.date!!)
         val c = Calendar.getInstance()
@@ -161,6 +172,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         val datePicker = DatePickerDialog(
             context!!,
+            R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Calendar,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 val date = "$year-${monthOfYear + 1}-$dayOfMonth"
                 activity?.toast(date)
@@ -172,7 +184,10 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 dayName_tv.text = activity?.getDayName(date)
                 date_tv.text = activity?.getDateStringFromString(date)
 
-            }, year, month, day
+            },
+            year,
+            month,
+            day
         )
 
         datePicker.show()
@@ -183,10 +198,14 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             MyUiStates.Loading -> {
                 loading.visibility = View.VISIBLE
                 matchesRv.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
+
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
-                viewModel.storedMatchesLiveData?.let {
+                emptyMessageTv.visibility = View.GONE
+
+                viewModel.storedMatchesLiveData?.let { it ->
                     it.observe(this@HomeFragment, Observer {
                         onStoredMatchesChanged(it)
                     })
@@ -196,22 +215,33 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             MyUiStates.LastPage -> {
                 loading.visibility = View.GONE
                 matchesRv.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
 
             }
             is MyUiStates.Error -> {
                 loading.visibility = View.GONE
                 matchesRv.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
 
-                activity?.snackBar(state.message, contentHome)
+                activity?.snackBar(state.message, homeRootView)
             }
+
             MyUiStates.NoConnection -> {
                 //show no connect view
                 loading.visibility = View.GONE
                 matchesRv.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
 
+                activity?.snackBarWithAction(
+                    context?.resources?.getString(R.string.noConnectionMessage),
+                    homeRootView
+                ) {
+                    viewModel.getMatchesList(liveSwitch.isChecked)
+                }
             }
             MyUiStates.Empty -> {
                 //show Empty view
+                emptyMessageTv.visibility = View.VISIBLE
                 loading.visibility = View.GONE
                 matchesRv.visibility = View.GONE
 
@@ -262,15 +292,16 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         return true
     }
 
-    private fun setUpMatches(matchesList: List<MatchModel>) {
+    private fun setUpMatches(list: List<MatchModel>) {
+        val matchesList: ArrayList<MatchModel> = arrayListOf()
 
-        this.matchesList.clear()
-        this.matchesList.addAll(matchesList)
+        matchesList.clear()
+        matchesList.addAll(list)
         activity?.toast("${matchesList.size}")
 
-        adapterMatches.notifyDataSetChanged()
+        val adapterMatches = AdapterMatches(matchesList)
 
-                adapterMatches.onItemChildClickListener =
+        adapterMatches.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when (view?.id) {
                     com.koraextra.app.R.id.matchItem -> {
@@ -281,6 +312,23 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
         matchesRv.visibility = View.VISIBLE
+
+//      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_top)
+        runLayoutAnimationFromBottom(matchesRv, R.anim.layout_animation_from_bottom)
+//      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_right)
+
+    }
+
+    private fun runLayoutAnimationFromBottom(
+        recyclerView: RecyclerView,
+        layout_animation: Int
+    ) {
+        val context = recyclerView.context
+        val controller = AnimationUtils.loadLayoutAnimation(context, layout_animation)
+        recyclerView.layoutAnimation = controller
+        recyclerView.adapter!!.notifyDataSetChanged()
+        recyclerView.scheduleLayoutAnimation()
+
     }
 
 

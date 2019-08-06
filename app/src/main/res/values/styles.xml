@@ -29,8 +29,4 @@
         <!--<item name="android:colorForeground">#00000000</item>-->
     </style>
 
-    <!-- Theme.AppCompat.Light is not a dialog theme -->
-    <!--<style name="DialogTheme" parent="@android:style/Widget.Material.Light.DatePicker">-->
-        <!--<item name="android:headerBackground">@color/colorPrimary</item>-->
-    <!--</style>-->
 </resources>

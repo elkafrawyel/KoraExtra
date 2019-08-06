@@ -48,11 +48,9 @@ class HomeViewModel : KoraViewModel() {
 
             when (result) {
                 is DataResource.Success -> {
-
                     if (result.data) {
-                        val databaseResult = getStoredMatches().getStoredMatches("")
 
-                        when (databaseResult) {
+                        when (val databaseResult = getStoredMatches().getStoredMatches("")) {
                             is DataResource.Success -> {
                                 storedMatchesLiveData = databaseResult.data
                                 withContext(dispatcherProvider.main) {
@@ -71,13 +69,6 @@ class HomeViewModel : KoraViewModel() {
                             _uiState.value = MyUiStates.Empty
                         }
                     }
-
-                    //    matchesList.clear()
-//                        result.data.response?.matchModels?.forEach {
-//                            matchesList.add(it!!)
-//                        }
-
-//                        matchesList.addAll(result.data.response?.matchModels as List<MatchModel>)
 
                 }
                 is DataResource.Error -> {

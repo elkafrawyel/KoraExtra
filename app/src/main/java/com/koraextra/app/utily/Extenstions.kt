@@ -43,11 +43,24 @@ fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
-fun Context.snackBar(message: String, rootView: View) {
-    val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+fun Context.snackBar(message: String?, rootView: View) {
+    val snackBar = Snackbar.make(rootView, message!!, Snackbar.LENGTH_LONG)
     val view = snackBar.view
     val textView = view.findViewById<View>(R.id.snackbar_text)
     textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+    snackBar.show()
+}
+
+fun Context.snackBarWithAction(message: String?, rootView: View,action: () -> Unit) {
+    val snackBar = Snackbar.make(rootView, message!!, Snackbar.LENGTH_LONG)
+    val view = snackBar.view
+    val textView = view.findViewById<View>(R.id.snackbar_text)
+    textView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+
+    snackBar.duration = 20000
+    snackBar.setAction(getString(R.string.refresh)) {
+        action.invoke()
+    }
     snackBar.show()
 }
 
@@ -87,14 +100,16 @@ fun Context.getDateFromString(oldDate: String): Date {
     val myDate = dateFormat.parse(oldDate)
     return myDate
 }
-fun Context.getTimeFromMills(mills :Long):String{
-    val m =  mills.toLong()
+
+fun Context.getTimeFromMills(mills: Long): String {
+    val m = mills.toLong()
     val newFormat = "hh:mm a"
-    val date = Date(m* 1000)
+    val date = Date(m * 1000)
     val dateFormat = SimpleDateFormat(newFormat, Locale("en"))
     val myDate = dateFormat.format(date)
-    return  myDate
+    return myDate
 }
+
 fun Context.getTimeAgoAsMills(time: Long): Long {
     var time = time
     if (time < 1000000000000L) {
@@ -102,6 +117,6 @@ fun Context.getTimeAgoAsMills(time: Long): Long {
         time *= 1000
     }
     val now = System.currentTimeMillis()
-    return  now - time
+    return now - time
 
 }

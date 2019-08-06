@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/contentHome"
+            android:id="@+id/homeRootView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -71,7 +71,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Switch
-                        android:theme="@style/switchStyle"
                         android:id="@+id/liveSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -80,6 +79,7 @@
                         android:text="@string/live"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="@android:color/white"
+                        android:theme="@style/switchStyle"
                         app:layout_constraintBottom_toBottomOf="@id/homeFragmentSearch"
                         app:layout_constraintEnd_toStartOf="@id/homeFragmentSearch"
                         app:layout_constraintTop_toTopOf="@id/homeFragmentSearch" />
@@ -162,25 +162,46 @@
                         android:src="@drawable/next" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/matchesRv"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/homeSwipe"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearHeader"
-                    tools:listitem="@layout/match_live_item_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearHeader">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/matchesRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/match_live_item_view" />
+
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ProgressBar
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/emptyMessageTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_matches"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

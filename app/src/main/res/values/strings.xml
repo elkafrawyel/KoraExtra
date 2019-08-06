@@ -62,4 +62,7 @@
     <string name="error_general">حدث خطأ ما</string>
     <string name="live">مباشر</string>
     <string name="kora_extra">Kora Extra</string>
+    <string name="no_matches">لا توجد مباريات</string>
+    <string name="noConnectionMessage">لا يوجد اتصال بالانترنت</string>
+    <string name="refresh">تحديث</string>
 </resources>
