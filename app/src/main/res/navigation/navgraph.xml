@@ -14,14 +14,8 @@
             android:id="@+id/action_homeFragment_to_matchNewsFragment"
             app:destination="@id/matchNewsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_teamLatestNewsFragment"
-            app:destination="@id/teamLatestNewsFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_matchTopsFragment"
-            app:destination="@id/matchTopsFragment" />
         <action
             android:id="@+id/action_homeFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
@@ -82,11 +76,6 @@
         android:label="match_news_fragment"
         tools:layout="@layout/match_news_fragment" />
     <fragment
-        android:id="@+id/teamLatestNewsFragment"
-        android:name="com.koraextra.app.ui.mainActivity.team.teamLatestNews.TeamLatestNewsFragment"
-        android:label="team_latest_news_fragment"
-        tools:layout="@layout/team_latest_news_fragment" />
-    <fragment
         android:id="@+id/teamFragment"
         android:name="com.koraextra.app.ui.mainActivity.team.TeamFragment"
         android:label="team_fragment"
@@ -97,20 +86,10 @@
         android:label="team_matches_fragment"
         tools:layout="@layout/team_matches_fragment" />
     <fragment
-        android:id="@+id/teamOrderFragment"
-        android:name="com.koraextra.app.ui.mainActivity.team.teamGroup.TeamGroupFragment"
-        android:label="team_order_fragment"
-        tools:layout="@layout/team_group_fragment" />
-    <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.koraextra.app.ui.mainActivity.favorites.FavoritesFragment"
         android:label="favorites_fragment"
         tools:layout="@layout/favorites_fragment" />
-    <fragment
-        android:id="@+id/matchTopsFragment"
-        android:name="com.koraextra.app.ui.mainActivity.match.matchTops.MatchTopsFragment"
-        android:label="match_tops_fragment"
-        tools:layout="@layout/match_tops_fragment" />
     <fragment
         android:id="@+id/topScorersFragment"
         android:name="com.koraextra.app.ui.mainActivity.topScorers.TopScorersFragment"
@@ -125,26 +104,6 @@
         android:name="com.koraextra.app.ui.mainActivity.notifications.NotificationsFragment"
         android:label="notifications_fragment"
         tools:layout="@layout/notifications_fragment" />
-    <fragment
-        android:id="@+id/playersDetailsFragment"
-        android:name="com.koraextra.app.ui.mainActivity.players.playersDetails.PlayersDetailsFragment"
-        android:label="players_details_fragment"
-        tools:layout="@layout/players_details_fragment" />
-    <fragment
-        android:id="@+id/playersMatchesFragment"
-        android:name="com.koraextra.app.ui.mainActivity.players.playersMatches.PlayersMatchesFragment"
-        android:label="players_matches_fragment"
-        tools:layout="@layout/players_matches_fragment" />
-    <fragment
-        android:id="@+id/teamPlayersFragment"
-        android:name="com.koraextra.app.ui.mainActivity.team.teamPlayers.TeamPlayersFragment"
-        android:label="team_players_fragment"
-        tools:layout="@layout/team_players_fragment" />
-    <fragment
-        android:id="@+id/playersOrderFragment"
-        android:name="com.koraextra.app.ui.mainActivity.players.playersOrder.PlayersOrderFragment"
-        android:label="players_order_fragment"
-        tools:layout="@layout/players_order_fragment" />
     <fragment
         android:id="@+id/tournamentsFragment"
         android:name="com.koraextra.app.ui.mainActivity.tournaments.TournamentsFragment"

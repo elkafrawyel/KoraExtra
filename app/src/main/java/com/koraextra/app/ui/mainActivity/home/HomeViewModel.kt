@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 class HomeViewModel : KoraViewModel() {
 
     var opened: Boolean = false
-    var allowSwitch: Boolean = true
+    var isSwitchOn: Boolean = false
 
     //==============================================================
     private var job: Job? = null

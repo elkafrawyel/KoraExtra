@@ -95,10 +95,11 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             drawerLayout.closeDrawer(GravityCompat.START)
         }
         liveSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (viewModel.allowSwitch) {
-                if (viewModel.opened){
-                    viewModel.allowSwitch = false
-                }
+            if(viewModel.isSwitchOn){
+                viewModel.isSwitchOn = false
+
+            }else{
+
                 if (isChecked) {
                     //today live
                     viewModel.getMatchesList(true)
@@ -108,9 +109,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     viewModel.getMatchesList()
                     linearHeader.visibility = View.VISIBLE
                 }
-            }else{
-                viewModel.allowSwitch = true
             }
+
         }
 
         date_tv.setOnClickListener {
@@ -316,6 +316,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when (view?.id) {
                     com.koraextra.app.R.id.matchItem -> {
+                        viewModel.isSwitchOn = liveSwitch.isChecked
                         findNavController().navigate(com.koraextra.app.R.id.matchFragment)
                     }
                 }
