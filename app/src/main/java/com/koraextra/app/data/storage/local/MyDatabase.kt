@@ -5,13 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.koraextra.app.data.models.AwayTeam
-//import com.koraextra.app.data.models.HomeTeam
+import com.koraextra.app.data.models.EventModel
 import com.koraextra.app.data.models.MatchModel
-import com.koraextra.app.data.models.Score
 
 @Database(
-entities = [MatchModel::class], version = 1
+entities = [MatchModel::class, EventModel::class], version = 1
 )@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

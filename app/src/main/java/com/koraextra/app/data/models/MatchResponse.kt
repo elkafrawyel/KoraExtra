@@ -8,10 +8,10 @@ import com.squareup.moshi.Json
 
 data class MatchResponse(
     @field:Json(name = "api")
-    val response: Response?
+    val response: MatchApi?
 )
 
-data class Response(
+data class MatchApi(
     @field:Json(name = "fixtures")
     val matchModels: List<MatchModel?>?,
     @field:Json(name = "results")

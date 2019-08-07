@@ -1,5 +1,6 @@
 package com.koraextra.app.data.storage.remote
 
+import com.koraextra.app.data.models.EventsResponse
 import com.koraextra.app.data.models.MatchResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
@@ -13,4 +14,10 @@ interface RetrofitApiService {
     fun getMatchesAsync(
         @Query("go") go: String
     ): Deferred<MatchResponse>
+
+
+    @GET("apigo.php")
+    fun getEventsAsync(
+        @Query("go") go: String
+    ): Deferred<EventsResponse>
 }

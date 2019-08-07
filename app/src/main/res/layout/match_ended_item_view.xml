@@ -79,7 +79,7 @@
                         android:paddingTop="8dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="8dp"
-                        android:text="انتهي"
+                        android:text="@string/match_ended"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="@android:color/white"
                         android:textStyle="bold" />

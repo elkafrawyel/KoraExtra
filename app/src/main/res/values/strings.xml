@@ -65,4 +65,6 @@
     <string name="no_matches">لا توجد مباريات</string>
     <string name="noConnectionMessage">لا يوجد اتصال بالانترنت</string>
     <string name="refresh">تحديث</string>
+    <string name="not_started">لم تبدأ</string>
+    <string name="match_ended">انتهي</string>
 </resources>

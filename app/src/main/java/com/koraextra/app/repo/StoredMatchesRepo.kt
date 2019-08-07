@@ -11,5 +11,9 @@ class StoredMatchesRepo(private val appDatabase: AppDatabase) {
         val matchesList = appDatabase.myDao().getMatches()
         return DataResource.Success(matchesList)
     }
+    suspend fun getStoredMatchById(id: Int): DataResource<LiveData<MatchModel>> {
+        val match = appDatabase.myDao().getMatchById(id)
+        return DataResource.Success(match)
+    }
 
 }

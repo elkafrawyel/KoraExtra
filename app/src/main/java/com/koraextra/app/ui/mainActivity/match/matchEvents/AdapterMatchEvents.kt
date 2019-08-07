@@ -1,11 +1,14 @@
 package com.koraextra.app.ui.mainActivity.match.matchEvents
 
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.koraextra.app.R
-import com.koraextra.app.data.models.MatchEventsModel
+import com.koraextra.app.data.models.EventModel
+import com.koraextra.app.utily.Injector
 
-class AdapterMatchEvents (data: MutableList<MatchEventsModel>?) : BaseMultiItemQuickAdapter<MatchEventsModel, BaseViewHolder>(data) {
+class AdapterMatchEvents (data: MutableList<EventModel>?) : BaseMultiItemQuickAdapter<EventModel, BaseViewHolder>(data) {
 
 
     init {
@@ -15,7 +18,7 @@ class AdapterMatchEvents (data: MutableList<MatchEventsModel>?) : BaseMultiItemQ
         addItemType(3, R.layout.match_main_event_item_view)
     }
 
-    override fun convert(helper: BaseViewHolder?, item: MatchEventsModel?) {
+    override fun convert(helper: BaseViewHolder?, item: EventModel?) {
 
         when (helper?.itemViewType) {
             0 -> {
@@ -23,10 +26,17 @@ class AdapterMatchEvents (data: MutableList<MatchEventsModel>?) : BaseMultiItemQ
             }
 
             1 -> {
-
+                helper.setText(R.id.eventElapsed,item?.elapsed!!.toString())
+                helper.setText(R.id.eventName,item.player!!)
+                Glide.with(Injector.getApplicationContext()).load(item.eventimg)
+                    .into(helper.getView(R.id.eventImg))
             }
 
             2 -> {
+                helper.setText(R.id.eventElapsed,item?.elapsed!!.toString())
+                helper.setText(R.id.eventName,item.player!!)
+                Glide.with(Injector.getApplicationContext()).load(item.eventimg)
+                    .into(helper.getView(R.id.eventImg))
 
             }
         }

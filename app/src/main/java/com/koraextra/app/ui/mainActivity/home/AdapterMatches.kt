@@ -1,19 +1,15 @@
 package com.koraextra.app.ui.mainActivity.home
 
 import android.os.SystemClock
-import android.util.Log
 import android.widget.Chronometer
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.utily.Injector
+import com.koraextra.app.utily.getTimeAgoAsMills
 import com.koraextra.app.utily.getTimeFromMills
 import com.koraextra.app.utily.toast
-import java.text.SimpleDateFormat
-import java.util.*
-import android.os.Build.VERSION_CODES.M
-import com.koraextra.app.utily.getTimeAgoAsMills
 
 
 class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter<MatchModel, BaseViewHolder>(data) {

@@ -186,7 +186,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Calendar,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 val date = "$year-${monthOfYear + 1}-$dayOfMonth"
-                activity?.toast(date)
+//                activity?.toast(date)
 
 
                 viewModel.date = date
@@ -308,7 +308,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         matchesList.clear()
         matchesList.addAll(list)
-        activity?.toast("${matchesList.size}")
+//        activity?.toast("${matchesList.size}")
 
         val adapterMatches = AdapterMatches(matchesList)
 
@@ -317,7 +317,9 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 when (view?.id) {
                     com.koraextra.app.R.id.matchItem -> {
                         viewModel.isSwitchOn = liveSwitch.isChecked
-                        findNavController().navigate(com.koraextra.app.R.id.matchFragment)
+                        val match = (adapter.data as List<MatchModel>)[position]
+                        val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
+                        findNavController().navigate(action)
                     }
                 }
             }
