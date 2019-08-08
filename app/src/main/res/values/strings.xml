@@ -67,4 +67,5 @@
     <string name="refresh">تحديث</string>
     <string name="not_started">لم تبدأ</string>
     <string name="match_ended">انتهي</string>
+    <string name="emptyEvents">لا توجد احداث للمباراة</string>
 </resources>

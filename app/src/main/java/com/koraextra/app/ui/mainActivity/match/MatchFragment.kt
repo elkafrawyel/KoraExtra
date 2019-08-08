@@ -38,7 +38,7 @@ class MatchFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(MatchViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        viewModel.uiState.observe(this, Observer { onMatchRespone(it) })
+        viewModel.uiState.observe(this, Observer { onMatchResponse(it) })
         arguments?.let {
             val fixtureId = MatchFragmentArgs.fromBundle(it).fixtureId
             viewModel.fixtureId = fixtureId
@@ -60,22 +60,39 @@ class MatchFragment : Fragment() {
         }
     }
 
-    private fun onMatchRespone(state: MyUiStates?) {
+    private fun onMatchResponse(state: MyUiStates?) {
         when (state) {
             MyUiStates.Loading -> {
+//                loading.visibility = View.VISIBLE
             }
             MyUiStates.Success -> {
                 onMatchStateSuccess()
             }
             MyUiStates.LastPage -> {
+//                loading.visibility = View.GONE
             }
             is MyUiStates.Error -> {
+//                loading.visibility = View.GONE
+                activity?.snackBar(state.message,matchRootView)
             }
             MyUiStates.NoConnection -> {
+//                loading.visibility = View.GONE
+                timer.text = context?.resources?.getString(R.string.noConnectionMessage)
+                activity?.snackBarWithAction(
+                    context!!.resources.getString(R.string.noConnectionMessage),
+                    matchRootView
+                ) {
+                    viewModel.fixtureId?.let {
+                        viewModel.getMatch()
+                    }
+                }
             }
             MyUiStates.Empty -> {
+//                loading.visibility = View.GONE
+
             }
             null -> {
+
             }
         }
     }
@@ -107,6 +124,9 @@ class MatchFragment : Fragment() {
 
                     timer.text = activity?.getTimeFromMills(item.eventTimestamp!!)
                     timerToolbar.text = activity?.getTimeFromMills(item.eventTimestamp!!)
+
+                    homeScore.text = "-"
+                    awayScore.text = "-"
                     homeScoreToolbar.text = "-"
                     awayScoreToolbar.text = "-"
 
@@ -182,9 +202,9 @@ class MatchFragment : Fragment() {
                         val time = SystemClock.elapsedRealtime() - it.base
                         var Seconds = (time / 1000).toInt()
                         val Minutes = Seconds / 60
-                        Seconds = Seconds % 60
+                        Seconds %= 60
                         val timerText = String.format("%02d:%02d", Minutes, Seconds)
-                        it.setText(timerText)
+                        it.text = timerText
                         timerToolbar.text = timerText
                     }
                     timer.start()

@@ -95,10 +95,10 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             drawerLayout.closeDrawer(GravityCompat.START)
         }
         liveSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(viewModel.isSwitchOn){
+            if (viewModel.isSwitchOn) {
                 viewModel.isSwitchOn = false
 
-            }else{
+            } else {
 
                 if (isChecked) {
                     //today live
@@ -274,7 +274,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            com.koraextra.app.R.id.nav_notification -> {
+            R.id.nav_notification -> {
                 findNavController().navigate(com.koraextra.app.R.id.notificationsFragment)
             }
             com.koraextra.app.R.id.nav_favourites -> {
@@ -283,18 +283,18 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             com.koraextra.app.R.id.nav_newsPaper -> {
                 findNavController().navigate(com.koraextra.app.R.id.latestNewsFragment)
             }
-            com.koraextra.app.R.id.nav_champions -> {
+            R.id.nav_champions -> {
                 findNavController().navigate(
                     com.koraextra.app.R.id.tournamentsFragment
                 )
             }
-            com.koraextra.app.R.id.nav_TopScorer -> {
+            R.id.nav_TopScorer -> {
                 findNavController().navigate(com.koraextra.app.R.id.topScorersFragment)
             }
-            com.koraextra.app.R.id.nav_settings -> {
+            R.id.nav_settings -> {
                 findNavController().navigate(com.koraextra.app.R.id.settingsFragment)
             }
-            com.koraextra.app.R.id.nav_login -> {
+            R.id.nav_login -> {
                 findNavController().navigate(com.koraextra.app.R.id.loginFragment)
             }
 
@@ -327,11 +327,11 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         matchesRv.setHasFixedSize(true)
         matchesRv.visibility = View.VISIBLE
 
-        if (!viewModel.opened) {
+//        if (!viewModel.opened) {
 //      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_top)
-            runLayoutAnimationFromBottom(matchesRv, R.anim.layout_animation_from_bottom)
+        runLayoutAnimationFromBottom(matchesRv, R.anim.layout_animation_from_bottom)
 //      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_right)
-        }
+//        }
     }
 
     private fun runLayoutAnimationFromBottom(

@@ -11,6 +11,8 @@ import com.koraextra.app.R
 import com.koraextra.app.data.models.EventModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
+import com.koraextra.app.utily.snackBar
+import com.koraextra.app.utily.snackBarWithAction
 import kotlinx.android.synthetic.main.match_events_fragment.*
 
 class MatchEventsFragment : Fragment() {
@@ -52,37 +54,56 @@ class MatchEventsFragment : Fragment() {
             MyUiStates.Loading -> {
 
                 loading.visibility = View.VISIBLE
+                emptyMessageTv.visibility = View.GONE
+                matchEventsRv.visibility = View.GONE
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
+                matchEventsRv.visibility = View.VISIBLE
+
                 onEventsSuccess()
             }
             MyUiStates.LastPage -> {
+                emptyMessageTv.visibility = View.GONE
 
                 loading.visibility = View.GONE
             }
             is MyUiStates.Error -> {
+                activity?.snackBar(states.message, matchEventRootView)
+                emptyMessageTv.visibility = View.GONE
+                matchEventsRv.visibility = View.GONE
 
                 loading.visibility = View.GONE
             }
             MyUiStates.NoConnection -> {
+                emptyMessageTv.visibility = View.GONE
+                matchEventsRv.visibility = View.GONE
 
                 loading.visibility = View.GONE
+                activity?.snackBarWithAction(
+                    context!!.resources.getString(R.string.noConnectionMessage),
+                    matchEventRootView
+                ) {
+                    viewModel.fixtureId?.let {
+                        viewModel.getMatchEventsList()
+                    }
+                }
             }
             MyUiStates.Empty -> {
+                emptyMessageTv.visibility = View.VISIBLE
+                matchEventsRv.visibility = View.GONE
 
                 loading.visibility = View.GONE
             }
             null -> {
 
-                loading.visibility = View.GONE
             }
         }
     }
 
     private fun onEventsSuccess() {
-        viewModel.matchEventsLiveData?.observe(this, Observer {
-            //            activity?.toast(it.size.toString())
+        viewModel.matchEventsLiveData?.observe(this, Observer { it ->
             val events = arrayListOf<EventModel>()
             it.forEach {
                 if (it.teamId == viewModel.homeTeamId) {

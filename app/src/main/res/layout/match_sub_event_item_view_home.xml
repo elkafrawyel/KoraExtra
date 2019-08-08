@@ -5,40 +5,42 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/eventImg"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        tools:src="@mipmap/ic_launcher"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical|center_horizontal"
-        android:drawablePadding="8dp"
-        android:textColor="@android:color/black"
-        app:layout_constrainedHeight="true"
-        app:layout_constrainedWidth="true"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/PlayerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="محمد صلاح"
+        app:layout_constraintStart_toEndOf="@id/eventImg"
+        app:layout_constraintTop_toTopOf="@id/linear"
         app:layout_constraintBottom_toBottomOf="@id/linear"
         app:layout_constraintEnd_toStartOf="@id/linear"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/linear"
-        app:layout_constraintVertical_bias="1">
-        <ImageView
-            android:id="@+id/eventImg"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            tools:src="@mipmap/ic_launcher"/>
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="12dp"/>
 
-        <TextView
-            android:id="@+id/eventName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            tools:text="محمد صلاح"
-            android:textColor="@android:color/black"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
-
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="هدف"
+        app:layout_constraintEnd_toEndOf="@id/PlayerName"
+        app:layout_constraintTop_toBottomOf="@id/PlayerName"
+        app:layout_constraintBottom_toBottomOf="@id/linear"
+        app:layout_constraintStart_toEndOf="@id/eventImg"
+        android:textColor="@android:color/black"
+        />
 
     <LinearLayout
         android:id="@+id/linear"

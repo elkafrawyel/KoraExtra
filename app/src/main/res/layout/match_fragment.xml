@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:id="@+id/matchRootView"
     app:layoutDescription="@xml/scene_collapsing_match"
     tools:context=".ui.mainActivity.match.MatchFragment">
 
@@ -79,7 +80,7 @@
                         android:id="@+id/homeImg"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/senegal" />
+                        tools:src="@drawable/senegal" />
 
                     <TextView
                         android:id="@+id/homeName"
@@ -158,7 +159,7 @@
                         android:padding="@dimen/dp_4"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="@android:color/white"
-                        android:textSize="17sp" />
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>
@@ -175,7 +176,7 @@
                         android:id="@+id/awayImg"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/egypt" />
+                        tools:src="@drawable/egypt" />
 
                     <TextView
                         android:id="@+id/awayName"
@@ -190,6 +191,15 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <!--<ProgressBar-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@id/loading"-->
+        <!--app:layout_constraintBottom_toBottomOf="guideline2horizontal"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/guideline1horizontal"/>-->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

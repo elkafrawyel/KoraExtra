@@ -27,17 +27,20 @@ class AdapterMatchEvents (data: MutableList<EventModel>?) : BaseMultiItemQuickAd
 
             1 -> {
                 helper.setText(R.id.eventElapsed,item?.elapsed!!.toString())
-                helper.setText(R.id.eventName,item.player!!)
+                helper.setText(R.id.PlayerName,item.player!!)
+                helper.setText(R.id.eventName,item.detail!!)
+
                 Glide.with(Injector.getApplicationContext()).load(item.eventimg)
                     .into(helper.getView(R.id.eventImg))
             }
 
             2 -> {
                 helper.setText(R.id.eventElapsed,item?.elapsed!!.toString())
-                helper.setText(R.id.eventName,item.player!!)
+                helper.setText(R.id.PlayerName,item.player!!)
+                helper.setText(R.id.eventName,item.detail!!)
+
                 Glide.with(Injector.getApplicationContext()).load(item.eventimg)
                     .into(helper.getView(R.id.eventImg))
-
             }
         }
     }
