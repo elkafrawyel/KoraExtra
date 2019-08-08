@@ -6,9 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
+import com.koraextra.app.utily.MyUiStates
+import com.koraextra.app.utily.snackBar
+import com.koraextra.app.utily.snackBarWithAction
 import kotlinx.android.synthetic.main.tournaments_fragment.*
 
 class TournamentsFragment : Fragment() {
@@ -18,7 +24,7 @@ class TournamentsFragment : Fragment() {
     }
 
     private lateinit var viewModel: TournamentsViewModel
-    private val adapterTournament= AdapterTournament()
+    private val adapterTournament = AdapterTournament()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,42 +37,116 @@ class TournamentsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TournamentsViewModel::class.java)
 
+        viewModel.uiState.observe(this, Observer {
+            onLeaguesResponse(it)
+        })
         backImage.setOnClickListener {
             findNavController().navigateUp()
         }
-        val list = ArrayList<String>()
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
 
-        adapterTournament.replaceData(list)
-        tournamentRv.adapter = adapterTournament
-        tournamentRv.setHasFixedSize(true)
+        viewModel.getSeasons()
 
+        seasonsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (viewModel.chooseThisYear) {
+                    viewModel.chooseThisYear = false
+                    viewModel.currentSeasonPosition = viewModel.seasons.size - 1
+                    viewModel.getLeaguesBySeason(viewModel.seasons[viewModel.currentSeasonPosition].toString())
+                } else {
+                    viewModel.currentSeasonPosition = position
+                    viewModel.getLeaguesBySeason(viewModel.seasons[position].toString())
+
+                }
+            }
+        }
+    }
+
+    private fun onLeaguesResponse(states: MyUiStates?) {
+        when (states) {
+            MyUiStates.Loading -> {
+                loading.visibility = View.VISIBLE
+                tournamentRv.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
+                if (!viewModel.loadSeasons) {
+                    seasonsSpinner.visibility = View.GONE
+                    leaguesTv.visibility = View.GONE
+                }
+            }
+            MyUiStates.Success -> {
+                loading.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
+
+                if (viewModel.loadSeasons) {
+                    adapterTournament.replaceData(viewModel.leagues.toMutableList())
+                    tournamentRv.adapter = adapterTournament
+                    tournamentRv.setHasFixedSize(true)
+                    tournamentRv.visibility = View.VISIBLE
+                    seasonsSpinner.visibility = View.VISIBLE
+                    leaguesTv.visibility = View.VISIBLE
+                } else {
+                    viewModel.loadSeasons = true
+                    val seasonsAdapter = ArrayAdapter(context!!, R.layout.simple_spinner_item, viewModel.seasons)
+                    seasonsAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+                    seasonsSpinner.adapter = seasonsAdapter
+                    seasonsSpinner.setSelection(viewModel.seasons.size - 1)
+                    seasonsSpinner.visibility = View.VISIBLE
+                    leaguesTv.visibility = View.VISIBLE
+                }
+            }
+            MyUiStates.LastPage -> {
+                loading.visibility = View.GONE
+                tournamentRv.visibility = View.VISIBLE
+                emptyMessageTv.visibility = View.GONE
+
+                seasonsSpinner.visibility = View.GONE
+                leaguesTv.visibility = View.GONE
+            }
+            is MyUiStates.Error -> {
+                loading.visibility = View.GONE
+                tournamentRv.visibility = View.GONE
+                activity?.snackBar(states.message, rootView)
+                emptyMessageTv.visibility = View.GONE
+
+                seasonsSpinner.visibility = View.GONE
+                leaguesTv.visibility = View.GONE
+            }
+            MyUiStates.NoConnection -> {
+                loading.visibility = View.GONE
+                tournamentRv.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
+
+                seasonsSpinner.visibility = View.GONE
+                leaguesTv.visibility = View.GONE
+                seasonsSpinner.visibility = View.GONE
+                leaguesTv.visibility = View.GONE
+                activity?.snackBarWithAction(context?.resources?.getString(R.string.noConnectionMessage), rootView) {
+                    refresh()
+                }
+            }
+            MyUiStates.Empty -> {
+                loading.visibility = View.GONE
+                tournamentRv.visibility = View.GONE
+                emptyMessageTv.visibility = View.VISIBLE
+
+                seasonsSpinner.visibility = View.VISIBLE
+                leaguesTv.visibility = View.VISIBLE
+            }
+            null -> {
+
+            }
+        }
+    }
+
+    fun refresh() {
+        if (!viewModel.loadSeasons) {
+            viewModel.getSeasons()
+        } else {
+            viewModel.getLeaguesBySeason(viewModel.seasons[viewModel.currentSeasonPosition].toString())
+        }
     }
 
 }

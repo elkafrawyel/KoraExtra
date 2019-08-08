@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mainActivity.tournaments.TournamentsFragment">
@@ -23,6 +24,7 @@
                 android:id="@+id/backImage"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_keyboard_backspace_white_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,16 +46,71 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/leaguesTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/seasons"
+        android:padding="8dp"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@id/seasonsSpinner"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <Spinner
+        android:id="@+id/seasonsSpinner"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/spinner_bg"
+        android:popupBackground="@android:color/white"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@id/leaguesTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/leaguesTv"
+        app:layout_constraintTop_toTopOf="@id/leaguesTv" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tournamentRv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/leaguesTv"
         app:spanCount="2"
         tools:listitem="@layout/champion_item_view" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyMessageTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/emptyLeagues"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@android:color/black"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

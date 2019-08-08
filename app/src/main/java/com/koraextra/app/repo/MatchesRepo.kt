@@ -23,18 +23,18 @@ class MatchesRepo(
     private suspend fun matchCall(go: String): DataResource<Boolean> {
         val response = retrofitApiService.getMatchesAsync(go).await()
         appDatabase.myDao().deleteMatches()
-        if(response.response?.count!!>0){
+        return if(response.response?.count!!>0){
             val matches= response.response.matchModels
-//            matches?.forEach {
-//                it?.awayTeam!!.fixtureId = it.fixtureId!!
-//                it.homeTeam!!.fixtureId = it.fixtureId
-//                it.score!!.fixtureId = it.fixtureId
-//            }
+    //            matches?.forEach {
+    //                it?.awayTeam!!.fixtureId = it.fixtureId!!
+    //                it.homeTeam!!.fixtureId = it.fixtureId
+    //                it.score!!.fixtureId = it.fixtureId
+    //            }
             appDatabase.myDao().insertMatches(matches as List<MatchModel>)
-            return DataResource.Success(true)
+            DataResource.Success(true)
         }else{
 
-            return DataResource.Success(false)
+            DataResource.Success(false)
         }
     }
 

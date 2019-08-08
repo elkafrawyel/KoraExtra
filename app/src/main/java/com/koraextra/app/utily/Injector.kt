@@ -2,13 +2,10 @@ package com.koraextra.app.utily
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.koraextra.app.MyApp
-import com.koraextra.app.repo.MatchesRepo
-import com.koraextra.app.repo.StoredMatchesRepo
 import com.koraextra.app.data.storage.local.AppDatabase
 import com.koraextra.app.data.storage.local.PreferencesHelper
 import com.koraextra.app.data.storage.remote.RetrofitApiService
-import com.koraextra.app.repo.MatchEventsRepo
-import com.koraextra.app.repo.StoredMatchEventsRepo
+import com.koraextra.app.repo.*
 import com.koraextra.app.utily.Constants.BASE_URL
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Interceptor
@@ -83,6 +80,8 @@ object Injector {
     // ============================================= Repos ================================================================
     fun getMatchesRepo() = MatchesRepo(getApiService(), getAppDatabase())
     fun getMatchEventsRepo() = MatchEventsRepo(getApiService(), getAppDatabase())
+    fun getLeaguesRepo() = LeaguesRepo(getApiService())
+    fun getSeasonsRepo() = SeasonsRepo(getApiService())
 
     fun getStoredMatchesRepo() = StoredMatchesRepo(getAppDatabase())
     fun getStoredMatchEventsRepo() = StoredMatchEventsRepo(getAppDatabase())
