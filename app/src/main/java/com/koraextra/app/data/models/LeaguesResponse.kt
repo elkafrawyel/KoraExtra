@@ -33,7 +33,7 @@ data class LeagueModel(
     @field:Json(name = "season_end")
     val seasonEnd: String?,
     @field:Json(name = "logo")
-    val logo: Any?,
+    val logo: String?,
     @field:Json(name = "flag")
     val flag: String?,
     @field:Json(name = "standings")

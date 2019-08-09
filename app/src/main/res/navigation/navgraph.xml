@@ -108,7 +108,11 @@
         android:id="@+id/tournamentsFragment"
         android:name="com.koraextra.app.ui.mainActivity.tournaments.TournamentsFragment"
         android:label="tournaments_fragment"
-        tools:layout="@layout/tournaments_fragment" />
+        tools:layout="@layout/tournaments_fragment" >
+        <action
+            android:id="@+id/action_tournamentsFragment_to_tournamentFragment"
+            app:destination="@id/tournamentFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.koraextra.app.ui.mainActivity.settings.SettingsFragment"
@@ -133,4 +137,19 @@
         android:name="com.koraextra.app.ui.mainActivity.players.PlayersFragment"
         android:label="players_fragment"
         tools:layout="@layout/players_fragment" />
+    <fragment
+        android:id="@+id/tournamentFragment"
+        android:name="com.koraextra.app.ui.mainActivity.tournament.TournamentFragment"
+        android:label="tournament_fragment"
+        tools:layout="@layout/tournament_fragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="image"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>

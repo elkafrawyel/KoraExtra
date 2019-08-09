@@ -1,4 +1,4 @@
-package com.koraextra.app.ui.mainActivity.match.matchNews
+package com.koraextra.app.ui.mainActivity.tournament.matches
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,28 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.koraextra.app.R
-import com.koraextra.app.ui.mainActivity.team.teamLatestNews.AdapterNews
-import kotlinx.android.synthetic.main.match_news_fragment.*
 
-class MatchNewsFragment : Fragment() {
+class TournamentMatchesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MatchNewsFragment()
+        fun newInstance() = TournamentMatchesFragment()
     }
 
-    private lateinit var viewModel: MatchNewsViewModel
-    private val adapterNews = AdapterNews()
+    private lateinit var viewModel: TournamentMatchesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.match_news_fragment, container, false)
+        return inflater.inflate(R.layout.tournament_matches_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MatchNewsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(TournamentMatchesViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

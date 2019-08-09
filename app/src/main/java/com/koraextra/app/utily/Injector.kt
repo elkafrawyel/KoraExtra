@@ -74,7 +74,7 @@ object Injector {
 
     fun getPreferenceHelper() = PreferencesHelper(getApplicationContext())
 
-    fun getAppDatabase() = AppDatabase.invoke(getApplicationContext())
+    private fun getAppDatabase() = AppDatabase.invoke(getApplicationContext())
 
 
     // ============================================= Repos ================================================================
@@ -82,6 +82,7 @@ object Injector {
     fun getMatchEventsRepo() = MatchEventsRepo(getApiService(), getAppDatabase())
     fun getLeaguesRepo() = LeaguesRepo(getApiService())
     fun getSeasonsRepo() = SeasonsRepo(getApiService())
+    fun getNewsRepo() = NewsRepo(getApiService())
 
     fun getStoredMatchesRepo() = StoredMatchesRepo(getAppDatabase())
     fun getStoredMatchEventsRepo() = StoredMatchEventsRepo(getAppDatabase())

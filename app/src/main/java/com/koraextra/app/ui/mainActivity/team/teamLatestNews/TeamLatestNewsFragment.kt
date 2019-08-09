@@ -44,7 +44,7 @@ class TeamLatestNewsFragment : Fragment() {
         news.add("a")
 
 
-        adapterNews.replaceData(news)
+//        adapterNews.replaceData(news)
 
         teamNewsRv.adapter = adapterNews
         teamNewsRv.setHasFixedSize(true)

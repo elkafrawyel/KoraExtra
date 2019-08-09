@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="8dp"
     android:id="@+id/newsViewCl"
     android:background="@android:color/white">
 
     <ImageView
-        android:id="@+id/teamNewsImage"
+        android:id="@+id/newsImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_margin="8dp"
@@ -19,28 +20,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/teamNewsContent"
+        android:id="@+id/newsContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:ellipsize="end"
         android:maxLines="3"
-        android:text="قبل زيمبابوي.. ماذا يفعل الفراعنة بافتتاح الكان في مصر؟"
+        tools:text="قبل زيمبابوي.. ماذا يفعل الفراعنة بافتتاح الكان في مصر؟"
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/teamNewsImage"
-        app:layout_constraintTop_toTopOf="@id/teamNewsImage" />
-
+        app:layout_constraintStart_toEndOf="@id/newsImage"
+        app:layout_constraintTop_toTopOf="@id/newsImage" />
 
     <TextView
-        android:id="@+id/teamsNewsTime"
+        android:id="@+id/newsTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:drawableStart="@drawable/event"
-        android:text="منذ 3 ساعات"
+        tools:text="منذ 3 ساعات"
         android:drawablePadding="8dp"
         android:textAppearance="?attr/textAppearanceCaption"
-        app:layout_constraintStart_toStartOf="@id/teamNewsContent"
-        app:layout_constraintTop_toBottomOf="@id/teamNewsContent" />
+        app:layout_constraintStart_toStartOf="@id/newsContent"
+        app:layout_constraintTop_toBottomOf="@id/newsContent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

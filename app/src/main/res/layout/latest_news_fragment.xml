@@ -81,5 +81,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newsViewPager"
-        tools:listitem="@layout/team_news_item_view" />
+        tools:listitem="@layout/news_item_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

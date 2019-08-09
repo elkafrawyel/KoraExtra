@@ -10,21 +10,45 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.LeagueModel
+import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.snackBarWithAction
 import kotlinx.android.synthetic.main.tournaments_fragment.*
 
-class TournamentsFragment : Fragment() {
+class TournamentsFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListener {
 
     companion object {
         fun newInstance() = TournamentsFragment()
     }
 
     private lateinit var viewModel: TournamentsViewModel
-    private val adapterTournament = AdapterTournament()
+    private lateinit var mainViewModel: MainViewModel
+    private val adapterTournament = AdapterTournament().also {
+        it.onItemChildClickListener = this
+    }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        when (view?.id) {
+            R.id.tournamentItem -> {
+                val tournament = (adapter?.data as List<LeagueModel>)[position]
+                mainViewModel.setTournament(tournament)
+                val action =
+                    TournamentsFragmentDirections
+                        .actionTournamentsFragmentToTournamentFragment(
+                            tournament.leagueId!!
+                            , tournament.logo!!, tournament.name!!
+                        )
+
+                findNavController().navigate(action)
+            }
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +60,7 @@ class TournamentsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TournamentsViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         viewModel.uiState.observe(this, Observer {
             onLeaguesResponse(it)
@@ -141,7 +166,7 @@ class TournamentsFragment : Fragment() {
         }
     }
 
-    fun refresh() {
+    private fun refresh() {
         if (!viewModel.loadSeasons) {
             viewModel.getSeasons()
         } else {

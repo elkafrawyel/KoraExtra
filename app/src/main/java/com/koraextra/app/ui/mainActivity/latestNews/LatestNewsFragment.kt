@@ -88,7 +88,7 @@ class LatestNewsFragment : Fragment() {
         news.add("a")
 
 
-        adapterNews.replaceData(news)
+//        adapterNews.replaceData(news)
 
         adapterNews.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {

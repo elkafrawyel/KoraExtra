@@ -12,6 +12,8 @@ class AdapterTournament : BaseQuickAdapter<LeagueModel, BaseViewHolder>(R.layout
 
         Glide.with(mContext).load(item.logo).into(helper.getView(R.id.championImage))
         helper.setText(R.id.championName, item.name)
+
+        helper.addOnClickListener(R.id.tournamentItem)
     }
 
 }
