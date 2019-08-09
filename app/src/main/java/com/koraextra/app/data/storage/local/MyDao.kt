@@ -8,7 +8,7 @@ import com.koraextra.app.data.models.MatchModel
 @Dao
 interface MyDao {
 
-    @Query("SELECT * FROM MatchModel")
+    @Query("SELECT * FROM MatchModel ORDER BY eventTimestamp")
     fun getMatches(): LiveData<List<MatchModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

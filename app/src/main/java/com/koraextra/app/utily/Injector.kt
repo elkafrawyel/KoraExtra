@@ -80,10 +80,13 @@ object Injector {
     // ============================================= Repos ================================================================
     fun getMatchesRepo() = MatchesRepo(getApiService(), getAppDatabase())
     fun getMatchEventsRepo() = MatchEventsRepo(getApiService(), getAppDatabase())
+    fun getMatchTopsRepo() = MatchTopsRepo(getApiService())
     fun getLeaguesRepo() = LeaguesRepo(getApiService())
     fun getSeasonsRepo() = SeasonsRepo(getApiService())
     fun getNewsRepo() = NewsRepo(getApiService())
 
+
+//------------------------------------database-------------------------------
     fun getStoredMatchesRepo() = StoredMatchesRepo(getAppDatabase())
     fun getStoredMatchEventsRepo() = StoredMatchEventsRepo(getAppDatabase())
 }

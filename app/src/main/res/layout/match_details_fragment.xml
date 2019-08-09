@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mainActivity.match.matchDetails.MatchDetailsFragment"
     android:orientation="vertical">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/groupNameLinear"
@@ -63,14 +66,16 @@
 
             />
         <TextView
+            android:id="@+id/roundTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="12dp"
             android:layout_weight="1.5"
             android:background="@android:color/white"
-            android:text="مبارة ودية"
+            tools:text="مبارة ودية"
             android:textAppearance="?attr/textAppearanceBody1"
             android:gravity="center"
+            android:maxLines="1"
 
             />
     </LinearLayout>
@@ -82,6 +87,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
+
         >
         <TextView
             android:layout_width="0dp"
@@ -96,12 +102,14 @@
 
             />
         <TextView
+            android:id="@+id/venueTv"
+            android:maxLines="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="12dp"
             android:layout_weight="1.5"
             android:background="@android:color/white"
-            android:text="ملعب القاهرة الدولي"
+            tools:text="ملعب القاهرة الدولي"
             android:textAppearance="?attr/textAppearanceBody1"
             android:gravity="center"
 
@@ -115,6 +123,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
+        android:visibility="gone"
         >
         <TextView
             android:layout_width="0dp"
@@ -134,7 +143,7 @@
             android:padding="12dp"
             android:layout_weight="1.5"
             android:background="@android:color/white"
-            android:text="القناة السادسه"
+            tools:text="القناة السادسه"
             android:textAppearance="?attr/textAppearanceBody1"
             android:gravity="center"
 
@@ -148,6 +157,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
+        android:visibility="gone"
         >
         <TextView
             android:layout_width="0dp"
@@ -167,7 +177,7 @@
             android:padding="12dp"
             android:layout_weight="1.5"
             android:background="@android:color/white"
-            android:text="مبارة ودية"
+            tools:text="مبارة ودية"
             android:textAppearance="?attr/textAppearanceBody1"
             android:gravity="center"
 
@@ -195,12 +205,13 @@
 
             />
         <TextView
+            android:id="@+id/timeTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="12dp"
             android:layout_weight="1.5"
             android:background="@android:color/white"
-            android:text="06:30 مساء"
+            tools:text="06:30 مساء"
             android:textAppearance="?attr/textAppearanceBody1"
             android:gravity="center"
 
@@ -228,16 +239,19 @@
 
             />
         <TextView
+            android:id="@+id/dateTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="12dp"
             android:layout_weight="1.5"
             android:background="@android:color/white"
-            android:text="17/7/2019"
+            tools:text="17/7/2019"
             android:textAppearance="?attr/textAppearanceBody1"
             android:gravity="center"
 
             />
     </LinearLayout>
-
 </LinearLayout>
+
+
+</ScrollView>

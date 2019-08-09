@@ -29,17 +29,17 @@ class TeamPlayersFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamPlayersViewModel::class.java)
-        val players = ArrayList<String>()
-        players.add("a")
-        players.add("a")
-        players.add("a")
-        players.add("a")
-        players.add("a")
-
-        adapterPlayers.replaceData(players)
-
-        teamPlayerRv.adapter = adapterPlayers
-        teamPlayerRv.setHasFixedSize(true)
+//        val players = ArrayList<String>()
+//        players.add("a")
+//        players.add("a")
+//        players.add("a")
+//        players.add("a")
+//        players.add("a")
+//
+//        adapterPlayers.replaceData(players)
+//
+//        teamPlayerRv.adapter = adapterPlayers
+//        teamPlayerRv.setHasFixedSize(true)
     }
 
 }

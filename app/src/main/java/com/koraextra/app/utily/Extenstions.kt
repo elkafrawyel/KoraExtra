@@ -112,6 +112,15 @@ fun Context.getTimeFromMills(mills: Long): String {
     return myDate
 }
 
+fun Context.getDateFromMills(mills: Long): String {
+    val m = mills.toLong()
+    val newFormat = "dd/MM/yyyy"
+    val date = Date(m * 1000)
+    val dateFormat = SimpleDateFormat(newFormat, Locale("en"))
+    val myDate = dateFormat.format(date)
+    return myDate
+}
+
 fun Context.getTimeAgoAsMills(time: Long): Long {
     var time = time
     if (time < 1000000000000L) {

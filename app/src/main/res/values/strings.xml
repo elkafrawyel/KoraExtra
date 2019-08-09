@@ -68,6 +68,7 @@
     <string name="not_started">لم تبدأ</string>
     <string name="match_ended">انتهي</string>
     <string name="emptyEvents">لا توجد احداث للمباراة</string>
+    <string name="emptyTops">لا توجد بيانات</string>
     <string name="emptyLeagues">لا توجد بطولات</string>
     <string name="seasons">المواسم</string>
 </resources>
