@@ -19,6 +19,7 @@ class HomeViewModel : KoraViewModel() {
 
     //==============================================================
     private var job: Job? = null
+
     private fun getMatchesRepo() = Injector.getMatchesRepo()
     private fun getStoredMatches() = Injector.getStoredMatchesRepo()
 
@@ -28,10 +29,8 @@ class HomeViewModel : KoraViewModel() {
 
     var storedMatchesLiveData: LiveData<List<MatchModel>>? = null
     var date: String? = null
-    var matchesList: ArrayList<MatchModel> = arrayListOf()
 
     fun getMatchesList(isLive: Boolean = false) {
-//        _uiState.value = MyUiStates.NoConnection
         if (NetworkUtils.isConnected()) {
             if (job?.isActive == true)
                 return
@@ -44,18 +43,25 @@ class HomeViewModel : KoraViewModel() {
     private fun launchJob(isLive: Boolean): Job {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
-            var result: DataResource<Boolean>? = null
-            if (isLive) {
-                result = getMatchesRepo().getMatches(getLiveMatches())
+            val result: DataResource<Boolean>?
+            result = if (isLive) {
+                getMatchesRepo().getMatches(getLiveMatches())
             } else {
-                result = getMatchesRepo().getMatches(getMatchesOfDate(date!!))
+                getMatchesRepo().getMatches(getMatchesOfDate(date!!))
             }
 
             when (result) {
                 is DataResource.Success -> {
                     if (result.data) {
 
-                        when (val databaseResult = getStoredMatches().getStoredMatches("")) {
+                        val databaseResult: DataResource<LiveData<List<MatchModel>>>?
+                        databaseResult = if (isLive) {
+                            getStoredMatches().getStoredLiveMatches(getLiveTypes())
+                        } else {
+                            getStoredMatches().getStoredMatches("%$date%")
+                        }
+
+                        when (databaseResult) {
                             is DataResource.Success -> {
                                 storedMatchesLiveData = databaseResult.data
                                 withContext(dispatcherProvider.main) {
@@ -84,6 +90,10 @@ class HomeViewModel : KoraViewModel() {
                 }
             }
         }
+    }
+
+    private fun getLiveTypes(): Array<Int> {
+        return arrayOf(4, 5, 6, 7, 10, 18, 19)
     }
 
     private fun getMatchesOfDate(

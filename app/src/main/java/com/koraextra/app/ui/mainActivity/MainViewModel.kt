@@ -25,5 +25,4 @@ class MainViewModel : KoraViewModel() {
         _tournament.value = tournament
     }
 
-
 }

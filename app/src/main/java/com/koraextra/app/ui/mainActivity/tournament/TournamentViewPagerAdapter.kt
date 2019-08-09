@@ -3,6 +3,7 @@ package com.koraextra.app.ui.mainActivity.tournament
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import com.koraextra.app.MyApp
 import com.koraextra.app.R
 import com.koraextra.app.ui.mainActivity.team.teamLatestNews.TeamLatestNewsFragment
@@ -33,21 +34,19 @@ class TournamentViewPagerAdapter(
         return fragmentList.size - count - 1
     }
 
-
-
     override fun getPageTitle(position: Int): String? {
-        when (position) {
+        return when (position) {
             0 -> {
-                return MyApp.instance.getString(R.string.latestNews)
+                MyApp.instance.getString(R.string.latestNews)
             }
             1 -> {
-                return MyApp.instance.getString(R.string.mateches)
+                MyApp.instance.getString(R.string.mateches)
             }
             2 -> {
-                return MyApp.instance.getString(R.string.order)
+                MyApp.instance.getString(R.string.order)
             }
             else -> {
-                return "كورة اكستراا"
+                "كورة اكستراا"
             }
         }
     }

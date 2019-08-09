@@ -84,6 +84,7 @@ object Injector {
     fun getLeaguesRepo() = LeaguesRepo(getApiService())
     fun getSeasonsRepo() = SeasonsRepo(getApiService())
     fun getNewsRepo() = NewsRepo(getApiService())
+    fun getLeaguesMatchesRepo() = LeaguesMatchesRepo(getApiService(), getAppDatabase())
 
 
 //------------------------------------database-------------------------------

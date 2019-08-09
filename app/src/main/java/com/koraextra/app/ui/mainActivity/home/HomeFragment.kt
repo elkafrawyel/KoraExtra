@@ -29,7 +29,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
+class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener,
+    Observer<List<MatchModel>> {
+
+    override fun onChanged(it: List<MatchModel>?) {
+        onStoredMatchesChanged(it!!)
+    }
 
 
     companion object {
@@ -54,6 +59,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         if (!viewModel.opened) {
             viewModel.opened = true
+            clearObservers()
             getTodayMatches()
         }
 
@@ -63,11 +69,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        viewModel.uiState.observe(this, object : Observer<MyUiStates?> {
-            override fun onChanged(it: MyUiStates?) {
-                onMatchesChanged(it)
-            }
-        })
+        viewModel.uiState.observe(this, Observer<MyUiStates?> { onMatchesChanged(it) })
 
         val actionBarDrawerToggle =
             object : ActionBarDrawerToggle(
@@ -158,7 +160,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     private fun changeDay(next: Boolean = false) {
         val date = activity?.getDateFromString(viewModel.date!!)
         val c = Calendar.getInstance()
-        c.setTime(date)
+        c.time = date
         if (next) {
             c.add(Calendar.DATE, 1)
         } else {
@@ -169,7 +171,13 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         viewModel.date = dateString
         dayName_tv.text = activity?.getDayName(dateString)
         date_tv.text = activity?.getDateStringFromString(dateString)
+        clearObservers()
         viewModel.getMatchesList()
+    }
+
+    private fun clearObservers() {
+        if (viewModel.storedMatchesLiveData != null)
+            viewModel.storedMatchesLiveData?.removeObserver(this)
     }
 
     @SuppressLint("PrivateResource")
@@ -190,6 +198,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
 
                 viewModel.date = date
+                clearObservers()
                 viewModel.getMatchesList()
 
                 dayName_tv.text = activity?.getDayName(date)
@@ -211,15 +220,14 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 matchesRv.visibility = View.GONE
                 emptyMessageTv.visibility = View.GONE
 
+
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
                 emptyMessageTv.visibility = View.GONE
 
                 viewModel.storedMatchesLiveData?.let { it ->
-                    it.observe(this@HomeFragment, Observer {
-                        onStoredMatchesChanged(it)
-                    })
+                    it.observe(this@HomeFragment, this)
                 }
             }
 
@@ -251,15 +259,19 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 }
             }
             MyUiStates.Empty -> {
-                //show Empty view
-                emptyMessageTv.visibility = View.VISIBLE
-                loading.visibility = View.GONE
-                matchesRv.visibility = View.GONE
-
+                onEmpty()
             }
             null -> {
             }
         }
+    }
+
+    private fun onEmpty() {
+        //show Empty view
+        emptyMessageTv.visibility = View.VISIBLE
+        loading.visibility = View.GONE
+        matchesRv.visibility = View.GONE
+
     }
 
     private fun onStoredMatchesChanged(matchesList: List<MatchModel>) {
@@ -268,34 +280,34 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     private fun animateView(image: View) {
 
-        val rotateAnimation = AnimationUtils.loadAnimation(activity, com.koraextra.app.R.anim.rotate)
+        val rotateAnimation = AnimationUtils.loadAnimation(activity, R.anim.rotate)
         image.startAnimation(rotateAnimation)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_notification -> {
-                findNavController().navigate(com.koraextra.app.R.id.notificationsFragment)
+                findNavController().navigate(R.id.notificationsFragment)
             }
-            com.koraextra.app.R.id.nav_favourites -> {
-                findNavController().navigate(com.koraextra.app.R.id.favoritesFragment)
+            R.id.nav_favourites -> {
+                findNavController().navigate(R.id.favoritesFragment)
             }
-            com.koraextra.app.R.id.nav_newsPaper -> {
-                findNavController().navigate(com.koraextra.app.R.id.latestNewsFragment)
+            R.id.nav_newsPaper -> {
+                findNavController().navigate(R.id.latestNewsFragment)
             }
             R.id.nav_champions -> {
                 findNavController().navigate(
-                    com.koraextra.app.R.id.tournamentsFragment
+                    R.id.tournamentsFragment
                 )
             }
             R.id.nav_TopScorer -> {
-                findNavController().navigate(com.koraextra.app.R.id.topScorersFragment)
+                findNavController().navigate(R.id.topScorersFragment)
             }
             R.id.nav_settings -> {
-                findNavController().navigate(com.koraextra.app.R.id.settingsFragment)
+                findNavController().navigate(R.id.settingsFragment)
             }
             R.id.nav_login -> {
-                findNavController().navigate(com.koraextra.app.R.id.loginFragment)
+                findNavController().navigate(R.id.loginFragment)
             }
 
         }
@@ -315,7 +327,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         adapterMatches.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when (view?.id) {
-                    com.koraextra.app.R.id.matchItem -> {
+                    R.id.matchItem -> {
                         viewModel.isSwitchOn = liveSwitch.isChecked
                         val match = (adapter.data as List<MatchModel>)[position]
                         val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
@@ -323,6 +335,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     }
                 }
             }
+        matchesRv.recycledViewPool.clear()
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
         matchesRv.visibility = View.VISIBLE

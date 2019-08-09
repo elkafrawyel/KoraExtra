@@ -22,13 +22,13 @@ class MatchEventsRepo(
 
     private suspend fun matchEventsCall(go: String): DataResource<Boolean> {
         val response = retrofitApiService.getEventsAsync(go).await()
-        if(response.response?.results!!>0){
+        return if(response.response?.results!!>0){
             val matchEvents= response.response.events
             appDatabase.myDao().insertMatchEvents(matchEvents as List<EventModel>)
-            return DataResource.Success(true)
+            DataResource.Success(true)
         }else{
 
-            return DataResource.Success(false)
+            DataResource.Success(false)
         }
     }
 

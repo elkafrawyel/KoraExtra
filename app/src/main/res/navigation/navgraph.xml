@@ -151,5 +151,23 @@
         <argument
             android:name="name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_tournamentFragment_to_matchFragment"
+            app:destination="@id/matchFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/tournamentMatchesFragment"
+        android:name="com.koraextra.app.ui.mainActivity.tournament.matches.TournamentMatchesFragment"
+        android:label="tournament_matches_fragment"
+        tools:layout="@layout/tournament_matches_fragment" />
+    <fragment
+        android:id="@+id/tournamentNewsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.tournament.news.TournamentNewsFragment"
+        android:label="tournament_news_fragment"
+        tools:layout="@layout/tournament_news_fragment" />
+    <fragment
+        android:id="@+id/tournamentOrderFragment"
+        android:name="com.koraextra.app.ui.mainActivity.tournament.order.TournamentOrderFragment"
+        android:label="tournament_order_fragment"
+        tools:layout="@layout/tournament_order_fragment" />
 </navigation>
