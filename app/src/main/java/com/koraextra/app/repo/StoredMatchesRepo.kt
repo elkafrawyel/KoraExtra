@@ -1,6 +1,9 @@
 package com.koraextra.app.repo
 
 import androidx.lifecycle.LiveData
+import com.google.gson.Gson
+import com.koraextra.app.data.models.AwayTeam
+import com.koraextra.app.data.models.HomeTeam
 import com.koraextra.app.utily.DataResource
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.data.storage.local.AppDatabase
@@ -24,6 +27,17 @@ class StoredMatchesRepo(private val appDatabase: AppDatabase) {
 
     fun getStoredLeagueMatches(id: Int): DataResource<LiveData<List<MatchModel>>> {
         val match = appDatabase.myDao().getMatchByLeagueId(id)
+        return DataResource.Success(match)
+    }
+
+    fun getStoredTeamMatches(homeTeam: HomeTeam?,awayTeam: AwayTeam?): DataResource<LiveData<List<MatchModel>>> {
+        var teamAsString: String? = null
+        if(homeTeam!=null){
+            teamAsString = Gson().toJson(homeTeam)
+        }else if(awayTeam!=null){
+            teamAsString = Gson().toJson(awayTeam)
+        }
+        val match = appDatabase.myDao().getMatchByTeam(teamAsString!!)
         return DataResource.Success(match)
     }
 }
