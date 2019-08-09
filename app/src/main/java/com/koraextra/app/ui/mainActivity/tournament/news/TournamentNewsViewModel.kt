@@ -39,7 +39,7 @@ class TournamentNewsViewModel : KoraViewModel() {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
 //            leagueModel?.leagueId.toString()
-            when (val result = getNewsRepo().getNews("/news","10")) {
+            when (val result = getNewsRepo().getLeagueNews("10")) {
                 is DataResource.Success -> {
                     newsList.addAll(result.data)
                     withContext(dispatcherProvider.main) {

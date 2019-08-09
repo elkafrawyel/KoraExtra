@@ -8,16 +8,70 @@ import com.koraextra.app.data.storage.remote.RetrofitApiService
 import com.koraextra.app.utily.Injector
 
 class NewsRepo(private val retrofitApiService: RetrofitApiService) {
+    private val go: String = "/news"
 
-    suspend fun getNews(go: String,leagueId: String): DataResource<List<KoraNewsModel>> {
+    //    All
+    suspend fun getAllNews(): DataResource<List<KoraNewsModel>> {
         return safeApiCall(
-            call = { newsCall(go,leagueId) },
+            call = { newsAllCall( ) },
             errorMessage = Injector.getApplicationContext().getString(R.string.error_general)
         )
     }
 
-    private suspend fun newsCall(go: String,leagueId: String): DataResource<List<KoraNewsModel>> {
-        val response = retrofitApiService.getNewsAsync(go,leagueId).await()
+    private suspend fun newsAllCall( ): DataResource<List<KoraNewsModel>> {
+        val response = retrofitApiService.getAllNewsAsync(go, "yes").await()
+        return DataResource.Success(response)
+    }
+
+    //    League
+    suspend fun getLeagueNews( leagueId: String): DataResource<List<KoraNewsModel>> {
+        return safeApiCall(
+            call = { newsLeagueCall( leagueId) },
+            errorMessage = Injector.getApplicationContext().getString(R.string.error_general)
+        )
+    }
+
+    private suspend fun newsLeagueCall( leagueId: String): DataResource<List<KoraNewsModel>> {
+        val response = retrofitApiService.getLeagueNewsAsync(go, leagueId).await()
+        return DataResource.Success(response)
+    }
+
+    //    Match
+    suspend fun getMatchNews( MatchId: String): DataResource<List<KoraNewsModel>> {
+        return safeApiCall(
+            call = { newsMatchCall(MatchId) },
+            errorMessage = Injector.getApplicationContext().getString(R.string.error_general)
+        )
+    }
+
+    private suspend fun newsMatchCall(MatchId: String): DataResource<List<KoraNewsModel>> {
+        val response = retrofitApiService.getMatchNewsAsync(go, MatchId).await()
+        return DataResource.Success(response)
+    }
+
+    //    Team
+    suspend fun getTeamNews( TeamId: String): DataResource<List<KoraNewsModel>> {
+        return safeApiCall(
+            call = { newsTeamCall(TeamId) },
+            errorMessage = Injector.getApplicationContext().getString(R.string.error_general)
+        )
+    }
+
+    private suspend fun newsTeamCall(TeamId: String): DataResource<List<KoraNewsModel>> {
+        val response = retrofitApiService.getTeamNewsAsync(go, TeamId).await()
+        return DataResource.Success(response)
+    }
+
+    //    Player
+    suspend fun getPlayerNews( PlayerId: String): DataResource<List<KoraNewsModel>> {
+        return safeApiCall(
+            call = { newsPlayerCall(PlayerId) },
+            errorMessage = Injector.getApplicationContext().getString(R.string.error_general)
+        )
+    }
+
+    private suspend fun newsPlayerCall(PlayerId: String): DataResource<List<KoraNewsModel>> {
+        val response = retrofitApiService.getPlayerNewsAsync(go, PlayerId).await()
         return DataResource.Success(response)
     }
 

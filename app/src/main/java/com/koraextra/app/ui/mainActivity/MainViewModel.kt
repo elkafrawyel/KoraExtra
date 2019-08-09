@@ -25,4 +25,14 @@ class MainViewModel : KoraViewModel() {
         _tournament.value = tournament
     }
 
+
+    private var _team = MutableLiveData<Int>()
+    val teamLiveData: LiveData<Int>
+        get() = _team
+
+    fun setTeamId(teamId: Int) {
+        _team.value = teamId
+    }
+
+
 }

@@ -44,7 +44,13 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
 
     override fun convert(helper: BaseViewHolder?, item: MatchModel?) {
 
-        helper?.addOnClickListener(com.koraextra.app.R.id.matchItem)
+        helper?.addOnClickListener(
+            com.koraextra.app.R.id.matchItem,
+            com.koraextra.app.R.id.homeImg,
+            com.koraextra.app.R.id.homeName,
+            com.koraextra.app.R.id.awayImg,
+            com.koraextra.app.R.id.awayName
+        )
 
         when (helper?.itemViewType) {
             1, 3 -> {

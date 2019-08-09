@@ -8,7 +8,7 @@
     tools:context=".ui.mainActivity.tournament.news.TournamentNewsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tournamentNewsRv"
+        android:id="@+id/newsRv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"

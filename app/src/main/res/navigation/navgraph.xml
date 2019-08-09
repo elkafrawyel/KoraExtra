@@ -79,7 +79,17 @@
         android:id="@+id/teamFragment"
         android:name="com.koraextra.app.ui.mainActivity.team.TeamFragment"
         android:label="team_fragment"
-        tools:layout="@layout/team_fragment" />
+        tools:layout="@layout/team_fragment" >
+        <argument
+            android:name="teamid"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="logo"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/teamMatchesFragment"
         android:name="com.koraextra.app.ui.mainActivity.team.teamMatches.TeamMatchesFragment"

@@ -55,7 +55,7 @@ class TournamentNewsFragment : Fragment() {
         when (state) {
             MyUiStates.Loading -> {
                 loading.visibility = View.VISIBLE
-                tournamentNewsRv.visibility = View.GONE
+                newsRv.visibility = View.GONE
 
             }
             MyUiStates.Success -> {
@@ -63,29 +63,29 @@ class TournamentNewsFragment : Fragment() {
                 adapterNews.replaceData(viewModel.newsList.toMutableList())
 
                 loading.visibility = View.GONE
-                tournamentNewsRv.visibility = View.VISIBLE
-                tournamentNewsRv.adapter = adapterNews
-                tournamentNewsRv.setHasFixedSize(true)
+                newsRv.visibility = View.VISIBLE
+                newsRv.adapter = adapterNews
+                newsRv.setHasFixedSize(true)
             }
             MyUiStates.LastPage -> {
 
                 loading.visibility = View.GONE
-                tournamentNewsRv.visibility = View.GONE
+                newsRv.visibility = View.GONE
             }
             is MyUiStates.Error -> {
                 activity?.snackBar(state.message,rootView)
                 loading.visibility = View.GONE
-                tournamentNewsRv.visibility = View.GONE
+                newsRv.visibility = View.GONE
             }
             MyUiStates.NoConnection -> {
 
                 loading.visibility = View.GONE
-                tournamentNewsRv.visibility = View.GONE
+                newsRv.visibility = View.GONE
             }
             MyUiStates.Empty -> {
 
                 loading.visibility = View.GONE
-                tournamentNewsRv.visibility = View.GONE
+                newsRv.visibility = View.GONE
             }
         }
     }

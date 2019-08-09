@@ -61,6 +61,19 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             viewModel.opened = true
             clearObservers()
             getTodayMatches()
+        } else {
+
+            dayName_tv.text = activity?.getDayName(viewModel.date!!)
+            date_tv.text = activity?.getDateStringFromString(viewModel.date!!)
+            clearObservers()
+            viewModel.storedMatchesLiveData?.observe(this@HomeFragment, this)
+
+            if (viewModel.isSwitchOn)
+                linearHeader.visibility = View.GONE
+            else
+                linearHeader.visibility = View.VISIBLE
+
+
         }
 
         navigationView.setNavigationItemSelectedListener(this)
@@ -102,6 +115,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
             } else {
 
+                clearObservers()
                 if (isChecked) {
                     //today live
                     viewModel.getMatchesList(true)
@@ -111,6 +125,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     viewModel.getMatchesList()
                     linearHeader.visibility = View.VISIBLE
                 }
+
             }
 
         }
@@ -171,7 +186,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         viewModel.date = dateString
         dayName_tv.text = activity?.getDayName(dateString)
         date_tv.text = activity?.getDateStringFromString(dateString)
-        clearObservers()
+//        clearObservers()
         viewModel.getMatchesList()
     }
 
@@ -193,7 +208,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             context!!,
             R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Calendar,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                val date = "$year-${monthOfYear + 1}-$dayOfMonth"
+                val date = year.toString() + "-" + String.format("%02d-%02d", (monthOfYear + 1), dayOfMonth)
 //                activity?.toast(date)
 
 
@@ -225,10 +240,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
                 emptyMessageTv.visibility = View.GONE
-
-                viewModel.storedMatchesLiveData?.let { it ->
-                    it.observe(this@HomeFragment, this)
-                }
+//                clearObservers()
+                viewModel.storedMatchesLiveData?.observe(this@HomeFragment, this)
             }
 
             MyUiStates.LastPage -> {
@@ -311,6 +324,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
 
         }
+        viewModel.isSwitchOn = liveSwitch.isChecked
+
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
@@ -326,11 +341,32 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         adapterMatches.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                viewModel.isSwitchOn = liveSwitch.isChecked
+                val match = (adapter.data as List<MatchModel>)[position]
                 when (view?.id) {
                     R.id.matchItem -> {
-                        viewModel.isSwitchOn = liveSwitch.isChecked
-                        val match = (adapter.data as List<MatchModel>)[position]
+
                         val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
+                        findNavController().navigate(action)
+                    }
+
+                    com.koraextra.app.R.id.homeImg,
+                    com.koraextra.app.R.id.homeName -> {
+                        val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
+                            match.homeTeam?.teamId!!,
+                            match.homeTeam.teamName!!,
+                            match.homeTeam.logo!!
+                        )
+                        findNavController().navigate(action)
+                    }
+
+                    com.koraextra.app.R.id.awayImg,
+                    com.koraextra.app.R.id.awayName -> {
+                        val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
+                            match.awayTeam?.teamId!!,
+                            match.awayTeam.teamName!!,
+                            match.awayTeam.logo!!
+                        )
                         findNavController().navigate(action)
                     }
                 }
@@ -351,11 +387,11 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         recyclerView: RecyclerView,
         layout_animation: Int
     ) {
-        val context = recyclerView.context
-        val controller = AnimationUtils.loadLayoutAnimation(context, layout_animation)
-        recyclerView.layoutAnimation = controller
-        recyclerView.adapter!!.notifyDataSetChanged()
-        recyclerView.scheduleLayoutAnimation()
+//        val context = recyclerView.context
+//        val controller = AnimationUtils.loadLayoutAnimation(context, layout_animation)
+//        recyclerView.layoutAnimation = controller
+//        recyclerView.adapter!!.notifyDataSetChanged()
+//        recyclerView.scheduleLayoutAnimation()
 
     }
 

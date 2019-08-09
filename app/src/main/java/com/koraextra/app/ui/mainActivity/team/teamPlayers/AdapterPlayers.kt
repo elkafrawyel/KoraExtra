@@ -9,7 +9,10 @@ import com.koraextra.app.data.models.Player
 class AdapterPlayers: BaseQuickAdapter<Player, BaseViewHolder>(R.layout.player_in_team_item_view) {
 
     override fun convert(helper: BaseViewHolder, item: Player) {
-        helper.setText(R.id.playerOrder_tv,item.number!!.toString())
+        item.number?.let {
+
+            helper.setText(R.id.playerOrder_tv,it.toString())
+        }
         helper.setText(R.id.playerNameTv,item.playerName.toString())
         helper.setText(R.id.playerNationTv,item.teamName!!.toString())
         helper.setText(R.id.player_goals_tv,item.goals?.total!!.toString())

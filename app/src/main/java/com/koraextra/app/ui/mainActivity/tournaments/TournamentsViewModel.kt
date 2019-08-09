@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 
 class TournamentsViewModel : KoraViewModel() {
 
+    var opened: Boolean = false
 
     private var job: Job? = null
     private fun getLeaguesRepo() = Injector.getLeaguesRepo()
@@ -86,6 +87,7 @@ class TournamentsViewModel : KoraViewModel() {
             when (val result = getLeaguesRepo().getLeagues(getQuery(season))) {
                 is DataResource.Success -> {
                     if (result.data.isNotEmpty()) {
+                        leagues.clear()
                         leagues.addAll(result.data)
                         withContext(dispatcherProvider.main) {
                             _uiState.value = MyUiStates.Success
