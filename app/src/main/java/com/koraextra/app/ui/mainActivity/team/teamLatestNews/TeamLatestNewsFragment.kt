@@ -9,12 +9,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.koraextra.app.R
+import com.koraextra.app.ui.mainActivity.AdapterNews
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.toast
-import kotlinx.android.synthetic.main.match_news_fragment.*
-import kotlinx.android.synthetic.main.team_latest_news_fragment.*
 import kotlinx.android.synthetic.main.team_latest_news_fragment.loading
 import kotlinx.android.synthetic.main.team_latest_news_fragment.newsRv
 import kotlinx.android.synthetic.main.team_latest_news_fragment.rootView

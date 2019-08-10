@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.KoraNewsModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
-import com.koraextra.app.ui.mainActivity.team.teamLatestNews.AdapterNews
+import com.koraextra.app.ui.mainActivity.AdapterNews
+import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.toast
@@ -25,7 +27,21 @@ class TournamentNewsFragment : Fragment() {
     private lateinit var viewModel: TournamentNewsViewModel
     private lateinit var mainViewModel: MainViewModel
 
-    private val adapterNews = AdapterNews()
+    private val adapterNews = AdapterNews().also {
+        it.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.newsViewCl -> {
+                    val news = (adapter.data as List<KoraNewsModel>)[position]
+                    (activity as MainActivity).openNewsFragment(
+                        news.title!!,
+                        news.img!!,
+                        news.description!!,
+                        news.createdAt!!
+                    )
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,18 +53,22 @@ class TournamentNewsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TournamentNewsViewModel::class.java)
-        viewModel.uiState.observe(this, Observer {
-            onNewsResponse(it)
-        })
-
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        mainViewModel.tournamentLiveData.observe(this, Observer {
-            activity?.toast("Name ${it.name}")
-            viewModel.leagueModel = it
-            viewModel.getNews()
-        })
+        if (viewModel.opened){
+            onSuccess()
 
+        }else {
+            viewModel.opened = true
+            viewModel.uiState.observe(this, Observer {
+                onNewsResponse(it)
+            })
+            mainViewModel.tournamentLiveData.observe(this, Observer {
+                activity?.toast("Name ${it.name}")
+                viewModel.leagueModel = it
+                viewModel.getNews()
+            })
+        }
     }
 
     private fun onNewsResponse(state: MyUiStates) {
@@ -60,12 +80,7 @@ class TournamentNewsFragment : Fragment() {
             }
             MyUiStates.Success -> {
 
-                adapterNews.replaceData(viewModel.newsList.toMutableList())
-
-                loading.visibility = View.GONE
-                newsRv.visibility = View.VISIBLE
-                newsRv.adapter = adapterNews
-                newsRv.setHasFixedSize(true)
+                onSuccess()
             }
             MyUiStates.LastPage -> {
 
@@ -73,7 +88,7 @@ class TournamentNewsFragment : Fragment() {
                 newsRv.visibility = View.GONE
             }
             is MyUiStates.Error -> {
-                activity?.snackBar(state.message,rootView)
+                activity?.snackBar(state.message, rootView)
                 loading.visibility = View.GONE
                 newsRv.visibility = View.GONE
             }
@@ -88,6 +103,15 @@ class TournamentNewsFragment : Fragment() {
                 newsRv.visibility = View.GONE
             }
         }
+    }
+
+    private fun onSuccess() {
+        adapterNews.replaceData(viewModel.newsList.toMutableList())
+
+        loading.visibility = View.GONE
+        newsRv.visibility = View.VISIBLE
+        newsRv.adapter = adapterNews
+        newsRv.setHasFixedSize(true)
     }
 
 }

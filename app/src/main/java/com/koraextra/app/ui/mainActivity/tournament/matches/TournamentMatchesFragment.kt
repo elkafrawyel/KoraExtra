@@ -17,8 +17,6 @@ import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.ui.mainActivity.home.AdapterMatches
-import com.koraextra.app.ui.mainActivity.home.HomeFragmentDirections
-import com.koraextra.app.ui.mainActivity.tournament.TournamentFragment
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.toast
@@ -35,6 +33,23 @@ class TournamentMatchesFragment : Fragment() {
 
     private lateinit var viewModel: TournamentMatchesViewModel
     private lateinit var mainViewModel: MainViewModel
+    private val matchesList: ArrayList<MatchModel> = arrayListOf()
+    private val adapterMatches = AdapterMatches(matchesList).also {
+        it.onItemChildClickListener =
+            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                when (view?.id) {
+                    R.id.matchItem -> {
+                        try {
+                            val match = (adapter.data as List<MatchModel>)[position]
+                            (activity as MainActivity).openMatchFragment(match.fixtureId!!)
+                        } catch (e: IllegalArgumentException) {
+                            // User tried tapping 2 links at once!
+                            activity?.toast("Can't open Match Fragment!")
+                        }
+                    }
+                }
+            }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,23 +61,27 @@ class TournamentMatchesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TournamentMatchesViewModel::class.java)
-
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        mainViewModel.tournamentLiveData.observe(this, Observer {
-            viewModel.tournament = it
-            viewModel.getMatchesList()
-
-        })
 
         if (viewModel.opened) {
-            viewModel.getMatchesList()
+            viewModel.storedMatchesLiveData?.observe(this, Observer {
+                setUpMatches(it)
+            })
+
         } else {
             viewModel.opened = true
-        }
-        viewModel.uiState.observe(this,
-            Observer<MyUiStates?> { onMatchesChanged(it) })
+            mainViewModel.tournamentLiveData.observe(this, Observer {
+                viewModel.tournament = it
+                viewModel.getMatchesList()
+            })
 
+            viewModel.uiState.observe(this,
+                Observer<MyUiStates?> { onMatchesChanged(it) })
+        }
+
+        tournamentMatchesRv.adapter = adapterMatches
+        tournamentMatchesRv.setHasFixedSize(true)
     }
 
     private fun onMatchesChanged(states: MyUiStates?) {
@@ -75,12 +94,9 @@ class TournamentMatchesFragment : Fragment() {
 
             }
             MyUiStates.Success -> {
-                loading.visibility = View.GONE
-                emptyMessageTv.visibility = View.GONE
-
                 viewModel.storedMatchesLiveData?.let { it ->
                     it.observe(this@TournamentMatchesFragment, Observer {
-                        onStoredMatchesChanged(it)
+                        setUpMatches(it)
                     })
                 }
             }
@@ -118,52 +134,14 @@ class TournamentMatchesFragment : Fragment() {
         }
     }
 
-    private fun onStoredMatchesChanged(matchesList: List<MatchModel>) {
-        setUpMatches(matchesList)
-    }
-
     private fun setUpMatches(list: List<MatchModel>) {
-        val matchesList: ArrayList<MatchModel> = arrayListOf()
-
         matchesList.clear()
         matchesList.addAll(list)
-        val adapterMatches = AdapterMatches(matchesList)
 
-        adapterMatches.onItemChildClickListener =
-            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-                when (view?.id) {
-                    R.id.matchItem -> {
-                        try {
-                            val match = (adapter.data as List<MatchModel>)[position]
-                            (activity as MainActivity).openMatchFragment(match.fixtureId!!)
-                        } catch (e: IllegalArgumentException) {
-                            // User tried tapping 2 links at once!
-                            activity?.toast("Can't open Match Fragment!")
-                        }
-                    }
-                }
-            }
-        tournamentMatchesRv.adapter = adapterMatches
-        tournamentMatchesRv.setHasFixedSize(true)
+        adapterMatches.notifyDataSetChanged()
         tournamentMatchesRv.visibility = View.VISIBLE
-
-//        if (!viewModel.opened) {
-//      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_top)
-        runLayoutAnimationFromBottom(tournamentMatchesRv, R.anim.layout_animation_from_bottom)
-//      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_right)
-//        }
-    }
-
-    private fun runLayoutAnimationFromBottom(
-        recyclerView: RecyclerView,
-        layout_animation: Int
-    ) {
-        val context = recyclerView.context
-        val controller = AnimationUtils.loadLayoutAnimation(context, layout_animation)
-        recyclerView.layoutAnimation = controller
-        recyclerView.adapter!!.notifyDataSetChanged()
-        recyclerView.scheduleLayoutAnimation()
-
+        loading.visibility = View.GONE
+        emptyMessageTv.visibility = View.GONE
     }
 
 }

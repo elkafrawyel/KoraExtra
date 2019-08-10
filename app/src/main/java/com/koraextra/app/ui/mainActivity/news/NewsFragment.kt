@@ -1,4 +1,4 @@
-package com.koraextra.app.ui.mainActivity.latestNews.news
+package com.koraextra.app.ui.mainActivity.news
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,17 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 
 import com.koraextra.app.R
 import kotlinx.android.synthetic.main.news_fragment.*
+import kotlinx.android.synthetic.main.news_fragment.newsImage
 
 class NewsFragment : Fragment() {
 
     companion object {
         fun newInstance() = NewsFragment()
     }
-
-    private lateinit var viewModel: NewsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +28,21 @@ class NewsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
-        // TODO: Use the ViewModel
 
         backImage.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        arguments?.let {
+            val title = NewsFragmentArgs.fromBundle(it).title
+            val image = NewsFragmentArgs.fromBundle(it).image
+            val desc = NewsFragmentArgs.fromBundle(it).desc
+            val time = NewsFragmentArgs.fromBundle(it).time
+
+            Glide.with(context!!).load(image).into(newsImage)
+            newsHeaderTv.text = title
+            newsBodyTv.text = desc
+            newsTimeTv.text = time
         }
     }
 

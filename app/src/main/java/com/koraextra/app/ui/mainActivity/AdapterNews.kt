@@ -1,4 +1,4 @@
-package com.koraextra.app.ui.mainActivity.team.teamLatestNews
+package com.koraextra.app.ui.mainActivity
 
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
