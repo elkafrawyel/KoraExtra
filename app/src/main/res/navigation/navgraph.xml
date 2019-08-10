@@ -139,9 +139,22 @@
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.koraextra.app.ui.mainActivity.latestNews.news.NewsFragment"
+        android:name="com.koraextra.app.ui.mainActivity.news.NewsFragment"
         android:label="news_fragment"
-        tools:layout="@layout/news_fragment" />
+        tools:layout="@layout/news_fragment" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="image"
+            app:argType="string" />
+        <argument
+            android:name="desc"
+            app:argType="string" />
+        <argument
+            android:name="time"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/playersFragment"
         android:name="com.koraextra.app.ui.mainActivity.players.PlayersFragment"
@@ -164,6 +177,9 @@
         <action
             android:id="@+id/action_tournamentFragment_to_matchFragment"
             app:destination="@id/matchFragment" />
+        <action
+            android:id="@+id/action_tournamentFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
     </fragment>
     <fragment
         android:id="@+id/tournamentMatchesFragment"

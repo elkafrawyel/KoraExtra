@@ -15,6 +15,8 @@ import kotlinx.coroutines.withContext
 
 class TournamentNewsViewModel : KoraViewModel() {
 
+    var opened: Boolean = false
+
     private var job: Job? = null
     var leagueModel: LeagueModel? = null
     private fun getNewsRepo() = Injector.getNewsRepo()
@@ -41,6 +43,7 @@ class TournamentNewsViewModel : KoraViewModel() {
 //            leagueModel?.leagueId.toString()
             when (val result = getNewsRepo().getLeagueNews("10")) {
                 is DataResource.Success -> {
+                    newsList.clear()
                     newsList.addAll(result.data)
                     withContext(dispatcherProvider.main) {
                         _uiState.value = MyUiStates.Success

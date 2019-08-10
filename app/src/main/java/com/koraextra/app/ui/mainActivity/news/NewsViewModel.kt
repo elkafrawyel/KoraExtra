@@ -1,4 +1,4 @@
-package com.koraextra.app.ui.mainActivity.latestNews.news
+package com.koraextra.app.ui.mainActivity.news
 
 import androidx.lifecycle.ViewModel;
 

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.koraextra.app.R
 import com.koraextra.app.data.models.NewsModel
-import com.koraextra.app.ui.mainActivity.team.teamLatestNews.AdapterNews
+import com.koraextra.app.ui.mainActivity.AdapterNews
 import kotlinx.android.synthetic.main.latest_news_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
