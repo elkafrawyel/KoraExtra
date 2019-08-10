@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
 import com.koraextra.app.R
+import com.koraextra.app.ui.mainActivity.team.TeamFragmentDirections
 import com.koraextra.app.ui.mainActivity.tournament.TournamentFragmentDirections
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,16 @@ class MainActivity : AppCompatActivity() {
         val action =
             TournamentFragmentDirections.actionTournamentFragmentToMatchFragment(id)
         findNavController(R.id.fragment).navigate(action)
+    }
+
+    fun openTeamMatchesFragment(id: Int, name: String, logo: String) {
+        val action =
+            TeamFragmentDirections.actionTeamFragmentToTeamMatchesFragment(
+                id,
+                name,
+                logo
+            )
+        findNavController(R.id.teamSubHost).navigate(action)
     }
 
     fun openNewsFragment(title: String, image: String, desc: String,time:String) {

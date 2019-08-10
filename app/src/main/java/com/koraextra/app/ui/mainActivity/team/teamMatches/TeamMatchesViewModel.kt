@@ -15,7 +15,11 @@ import kotlinx.coroutines.withContext
 class TeamMatchesViewModel : KoraViewModel() {
 
 
- var teamId:Int = 0
+    var opened:Boolean = false
+
+    var id:Int?=null
+    var name:String?=null
+    var logo:String?=null
     //==============================================================
     private var job: Job? = null
     private fun getMatchesRepo() = Injector.getMatchesRepo()
@@ -40,14 +44,14 @@ class TeamMatchesViewModel : KoraViewModel() {
     private fun launchJob(): Job {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
-            var result: DataResource<Boolean>? = getMatchesRepo().getMatches(getMatchesOfTeam(teamId))
+            var result: DataResource<Boolean>? = getMatchesRepo().getMatches(getMatchesOfTeam(id!!))
 
 
             when (result) {
                 is DataResource.Success -> {
                     if (result.data) {
 
-                        when (val databaseResult = getStoredMatches().getStoredMatches("")) {
+                        when (val databaseResult = getStoredMatches().getStoredTeamMatches(id!!,name!!,logo!!)) {
                             is DataResource.Success -> {
                                 storedMatchesLiveData = databaseResult.data
                                 withContext(dispatcherProvider.main) {

@@ -8,15 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
+import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.ui.mainActivity.home.AdapterMatches
 import com.koraextra.app.ui.mainActivity.home.HomeFragmentDirections
+import com.koraextra.app.ui.mainActivity.team.TeamFragmentArgs
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.team_matches_fragment.*
 
@@ -27,9 +30,40 @@ class TeamMatchesFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamMatchesViewModel
-    private lateinit var mainViewModel: MainViewModel
-    private val list: ArrayList<MatchModel> = arrayListOf()
-    private val adapterMatches = AdapterMatches(list)
+    private val matchesList: ArrayList<MatchModel> = arrayListOf()
+    private val adapterMatches = AdapterMatches(matchesList).also {
+        it.onItemChildClickListener =
+            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                val match = (adapter.data as List<MatchModel>)[position]
+                when (view?.id) {
+                    com.koraextra.app.R.id.matchItem -> {
+
+                        val bundle = Bundle()
+                        bundle.putInt("fixtureId", match.fixtureId!!)
+//                        val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
+                        activity?.findNavController(R.id.fragment)?.navigate(R.id.matchFragment,bundle)
+                    }
+
+                    com.koraextra.app.R.id.homeImg,
+                    com.koraextra.app.R.id.homeName -> {
+                        val bundle = Bundle()
+                        bundle.putInt("teamid", match.homeTeam?.teamId!!)
+                        bundle.putString("name", match.homeTeam.teamName!!)
+                        bundle.putString("logo", match.homeTeam.logo!!)
+                        activity?.findNavController(R.id.fragment)?.navigate(R.id.teamFragment,bundle)
+                    }
+
+                    com.koraextra.app.R.id.awayImg,
+                    com.koraextra.app.R.id.awayName -> {
+                        val bundle = Bundle()
+                        bundle.putInt("teamid", match.awayTeam?.teamId!!)
+                        bundle.putString("name", match.awayTeam.teamName!!)
+                        bundle.putString("logo", match.awayTeam.logo!!)
+                        activity?.findNavController(R.id.fragment)?.navigate(R.id.teamFragment,bundle)
+                    }
+                }
+            }
+    }
 
 
     override fun onCreateView(
@@ -42,22 +76,45 @@ class TeamMatchesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamMatchesViewModel::class.java)
-        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        mainViewModel.teamLiveData.observe(this, Observer {
-                        activity?.toast("Match :${it}")
-            viewModel.teamId = it
+        arguments?.let {
+            viewModel.id = TeamFragmentArgs.fromBundle(it).teamid
+            viewModel.name = TeamFragmentArgs.fromBundle(it).name
+            viewModel.logo = TeamFragmentArgs.fromBundle(it).logo
+
             viewModel.getMatchesList()
-        })
+
+        }
 
 
 
-        viewModel.uiState.observe(this, object : Observer<MyUiStates?> {
-            override fun onChanged(it: MyUiStates?) {
-                onMatchesChanged(it)
+//        viewModel.uiState.observe(this, object : Observer<MyUiStates?> {
+//            override fun onChanged(it: MyUiStates?) {
+//                onMatchesChanged(it)
+//            }
+//        })
+
+        if (viewModel.opened) {
+            viewModel.storedMatchesLiveData?.observe(this, Observer {
+                setUpMatches(it)
+            })
+
+        } else {
+            viewModel.opened = true
+            arguments?.let {
+                viewModel.id = TeamFragmentArgs.fromBundle(it).teamid
+                viewModel.name = TeamFragmentArgs.fromBundle(it).name
+                viewModel.logo = TeamFragmentArgs.fromBundle(it).logo
+
+                viewModel.getMatchesList()
+
             }
-        })
 
+            viewModel.uiState.observe(this,
+                Observer<MyUiStates?> { onMatchesChanged(it) })
+        }
+        matchesRv.adapter = adapterMatches
+        matchesRv.setHasFixedSize(true)
     }
 
 
@@ -75,7 +132,7 @@ class TeamMatchesFragment : Fragment() {
 
                 viewModel.storedMatchesLiveData?.let { it ->
                     it.observe(this, Observer {
-                        onStoredMatchesChanged(it)
+                        setUpMatches(it)
                     })
                 }
             }
@@ -120,54 +177,47 @@ class TeamMatchesFragment : Fragment() {
     }
 
 
-    private fun onStoredMatchesChanged(matchesList: List<MatchModel>) {
-        setUpMatches(matchesList)
-    }
-
-
 
     private fun setUpMatches(list: List<MatchModel>) {
-        val matchesList: java.util.ArrayList<MatchModel> = arrayListOf()
 
         matchesList.clear()
         matchesList.addAll(list)
+        adapterMatches.notifyDataSetChanged()
 //        activity?.toast("${matchesList.size}")
 
-        val adapterMatches = AdapterMatches(matchesList)
 
-        adapterMatches.onItemChildClickListener =
-            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-                val match = (adapter.data as List<MatchModel>)[position]
-                when (view?.id) {
-                    com.koraextra.app.R.id.matchItem -> {
+//        adapterMatches.onItemChildClickListener =
+//            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+//                val match = (adapter.data as List<MatchModel>)[position]
+//                when (view?.id) {
+//                    com.koraextra.app.R.id.matchItem -> {
+//
+//                        val bundle = Bundle()
+//                        bundle.putInt("fixtureId", match.fixtureId!!)
+////                        val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
+//                        activity?.findNavController(R.id.fragment)?.navigate(R.id.matchFragment,bundle)
+//                    }
+//
+//                    com.koraextra.app.R.id.homeImg,
+//                    com.koraextra.app.R.id.homeName -> {
+//                        val bundle = Bundle()
+//                        bundle.putInt("teamid", match.homeTeam?.teamId!!)
+//                        bundle.putString("name", match.homeTeam.teamName!!)
+//                        bundle.putString("logo", match.homeTeam.logo!!)
+//                        activity?.findNavController(R.id.fragment)?.navigate(R.id.teamFragment,bundle)
+//                    }
+//
+//                    com.koraextra.app.R.id.awayImg,
+//                    com.koraextra.app.R.id.awayName -> {
+//                        val bundle = Bundle()
+//                        bundle.putInt("teamid", match.awayTeam?.teamId!!)
+//                        bundle.putString("name", match.awayTeam.teamName!!)
+//                        bundle.putString("logo", match.awayTeam.logo!!)
+//                        activity?.findNavController(R.id.fragment)?.navigate(R.id.teamFragment,bundle)
+//                    }
+//                }
+//            }
 
-                        val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
-                        findNavController().navigate(action)
-                    }
-
-                    com.koraextra.app.R.id.homeImg,
-                    com.koraextra.app.R.id.homeName -> {
-                        val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
-                            match.homeTeam?.teamId!!,
-                            match.homeTeam.teamName!!,
-                            match.homeTeam.logo!!
-                        )
-                        findNavController().navigate(action)
-                    }
-
-                    com.koraextra.app.R.id.awayImg,
-                    com.koraextra.app.R.id.awayName -> {
-                        val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
-                            match.awayTeam?.teamId!!,
-                            match.awayTeam.teamName!!,
-                            match.awayTeam.logo!!
-                        )
-                        findNavController().navigate(action)
-                    }
-                }
-            }
-        matchesRv.adapter = adapterMatches
-        matchesRv.setHasFixedSize(true)
         matchesRv.visibility = View.VISIBLE
 
 //        if (!viewModel.opened) {
