@@ -44,7 +44,7 @@ class TeamLatestNewsFragment : Fragment() {
         })
 
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
-        mainViewModel.teamLiveData.observe(this, Observer {
+        mainViewModel.teamIdLiveData.observe(this, Observer {
             activity?.toast("Match :${it}")
             viewModel.teamId = it
             viewModel.getNews()

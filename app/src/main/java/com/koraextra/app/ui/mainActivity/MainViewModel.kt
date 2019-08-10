@@ -26,13 +26,29 @@ class MainViewModel : KoraViewModel() {
     }
 
 
-    private var _team = MutableLiveData<Int>()
-    val teamLiveData: LiveData<Int>
-        get() = _team
+    private var _teamId = MutableLiveData<Int>()
+    val teamIdLiveData: LiveData<Int>
+        get() = _teamId
 
     fun setTeamId(teamId: Int) {
-        _team.value = teamId
+        _teamId.value = teamId
     }
 
+
+    private var _teamName = MutableLiveData<String>()
+    val teamNameLiveData: LiveData<String>
+        get() = _teamName
+
+    fun setTeamName(teamName: String) {
+        _teamName.value = teamName
+    }
+
+    private var _teamLogo = MutableLiveData<String>()
+    val teamLogoLiveData: LiveData<String>
+        get() = _teamLogo
+
+    fun setTeamLogo(teamLogo: String) {
+        _teamLogo.value = teamLogo
+    }
 
 }

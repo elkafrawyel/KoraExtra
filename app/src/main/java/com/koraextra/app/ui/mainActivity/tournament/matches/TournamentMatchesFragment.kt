@@ -95,7 +95,7 @@ class TournamentMatchesFragment : Fragment() {
             }
             MyUiStates.Success -> {
                 viewModel.storedMatchesLiveData?.let { it ->
-                    it.observe(this@TournamentMatchesFragment, Observer {
+                    it.observe(this, Observer {
                         setUpMatches(it)
                     })
                 }

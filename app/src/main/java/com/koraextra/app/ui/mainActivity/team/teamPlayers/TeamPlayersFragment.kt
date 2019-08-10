@@ -36,7 +36,7 @@ class TeamPlayersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(TeamPlayersViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        mainViewModel.teamLiveData.observe(this, Observer {
+        mainViewModel.teamIdLiveData.observe(this, Observer {
             //            activity?.toast("Match :${it.fixtureId}")
             viewModel.teamId = it
             viewModel.getTeamPlayersTopsList()

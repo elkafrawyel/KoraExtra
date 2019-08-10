@@ -23,6 +23,7 @@ import com.koraextra.app.utily.MyUiStates
 import com.google.android.material.navigation.NavigationView
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
+import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.text.SimpleDateFormat
@@ -42,6 +43,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private lateinit var viewModel: HomeViewModel
+    private lateinit var mainViewModel: MainViewModel
     private val matchesList: ArrayList<MatchModel> = arrayListOf()
     private val adapterMatches = AdapterMatches(matchesList).also {
         it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter
@@ -58,22 +60,21 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
                 R.id.homeImg,
                 R.id.homeName -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
-                        match.homeTeam?.teamId!!,
-                        match.homeTeam.teamName!!,
-                        match.homeTeam.logo!!
-                    )
-                    findNavController().navigate(action)
+                    mainViewModel.setTeamId(match.homeTeam?.teamId!!)
+                    mainViewModel.setTeamName(match.homeTeam.teamName!!)
+                    mainViewModel.setTeamLogo(match.homeTeam.logo!!)
+
+                    findNavController().navigate(R.id.teamFragment)
                 }
 
                 R.id.awayImg,
                 R.id.awayName -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
-                        match.awayTeam?.teamId!!,
-                        match.awayTeam.teamName!!,
-                        match.awayTeam.logo!!
-                    )
-                    findNavController().navigate(action)
+                    mainViewModel.setTeamId(match.awayTeam?.teamId!!)
+                    mainViewModel.setTeamName(match.awayTeam.teamName!!)
+                    mainViewModel.setTeamLogo(match.awayTeam.logo!!)
+
+                    findNavController().navigate(R.id.teamFragment)
+
                 }
             }
         }
@@ -90,6 +91,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         if (!viewModel.opened) {
             viewModel.opened = true

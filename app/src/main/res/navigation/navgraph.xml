@@ -80,15 +80,6 @@
         android:name="com.koraextra.app.ui.mainActivity.team.TeamFragment"
         android:label="team_fragment"
         tools:layout="@layout/team_fragment" >
-        <argument
-            android:name="teamid"
-            app:argType="integer" />
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="logo"
-            app:argType="string" />
         <action
             android:id="@+id/action_teamFragment_to_teamPlayersFragment"
             app:destination="@id/teamPlayersFragment" />
@@ -103,17 +94,7 @@
         android:id="@+id/teamMatchesFragment"
         android:name="com.koraextra.app.ui.mainActivity.team.teamMatches.TeamMatchesFragment"
         android:label="team_matches_fragment"
-        tools:layout="@layout/team_matches_fragment" >
-        <argument
-            android:name="teamid"
-            app:argType="integer" />
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="logo"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/team_matches_fragment" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.koraextra.app.ui.mainActivity.favorites.FavoritesFragment"

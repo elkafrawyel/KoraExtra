@@ -44,7 +44,7 @@ class TeamMatchesViewModel : KoraViewModel() {
     private fun launchJob(): Job {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
-            var result: DataResource<Boolean>? = getMatchesRepo().getMatches(getMatchesOfTeam(id!!))
+            val result: DataResource<Boolean>? = getMatchesRepo().getMatches(getMatchesOfTeam(id!!))
 
 
             when (result) {
