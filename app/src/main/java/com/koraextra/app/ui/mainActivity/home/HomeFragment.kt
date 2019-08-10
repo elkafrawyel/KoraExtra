@@ -42,8 +42,42 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private lateinit var viewModel: HomeViewModel
-//    private val matchesList: ArrayList<MatchModel> = arrayListOf()
-//    private val adapterMatches = AdapterMatches(matchesList)
+    private val matchesList: ArrayList<MatchModel> = arrayListOf()
+    private val adapterMatches = AdapterMatches(matchesList).also {
+        it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter
+                                                                                  , view, position ->
+
+            viewModel.isSwitchOn = liveSwitch.isChecked
+            val match = (adapter.data as List<MatchModel>)[position]
+            when (view?.id) {
+                R.id.matchItem -> {
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
+                    findNavController().navigate(action)
+                }
+
+                R.id.homeImg,
+                R.id.homeName -> {
+                    val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
+                        match.homeTeam?.teamId!!,
+                        match.homeTeam.teamName!!,
+                        match.homeTeam.logo!!
+                    )
+                    findNavController().navigate(action)
+                }
+
+                R.id.awayImg,
+                R.id.awayName -> {
+                    val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
+                        match.awayTeam?.teamId!!,
+                        match.awayTeam.teamName!!,
+                        match.awayTeam.logo!!
+                    )
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
 
 
     override fun onCreateView(
@@ -154,6 +188,9 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             android.R.color.holo_orange_light,
             android.R.color.holo_red_light
         )
+
+        matchesRv.adapter = adapterMatches
+        matchesRv.setHasFixedSize(true)
     }
 
     private fun getTodayMatches() {
@@ -234,8 +271,6 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 loading.visibility = View.VISIBLE
                 matchesRv.visibility = View.GONE
                 emptyMessageTv.visibility = View.GONE
-
-
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
@@ -292,7 +327,6 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private fun animateView(image: View) {
-
         val rotateAnimation = AnimationUtils.loadAnimation(activity, R.anim.rotate)
         image.startAnimation(rotateAnimation)
     }
@@ -322,78 +356,17 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             R.id.nav_login -> {
                 findNavController().navigate(R.id.loginFragment)
             }
-
         }
         viewModel.isSwitchOn = liveSwitch.isChecked
-
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
     private fun setUpMatches(list: List<MatchModel>) {
-        val matchesList: ArrayList<MatchModel> = arrayListOf()
-
         matchesList.clear()
         matchesList.addAll(list)
-//        activity?.toast("${matchesList.size}")
-
-        val adapterMatches = AdapterMatches(matchesList)
-
-        adapterMatches.onItemChildClickListener =
-            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-                viewModel.isSwitchOn = liveSwitch.isChecked
-                val match = (adapter.data as List<MatchModel>)[position]
-                when (view?.id) {
-                    R.id.matchItem -> {
-
-                        val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
-                        findNavController().navigate(action)
-                    }
-
-                    com.koraextra.app.R.id.homeImg,
-                    com.koraextra.app.R.id.homeName -> {
-                        val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
-                            match.homeTeam?.teamId!!,
-                            match.homeTeam.teamName!!,
-                            match.homeTeam.logo!!
-                        )
-                        findNavController().navigate(action)
-                    }
-
-                    com.koraextra.app.R.id.awayImg,
-                    com.koraextra.app.R.id.awayName -> {
-                        val action = HomeFragmentDirections.actionHomeFragmentToTeamFragment(
-                            match.awayTeam?.teamId!!,
-                            match.awayTeam.teamName!!,
-                            match.awayTeam.logo!!
-                        )
-                        findNavController().navigate(action)
-                    }
-                }
-            }
-        matchesRv.recycledViewPool.clear()
-        matchesRv.adapter = adapterMatches
-        matchesRv.setHasFixedSize(true)
+        adapterMatches.notifyDataSetChanged()
         matchesRv.visibility = View.VISIBLE
-
-//        if (!viewModel.opened) {
-//      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_top)
-        runLayoutAnimationFromBottom(matchesRv, R.anim.layout_animation_from_bottom)
-//      runLayoutAnimationFromBottom(ChannelRv, R.anim.layout_animation_from_right)
-//        }
     }
-
-    private fun runLayoutAnimationFromBottom(
-        recyclerView: RecyclerView,
-        layout_animation: Int
-    ) {
-//        val context = recyclerView.context
-//        val controller = AnimationUtils.loadLayoutAnimation(context, layout_animation)
-//        recyclerView.layoutAnimation = controller
-//        recyclerView.adapter!!.notifyDataSetChanged()
-//        recyclerView.scheduleLayoutAnimation()
-
-    }
-
 
 }

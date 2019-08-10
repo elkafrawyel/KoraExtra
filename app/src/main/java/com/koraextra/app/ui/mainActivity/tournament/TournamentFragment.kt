@@ -12,9 +12,6 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 
 import com.koraextra.app.R
-import com.koraextra.app.ui.mainActivity.home.HomeFragmentDirections
-import com.koraextra.app.ui.mainActivity.tournaments.TournamentsFragmentDirections
-import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.tournament_fragment.*
 
 class TournamentFragment : Fragment() {
@@ -52,7 +49,12 @@ class TournamentFragment : Fragment() {
 
         }
 
-        selectOrder()
+        if (viewModel.opened){
+            tournamentTabs.getTabAt(viewModel.selectedTab)?.select()
+        }else{
+            viewModel.opened = true
+            selectTab(0)
+        }
 
         tournamentTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -64,32 +66,54 @@ class TournamentFragment : Fragment() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> selectOrder()
 
-                    1 -> selectMatches()
+                if (viewModel.selectedFromTabs) {
+                    when (tab?.position) {
+                        0 -> selectOrder()
 
-                    2 -> selectNews()
+                        1 -> selectMatches()
+
+                        2 -> selectNews()
+                    }
+                    viewModel.selectedTab = tab?.position!!
+                } else {
+                    viewModel.selectedFromTabs = true
 
                 }
+
             }
         })
 
     }
 
-    private fun selectOrder(){
+
+    private fun selectTab(position: Int) {
+        when (position) {
+            0 -> {
+                selectOrder()
+            }
+            1 -> {
+                selectMatches()
+            }
+            2 -> {
+                selectNews()
+            }
+        }
+    }
+
+    private fun selectOrder() {
         activity?.findNavController(R.id.tournamentSubHost)!!.navigate(R.id.tournamentOrderFragment)
-
+        tournamentTabs.getTabAt(0)?.select()
     }
 
-    private fun selectMatches(){
+    private fun selectMatches() {
         activity?.findNavController(R.id.tournamentSubHost)!!.navigate(R.id.tournamentMatchesFragment)
-
+        tournamentTabs.getTabAt(1)?.select()
     }
 
-    private fun selectNews(){
+    private fun selectNews() {
         activity?.findNavController(R.id.tournamentSubHost)!!.navigate(R.id.tournamentNewsFragment)
-
+        tournamentTabs.getTabAt(2)?.select()
     }
 
 }
