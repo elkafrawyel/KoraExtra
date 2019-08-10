@@ -8,8 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.koraextra.app.R
+import com.koraextra.app.data.models.KoraNewsModel
 import com.koraextra.app.data.models.NewsModel
 import com.koraextra.app.ui.mainActivity.AdapterNews
+import com.koraextra.app.ui.mainActivity.MainActivity
+import com.koraextra.app.utily.MyUiStates
+import com.koraextra.app.utily.snackBar
 import kotlinx.android.synthetic.main.latest_news_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -68,38 +72,79 @@ class LatestNewsFragment : Fragment() {
         )
 
         latestNewsSliderAdapter.submitList(mainNews)
-        val news = ArrayList<String>()
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
-        news.add("a")
 
+        if (viewModel.opened){
+            onSuccess()
 
-//        adapterNews.replaceData(news)
+        }else {
+            viewModel.opened = true
+            viewModel.uiState.observe(this, androidx.lifecycle.Observer {
+                onNewsResponse(it)
+            })
+
+            viewModel.getAllNews()
+        }
 
         adapterNews.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
                 R.id.newsViewCl -> {
-                    findNavController().navigate(R.id.newsFragment)
+                    val news = (adapter.data as List<KoraNewsModel>)[position]
+                    val action = LatestNewsFragmentDirections
+                        .actionLatestNewsFragmentToNewsFragment(news.title!!,
+                            news.img!!,
+                            news.description!!,
+                            news.createdAt!!)
+                    findNavController().navigate(action)
                 }
             }
         }
+
         latestNewsRv.adapter = adapterNews
         latestNewsRv.setHasFixedSize(true)
         newsViewPager.setCurrentItem(0, true)
+    }
+
+    private fun onNewsResponse(state: MyUiStates) {
+        when (state) {
+            MyUiStates.Loading -> {
+                loading.visibility = View.VISIBLE
+                latestNewsRv.visibility = View.GONE
+
+            }
+            MyUiStates.Success -> {
+
+                onSuccess()
+            }
+            MyUiStates.LastPage -> {
+
+                loading.visibility = View.GONE
+                latestNewsRv.visibility = View.GONE
+            }
+            is MyUiStates.Error -> {
+                activity?.snackBar(state.message, rootView)
+                loading.visibility = View.GONE
+                latestNewsRv.visibility = View.GONE
+            }
+            MyUiStates.NoConnection -> {
+
+                loading.visibility = View.GONE
+                latestNewsRv.visibility = View.GONE
+            }
+            MyUiStates.Empty -> {
+
+                loading.visibility = View.GONE
+                latestNewsRv.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun onSuccess() {
+        adapterNews.replaceData(viewModel.newsList.toMutableList())
+
+        loading.visibility = View.GONE
+        latestNewsRv.visibility = View.VISIBLE
+        latestNewsRv.adapter = adapterNews
+        latestNewsRv.setHasFixedSize(true)
     }
 
     override fun onResume() {

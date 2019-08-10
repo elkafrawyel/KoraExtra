@@ -19,8 +19,6 @@ class NewsFragment : Fragment() {
         fun newInstance() = NewsFragment()
     }
 
-    private lateinit var viewModel: NewsViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,8 +28,6 @@ class NewsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
-        // TODO: Use the ViewModel
 
         backImage.setOnClickListener {
             findNavController().navigateUp()
