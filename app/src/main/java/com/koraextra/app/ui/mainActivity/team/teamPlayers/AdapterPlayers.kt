@@ -4,11 +4,11 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.koraextra.app.R
-import com.koraextra.app.data.models.Player
+import com.koraextra.app.data.models.PlayerModel
 
-class AdapterPlayers: BaseQuickAdapter<Player, BaseViewHolder>(R.layout.player_in_team_item_view) {
+class AdapterPlayers: BaseQuickAdapter<PlayerModel, BaseViewHolder>(R.layout.player_in_team_item_view) {
 
-    override fun convert(helper: BaseViewHolder, item: Player) {
+    override fun convert(helper: BaseViewHolder, item: PlayerModel) {
         item.number?.let {
 
             helper.setText(R.id.playerOrder_tv,it.toString())

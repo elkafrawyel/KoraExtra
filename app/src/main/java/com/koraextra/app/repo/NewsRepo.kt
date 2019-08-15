@@ -62,7 +62,7 @@ class NewsRepo(private val retrofitApiService: RetrofitApiService) {
         return DataResource.Success(response)
     }
 
-    //    Player
+    //    PlayerModel
     suspend fun getPlayerNews( PlayerId: String): DataResource<List<KoraNewsModel>> {
         return safeApiCall(
             call = { newsPlayerCall(PlayerId) },

@@ -32,7 +32,7 @@ data class EventModel(
     val elapsed: Int?,
     @field:Json(name = "eventimg")
     val eventimg: String?,
-    @field:Json(name = "player")
+    @field:Json(name = "players")
     val player: String?,
     @field:Json(name = "player_id")
     val playerId: Int?,

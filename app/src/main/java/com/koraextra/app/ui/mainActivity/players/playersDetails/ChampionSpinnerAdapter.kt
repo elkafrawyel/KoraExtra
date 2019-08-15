@@ -10,8 +10,9 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.koraextra.app.R
 import com.koraextra.app.data.models.NewsModel
+import com.koraextra.app.data.models.PlayerModel
 
-class ChampionSpinnerAdapter(val context: Context, var listItemsTxt: ArrayList<NewsModel>) : BaseAdapter() {
+class ChampionSpinnerAdapter(val context: Context, var listItemsTxt: ArrayList<PlayerModel>) : BaseAdapter() {
 
 
     val mInflater: LayoutInflater = LayoutInflater.from(context)
@@ -27,16 +28,10 @@ class ChampionSpinnerAdapter(val context: Context, var listItemsTxt: ArrayList<N
             view = convertView
             vh = view.tag as ItemRowHolder
         }
-
-    // setting adapter item height programatically.
-     
-//        val params = view.layoutParams
-//        params.height = 60
-//        view.layoutParams = params
-        Glide.with(parent!!.context)
-            .load(listItemsTxt.get(position).img)
-            .into(vh.img)
-        vh.label.text = listItemsTxt.get(position).title
+//        Glide.with(parent!!.context)
+//            .load(listItemsTxt.get(position).playerimage)
+//            .into(vh.img)
+        vh.label.text = listItemsTxt.get(position).toString()
         return view
     }
 

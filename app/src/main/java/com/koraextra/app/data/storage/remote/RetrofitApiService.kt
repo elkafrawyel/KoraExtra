@@ -3,7 +3,7 @@ package com.koraextra.app.data.storage.remote
 import com.koraextra.app.data.models.*
 import com.koraextra.app.data.models.EventsResponse
 import com.koraextra.app.data.models.MatchResponse
-import com.koraextra.app.data.models.MatchTopsResponse
+import com.koraextra.app.data.models.PlayersResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -25,7 +25,7 @@ interface RetrofitApiService {
     @GET("apigo.php")
     fun getMatchTopsAsync(
         @Query("go") go: String
-    ): Deferred<MatchTopsResponse>
+    ): Deferred<PlayersResponse>
 
     @GET("apigo.php")
     fun getLeaguesAsync(

@@ -145,7 +145,7 @@
             android:src="@drawable/liverpool" />
 
         <TextView
-            android:id="@+id/playerclubNameTv"
+            android:id="@+id/playerTeamNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

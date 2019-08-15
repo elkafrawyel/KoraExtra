@@ -7,11 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 
 import com.koraextra.app.R
+import com.koraextra.app.ui.mainActivity.MainViewModel
+import com.koraextra.app.utily.Injector
 import kotlinx.android.synthetic.main.players_fragment.*
+import kotlinx.android.synthetic.main.players_fragment.backImage
+import kotlinx.android.synthetic.main.team_fragment.*
 
 class PlayersFragment : Fragment() {
 
@@ -20,6 +26,7 @@ class PlayersFragment : Fragment() {
     }
 
     private lateinit var viewModel: PlayersViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +38,16 @@ class PlayersFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
-
-        playerNameTv.text = "محمد صلاح"
+        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        mainViewModel.playerLiveData.observe(this, Observer {
+            val player = it
+            playerNameTv.text = player.playerName
+            playerNumberTv.text = player.number.toString()
+            playerAgeTv.text = player.age.toString()
+            playerPositionTv.text = player.position.toString()
+            playerTeamNameTv.text = player.teamName.toString()
+            playerNationNameTv.text = player.nationality.toString()
+        })
 
         backImage.setOnClickListener {
             findNavController().navigateUp()

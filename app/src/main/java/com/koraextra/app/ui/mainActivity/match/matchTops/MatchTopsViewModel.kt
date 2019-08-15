@@ -3,7 +3,7 @@ package com.koraextra.app.ui.mainActivity.match.matchTops
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.NetworkUtils
-import com.koraextra.app.data.models.Player
+import com.koraextra.app.data.models.PlayerModel
 import com.koraextra.app.ui.KoraViewModel
 import com.koraextra.app.utily.DataResource
 import com.koraextra.app.utily.Injector
@@ -25,7 +25,7 @@ class MatchTopsViewModel : KoraViewModel() {
     val uiState: LiveData<MyUiStates>
         get() = _uiState
 
-    var matchTops: List<Player>? = null
+    var matchTops: List<PlayerModel>? = null
 
     fun getMatchTopsList() {
         if (NetworkUtils.isConnected()) {
@@ -41,7 +41,7 @@ class MatchTopsViewModel : KoraViewModel() {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
 //            141565
-            when (val result = getMatchTopsRepo().getMatchTops(getTopsOfMatch(fixtureId!!))) {
+            when (val result = getMatchTopsRepo().getPlayers(getTopsOfMatch(fixtureId!!))) {
                 is DataResource.Success -> {
                     if (result.data.isNotEmpty()) {
                         matchTops = result.data

@@ -1,28 +1,33 @@
 package com.koraextra.app.data.models
+
 import com.squareup.moshi.Json
 
 
-data class MatchTopsResponse(
+data class PlayersResponse(
     @field:Json(name = "api")
     val api: TopsApi?
 )
 
 data class TopsApi(
     @field:Json(name = "players")
-    val players: List<Player>?,
+    val players: List<PlayerModel>?,
     @field:Json(name = "results")
     val results: Int?
 )
 
-data class Player(
+data class PlayerModel(
     @field:Json(name = "captain")
     val captain: String?,
+    @field:Json(name = "nationality")
+    val nationality: String?,
     @field:Json(name = "cards")
     val cards: Cards?,
     @field:Json(name = "dribbles")
     val dribbles: Dribbles?,
     @field:Json(name = "duels")
     val duels: Duels?,
+    @field:Json(name = "age")
+    val age: Int?,
     @field:Json(name = "event_id")
     val eventId: Int?,
     @field:Json(name = "fouls")
@@ -55,13 +60,19 @@ data class Player(
     val tackles: Tackles?,
     @field:Json(name = "team_id")
     val teamId: Int?,
+    @field:Json(name = "league")
+    val league: String?,
     @field:Json(name = "team_name")
     val teamName: String?,
     @field:Json(name = "updateAt")
     val updateAt: Int?,
     @field:Json(name = "playerimage")
     val playerimage: String?
-)
+) {
+    override fun toString(): String {
+        return league!!
+    }
+}
 
 data class Goals(
     @field:Json(name = "assists")

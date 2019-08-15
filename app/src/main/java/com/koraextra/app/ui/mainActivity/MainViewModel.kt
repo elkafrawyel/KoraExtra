@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.koraextra.app.data.models.LeagueModel
 import com.koraextra.app.data.models.MatchModel
+import com.koraextra.app.data.models.PlayerModel
 import com.koraextra.app.ui.KoraViewModel
 
 class MainViewModel : KoraViewModel() {
@@ -49,6 +50,14 @@ class MainViewModel : KoraViewModel() {
 
     fun setTeamLogo(teamLogo: String) {
         _teamLogo.value = teamLogo
+    }
+
+    private var _player = MutableLiveData<PlayerModel>()
+    val playerLiveData: LiveData<PlayerModel>
+        get() = _player
+
+    fun setPlayer(player: PlayerModel) {
+        _player.value = player
     }
 
 }
