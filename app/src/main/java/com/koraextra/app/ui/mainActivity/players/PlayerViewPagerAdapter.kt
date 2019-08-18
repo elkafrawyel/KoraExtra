@@ -18,7 +18,7 @@ class PlayerViewPagerAdapter(
 
     private val fragmentList = listOf(
         PlayersDetailsFragment(),
-        PlayersMatchesFragment()
+        TeamMatchesFragment()
     )
 
     override fun getItem(position: Int): Fragment =

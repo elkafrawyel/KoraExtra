@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.koraextra.app.R
+import com.koraextra.app.data.models.PlayerModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.ui.mainActivity.team.teamPlayers.AdapterPlayers
 import com.koraextra.app.utily.MyUiStates
@@ -116,7 +119,17 @@ class MatchTopsFragment : Fragment() {
 
     private fun onMatchTopsSuccess() {
         val tops = viewModel.matchTops
-        val adapterPlayers = AdapterPlayers()
+        val adapterPlayers = AdapterPlayers().also {
+            it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter
+                                                                                      , view, position ->
+                mainViewModel.setPlayer((adapter.data[position] as PlayerModel?)!!)
+                when (view?.id) {
+                    R.id.player_item -> {
+                        activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
+                    }
+                }
+            }
+        }
         adapterPlayers.replaceData(tops!!)
         matchPlayerRv.adapter = adapterPlayers
         matchPlayerRv.setHasFixedSize(true)

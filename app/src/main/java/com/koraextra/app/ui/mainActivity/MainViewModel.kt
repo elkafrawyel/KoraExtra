@@ -52,12 +52,32 @@ class MainViewModel : KoraViewModel() {
         _teamLogo.value = teamLogo
     }
 
-    private var _player = MutableLiveData<PlayerModel>()
+    private var _leagueId = MutableLiveData<Int>()
+    val leagueIdLiveData: LiveData<Int>
+        get() = _leagueId
+
+    fun setLeagueId(leagueId: Int) {
+        _leagueId.value = leagueId
+    }
+
+    var player = MutableLiveData<PlayerModel>()
     val playerLiveData: LiveData<PlayerModel>
-        get() = _player
+        get() = player
 
     fun setPlayer(player: PlayerModel) {
-        _player.value = player
+        this._teamId.value = player.teamId!!
+        this._teamName.value = player.teamName!!
+        this._teamLogo.value = player.teamimage!!
+        this.player.value = player
+    }
+
+
+    var playerId = MutableLiveData<Int>()
+    val playerIdLiveData: LiveData<Int>
+        get() = playerId
+
+    fun setplayerId(playerId: Int) {
+        this.playerId.value = playerId
     }
 
 }

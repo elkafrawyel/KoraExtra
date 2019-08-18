@@ -38,8 +38,16 @@ class PlayersDetailsFragment : Fragment() {
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         viewModel.uiState.observe(this, Observer { onPlayerResponse(it) })
-        viewModel.playerId = 276
-        viewModel.getPlayerList()
+        mainViewModel.playerLiveData.observe(this, Observer {
+            viewModel.playerId = it.playerId
+            viewModel.getPlayerList()
+            mainViewModel.leagueIdLiveData.removeObserver { this }
+        })
+//        mainViewModel.playerIdLiveData.observe(this, Observer {
+//            viewModel.playerId = it
+//            viewModel.getPlayerList()
+//            mainViewModel.playerLiveData.removeObserver { this }
+//        })
 
 
 
@@ -62,8 +70,9 @@ class PlayersDetailsFragment : Fragment() {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         val player = viewModel.players!![position]
 
+                        loading.visibility = View.GONE
                         setPlayer(player)
-                        mainViewModel.setPlayer(player)
+//                        mainViewModel.setPlayer(player)
                     }
 
                 }
@@ -77,7 +86,12 @@ class PlayersDetailsFragment : Fragment() {
     }
 
     private fun setPlayer(player: PlayerModel) {
-        activity?.toast(player.toString())
+        goals_tv.text = player.goals?.total.toString()
+        reverse_goals_tv.text = player.goals?.conceded.toString()
+        successful_penalty_tv.text = player.penalty?.success.toString()
+        missed_penalty_tv.text = player.penalty?.missed.toString()
+        yellow_Card_tv.text = player.cards?.yellow.toString()
+        red_Card_tv.text = player.cards?.red.toString()
 
     }
 

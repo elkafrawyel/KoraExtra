@@ -28,6 +28,12 @@ interface RetrofitApiService {
     ): Deferred<PlayersResponse>
 
     @GET("apigo.php")
+    fun getMatchTopsAsync(
+        @Query("go") go: String,
+        @Query("league_id") league_id: Int
+    ): Deferred<PlayersResponse>
+
+    @GET("apigo.php")
     fun getLeaguesAsync(
         @Query("go") go: String
     ): Deferred<LeaguesResponse>

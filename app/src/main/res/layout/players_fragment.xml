@@ -54,14 +54,15 @@
         android:id="@+id/playerNameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        tools:text=""
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline1horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLength="20"/>
 
     <ImageView
         android:id="@+id/share"
@@ -80,7 +81,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="8dp"
         android:scaleType="centerInside"
-        android:src="@drawable/test_player"
+        tools:src="@drawable/test_player"
         app:layout_constraintStart_toEndOf="@+id/guideline1vertical"
         app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal" />
 
@@ -91,12 +92,13 @@
         android:layout_marginStart="12dp"
         android:background="@drawable/circle_yellow_bg"
         android:gravity="center"
-        android:text="11"
+        tools:text="11"
         android:textAppearance="?attr/textAppearanceCaption"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/guideline1vertical"
         app:layout_constraintStart_toStartOf="@+id/guideline1vertical"
-        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline1horizontal"
+        />
 
     <TextView
         android:id="@+id/playerAgeTv"
@@ -106,7 +108,7 @@
         android:gravity="center"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:text="26 عام"
+        tools:text="26 عام"
         android:textAppearance="?attr/textAppearanceCaption"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/guideline2horizontal"
@@ -120,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:text="المركز : جناج ايمن"
+        tools:text="المركز : جناج ايمن"
         android:textAppearance="?attr/textAppearanceBody1"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toEndOf="@+id/guideline2vertical"
@@ -142,7 +144,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:src="@drawable/liverpool" />
+            tools:src="@drawable/liverpool" />
 
         <TextView
             android:id="@+id/playerTeamNameTv"
@@ -151,7 +153,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:text="ليفربول"
+            tools:text="ليفربول"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@color/colorAccent" />
 
@@ -161,16 +163,17 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
-            android:src="@drawable/liverpool" />
+            tools:src="@drawable/liverpool"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/playerNationNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="12dp"
             android:gravity="center"
-            android:text="مصر"
+            tools:text="مصر"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@color/colorAccent" />
 

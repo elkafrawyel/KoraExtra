@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.koraextra.app.R
 import com.koraextra.app.data.models.EventModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
@@ -116,7 +118,13 @@ class MatchEventsFragment : Fragment() {
             if (events.size > 0)
                 events.add(events.size, EventModel("", 0, "", "", 0, 0, "", "", 0, viewModel.fixtureId, 0))
 
-            val adapterMatchEvents = AdapterMatchEvents(events)
+            val adapterMatchEvents = AdapterMatchEvents(events).also {
+                it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                    mainViewModel.setplayerId((adapter.data[position] as EventModel?)!!.playerId!!)
+                    if (view.id == R.id.PlayerName)
+                        activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
+                }
+            }
             matchEventsRv.adapter = adapterMatchEvents
             matchEventsRv.setHasFixedSize(true)
         })

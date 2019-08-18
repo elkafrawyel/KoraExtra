@@ -8,7 +8,7 @@ import com.koraextra.app.R
 import com.koraextra.app.data.models.EventModel
 import com.koraextra.app.utily.Injector
 
-class AdapterMatchEvents (data: MutableList<EventModel>?) : BaseMultiItemQuickAdapter<EventModel, BaseViewHolder>(data) {
+class AdapterMatchEvents(data: MutableList<EventModel>?) : BaseMultiItemQuickAdapter<EventModel, BaseViewHolder>(data) {
 
 
     init {
@@ -19,25 +19,25 @@ class AdapterMatchEvents (data: MutableList<EventModel>?) : BaseMultiItemQuickAd
     }
 
     override fun convert(helper: BaseViewHolder?, item: EventModel?) {
-
+//        helper?.addOnClickListener(R.id.PlayerName)
         when (helper?.itemViewType) {
             0 -> {
 
             }
 
             1 -> {
-                helper.setText(R.id.eventElapsed,item?.elapsed!!.toString())
-                helper.setText(R.id.PlayerName,item.player!!)
-                helper.setText(R.id.eventName,item.detail!!)
+                helper.setText(R.id.eventElapsed, item?.elapsed!!.toString())
+                helper.setText(R.id.PlayerName, item.player!!)
+                helper.setText(R.id.eventName, item.detail!!)
 
                 Glide.with(Injector.getApplicationContext()).load(item.eventimg)
                     .into(helper.getView(R.id.eventImg))
             }
 
             2 -> {
-                helper.setText(R.id.eventElapsed,item?.elapsed!!.toString())
-                helper.setText(R.id.PlayerName,item.player!!)
-                helper.setText(R.id.eventName,item.detail!!)
+                helper.setText(R.id.eventElapsed, item?.elapsed!!.toString())
+                helper.setText(R.id.PlayerName, item.player!!)
+                helper.setText(R.id.eventName, item.detail!!)
 
                 Glide.with(Injector.getApplicationContext()).load(item.eventimg)
                     .into(helper.getView(R.id.eventImg))

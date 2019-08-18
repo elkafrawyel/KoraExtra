@@ -9,6 +9,9 @@ import com.koraextra.app.data.models.PlayerModel
 class AdapterPlayers: BaseQuickAdapter<PlayerModel, BaseViewHolder>(R.layout.player_in_team_item_view) {
 
     override fun convert(helper: BaseViewHolder, item: PlayerModel) {
+
+        helper.addOnClickListener(R.id.player_item)
+
         item.number?.let {
 
             helper.setText(R.id.playerOrder_tv,it.toString())

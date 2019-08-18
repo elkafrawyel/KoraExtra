@@ -25,5 +25,19 @@ class MatchTopsRepo(
 
     }
 
+    suspend fun getPlayers(go: String,leagueId:Int): DataResource<List<PlayerModel>> {
+        return safeApiCall(
+            call = { matchTopsCall(go,leagueId) },
+            errorMessage = Injector.getApplicationContext().getString(R.string.error_general)
+        )
+    }
+
+    private suspend fun matchTopsCall(go: String,leagueId:Int): DataResource<List<PlayerModel>> {
+        val response = retrofitApiService.getMatchTopsAsync(go,leagueId).await()
+        val matchTops = response.api?.players!!
+        return DataResource.Success(matchTops)
+
+    }
+
 
 }

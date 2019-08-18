@@ -67,7 +67,9 @@ data class PlayerModel(
     @field:Json(name = "updateAt")
     val updateAt: Int?,
     @field:Json(name = "playerimage")
-    val playerimage: String?
+    val playerimage: String?,
+    @field:Json(name = "teamimage")
+    val teamimage: String?
 ) {
     override fun toString(): String {
         return league!!

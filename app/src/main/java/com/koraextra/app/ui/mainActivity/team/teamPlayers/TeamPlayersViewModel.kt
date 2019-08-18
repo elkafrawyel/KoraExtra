@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 
 class TeamPlayersViewModel : KoraViewModel() {
     var teamId: Int? = null
+    var leagueId: Int? = null
 
     //==============================================================
     private var job: Job? = null
@@ -41,7 +42,7 @@ class TeamPlayersViewModel : KoraViewModel() {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
 //            141565
-            when (val result = getMatchTopsRepo().getPlayers(getPlayersOfTeam(teamId!!))) {
+            when (val result = getMatchTopsRepo().getPlayers(getPlayersOfTeam(teamId!!),leagueId!!)) {
                 is DataResource.Success -> {
                     if (result.data.isNotEmpty()) {
                         matchTops = result.data

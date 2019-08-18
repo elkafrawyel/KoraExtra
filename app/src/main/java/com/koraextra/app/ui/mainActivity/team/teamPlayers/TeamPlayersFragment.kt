@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.PlayerModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
@@ -36,6 +39,10 @@ class TeamPlayersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(TeamPlayersViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
+        mainViewModel.leagueIdLiveData.observe(this, Observer {
+            //            activity?.toast("Match :${it.fixtureId}")
+            viewModel.leagueId = it
+        })
         mainViewModel.teamIdLiveData.observe(this, Observer {
             //            activity?.toast("Match :${it.fixtureId}")
             viewModel.teamId = it
@@ -116,7 +123,17 @@ class TeamPlayersFragment : Fragment() {
 
     private fun onMatchTopsSuccess() {
         val tops = viewModel.matchTops
-        val adapterPlayers = AdapterPlayers()
+        val adapterPlayers = AdapterPlayers().also {
+            it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter
+                                                                                      , view, position ->
+                mainViewModel.setPlayer((adapter.data[position] as PlayerModel?)!!)
+                when (view?.id) {
+                    R.id.player_item -> {
+                        activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
+                    }
+                }
+            }
+        }
         adapterPlayers.replaceData(tops!!)
         teamPlayerRv.adapter = adapterPlayers
         teamPlayerRv.setHasFixedSize(true)

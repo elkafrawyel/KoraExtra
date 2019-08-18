@@ -63,6 +63,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     mainViewModel.setTeamId(match.homeTeam?.teamId!!)
                     mainViewModel.setTeamName(match.homeTeam.teamName!!)
                     mainViewModel.setTeamLogo(match.homeTeam.logo!!)
+                    mainViewModel.setLeagueId(match.leagueId!!)
 
                     findNavController().navigate(R.id.teamFragment)
                 }
@@ -72,6 +73,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     mainViewModel.setTeamId(match.awayTeam?.teamId!!)
                     mainViewModel.setTeamName(match.awayTeam.teamName!!)
                     mainViewModel.setTeamLogo(match.awayTeam.logo!!)
+                    mainViewModel.setLeagueId(match.leagueId!!)
 
                     findNavController().navigate(R.id.teamFragment)
 
