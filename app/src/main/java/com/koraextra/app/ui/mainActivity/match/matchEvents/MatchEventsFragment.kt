@@ -38,6 +38,8 @@ class MatchEventsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(MatchEventsViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
+
+
         mainViewModel.matchLiveData.observe(this, Observer {
             //            activity?.toast("Match :${it.fixtureId}")
             viewModel.homeTeamId = it?.homeTeam?.teamId
