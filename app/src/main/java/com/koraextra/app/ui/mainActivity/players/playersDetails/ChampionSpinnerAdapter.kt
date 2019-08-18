@@ -35,6 +35,7 @@ class ChampionSpinnerAdapter(val context: Context, var listItemsTxt: ArrayList<P
         return view
     }
 
+
     override fun getItem(position: Int): Any? {
 
         return null
