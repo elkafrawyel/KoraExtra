@@ -17,8 +17,8 @@ class PlayerViewPagerAdapter(
 ) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val fragmentList = listOf(
-        PlayersDetailsFragment(),
-        TeamMatchesFragment()
+        TeamMatchesFragment(),
+        PlayersDetailsFragment()
     )
 
     override fun getItem(position: Int): Fragment =

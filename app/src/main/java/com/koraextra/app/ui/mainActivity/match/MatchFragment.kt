@@ -49,15 +49,14 @@ class MatchFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-
         teamShareImage.setOnClickListener {
             activity?.toast("Added to your Share")
         }
 
-        MatchViewPagerAdapter(fragmentManager!!).also {
-            matchTabs.setupWithViewPager(view_pager)
-            view_pager.adapter = it
-        }
+        val pagerAdapter = MatchViewPagerAdapter(this.childFragmentManager)
+        viewPager.adapter = pagerAdapter
+        viewPager.offscreenPageLimit =  4
+
     }
 
     private fun onMatchResponse(state: MyUiStates?) {

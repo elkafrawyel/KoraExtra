@@ -63,53 +63,32 @@
         android:layout_height="120dp"
         android:background="@color/colorPrimary"
         android:padding="8dp"
-        tools:src="@drawable/liverpool"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:src="@drawable/liverpool" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/teamsTabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teamImage"
-        app:tabIndicator="@color/colorAccent"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="5dp"
-        app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextAppearance="@style/TabStyle"
-        app:tabTextColor="@color/colorBackground">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/mateches"/>
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/latestNews"
-            android:background="@color/colorBackground"/>
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/players"
-            android:background="@color/colorBackground"/>
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <fragment
-        android:id="@+id/teamSubHost"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamsTabs"
-        app:navGraph="@navigation/navgraph" />
+        app:layout_constraintTop_toBottomOf="@id/teamImage">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicator="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorHeight="5dp"
+            android:background="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextAppearance="@style/TabStyle"
+            app:tabTextColor="@color/colorBackground"/>
+
+    </androidx.viewpager.widget.ViewPager>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

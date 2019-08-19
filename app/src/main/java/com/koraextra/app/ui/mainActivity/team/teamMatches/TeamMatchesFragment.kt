@@ -17,7 +17,7 @@ import com.koraextra.app.ui.mainActivity.home.AdapterMatches
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.team_matches_fragment.*
 
-class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>> {
+class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAdapter.OnItemChildClickListener {
 
 
     companion object {
@@ -29,45 +29,7 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>> {
 
     private val matchesList: ArrayList<MatchModel> = arrayListOf()
     private val adapterMatches = AdapterMatches(matchesList).also {
-        it.onItemChildClickListener =
-            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-                val match = (adapter.data as List<MatchModel>)[position]
-                when (view?.id) {
-                    R.id.matchItem -> {
-                        val bundle = Bundle()
-                        bundle.putInt("fixtureId", match.fixtureId!!)
-                        activity?.findNavController(R.id.fragment)?.navigate(R.id.matchFragment, bundle)
-                    }
-
-                    R.id.homeImg,
-                    R.id.homeName -> {
-                        viewModel.id = match.homeTeam?.teamId!!
-                        viewModel.name = match.homeTeam.teamName!!
-                        viewModel.logo = match.homeTeam.logo!!
-
-                        mainViewModel.setTeamId(match.homeTeam.teamId)
-                        mainViewModel.setTeamName(match.homeTeam.teamName)
-                        mainViewModel.setTeamLogo(match.homeTeam.logo)
-                        viewModel.getMatchesList()
-                        viewModel.storedMatchesLiveData?.removeObserver(this)
-
-                    }
-
-                    R.id.awayImg,
-                    R.id.awayName -> {
-                        viewModel.id = match.homeTeam?.teamId!!
-                        viewModel.name = match.homeTeam.teamName!!
-                        viewModel.logo = match.homeTeam.logo!!
-
-                        mainViewModel.setTeamId(match.awayTeam?.teamId!!)
-                        mainViewModel.setTeamName(match.awayTeam.teamName!!)
-                        mainViewModel.setTeamLogo(match.awayTeam.logo!!)
-                        viewModel.getMatchesList()
-                        viewModel.storedMatchesLiveData?.removeObserver(this)
-
-                    }
-                }
-            }
+        it.onItemChildClickListener = this
     }
 
 
@@ -87,13 +49,15 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>> {
         viewModel = ViewModelProviders.of(this).get(TeamMatchesViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        if (viewModel.opened) {
-            viewModel.storedMatchesLiveData?.observe(this, Observer {
-                setUpMatches(it)
-            })
+        if (viewModel.storedMatchesLiveData == null) {
+//            viewModel.storedMatchesLiveData?.observe(this, Observer {
+//                setUpMatches(it)
+//            })
+//
+//        } else {
+//            viewModel.opened = true
 
-        } else {
-            viewModel.opened = true
+
             mainViewModel.teamIdLiveData.observe(this, Observer {
                 viewModel.id = it
             })
@@ -107,8 +71,7 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>> {
                 viewModel.logo = it
             })
 
-            viewModel.uiState.observe(this,
-                Observer<MyUiStates?> { onMatchesChanged(it) })
+            viewModel.uiState.observe(this, Observer<MyUiStates?> { onMatchesChanged(it) })
 
             viewModel.getMatchesList()
         }
@@ -127,10 +90,7 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>> {
 
             }
             MyUiStates.Success -> {
-
-                viewModel.storedMatchesLiveData?.let { it ->
-                    it.observe(this, this)
-                }
+                viewModel.storedMatchesLiveData?.observe(this, this)
             }
 
             MyUiStates.LastPage -> {
@@ -172,6 +132,44 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>> {
         }
     }
 
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        val match = (adapter?.data as List<MatchModel>)[position]
+        when (view?.id) {
+            R.id.matchItem -> {
+                val bundle = Bundle()
+                bundle.putInt("fixtureId", match.fixtureId!!)
+                activity?.findNavController(R.id.fragment)?.navigate(R.id.matchFragment, bundle)
+            }
+
+            R.id.homeImg,
+            R.id.homeName -> {
+                viewModel.id = match.homeTeam?.teamId!!
+                viewModel.name = match.homeTeam.teamName!!
+                viewModel.logo = match.homeTeam.logo!!
+
+                mainViewModel.setTeamId(match.homeTeam.teamId)
+                mainViewModel.setTeamName(match.homeTeam.teamName)
+                mainViewModel.setTeamLogo(match.homeTeam.logo)
+                viewModel.getMatchesList()
+                viewModel.storedMatchesLiveData?.removeObserver(this)
+
+            }
+
+            R.id.awayImg,
+            R.id.awayName -> {
+                viewModel.id = match.homeTeam?.teamId!!
+                viewModel.name = match.homeTeam.teamName!!
+                viewModel.logo = match.homeTeam.logo!!
+
+                mainViewModel.setTeamId(match.awayTeam?.teamId!!)
+                mainViewModel.setTeamName(match.awayTeam.teamName!!)
+                mainViewModel.setTeamLogo(match.awayTeam.logo!!)
+                viewModel.getMatchesList()
+                viewModel.storedMatchesLiveData?.removeObserver(this)
+
+            }
+        }
+    }
 
     private fun setUpMatches(list: List<MatchModel>) {
 
@@ -182,41 +180,5 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>> {
         emptyMessageTv.visibility = View.GONE
         matchesRv.visibility = View.VISIBLE
 
-//        activity?.toast("${matchesList.size}")
-
-
-//        adapterMatches.onItemChildClickListener =
-//            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-//                val match = (adapter.data as List<MatchModel>)[position]
-//                when (view?.id) {
-//                    com.koraextra.app.R.id.matchItem -> {
-//
-//                        val bundle = Bundle()
-//                        bundle.putInt("fixtureId", match.fixtureId!!)
-////                        val action = HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
-//                        activity?.findNavController(R.id.fragment)?.navigate(R.id.matchFragment,bundle)
-//                    }
-//
-//                    com.koraextra.app.R.id.homeImg,
-//                    com.koraextra.app.R.id.homeName -> {
-//                        val bundle = Bundle()
-//                        bundle.putInt("teamid", match.homeTeam?.teamId!!)
-//                        bundle.putString("name", match.homeTeam.teamName!!)
-//                        bundle.putString("logo", match.homeTeam.logo!!)
-//                        activity?.findNavController(R.id.fragment)?.navigate(R.id.teamFragment,bundle)
-//                    }
-//
-//                    com.koraextra.app.R.id.awayImg,
-//                    com.koraextra.app.R.id.awayName -> {
-//                        val bundle = Bundle()
-//                        bundle.putInt("teamid", match.awayTeam?.teamId!!)
-//                        bundle.putString("name", match.awayTeam.teamName!!)
-//                        bundle.putString("logo", match.awayTeam.logo!!)
-//                        activity?.findNavController(R.id.fragment)?.navigate(R.id.teamFragment,bundle)
-//                    }
-//                }
-//            }
-
-        matchesRv.visibility = View.VISIBLE
     }
 }

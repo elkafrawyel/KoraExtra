@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.KoraNewsModel
 import com.koraextra.app.ui.mainActivity.AdapterNews
+import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
@@ -27,7 +29,21 @@ class TeamLatestNewsFragment : Fragment() {
     private lateinit var viewModel: TeamLatestNewsViewModel
     private lateinit var mainViewModel: MainViewModel
 
-    private val adapterNews = AdapterNews()
+    private val adapterNews = AdapterNews().also {
+        it.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.newsViewCl -> {
+                    val news = (adapter.data as List<KoraNewsModel>)[position]
+                    (activity as MainActivity).openNewsFragment(
+                        news.title!!,
+                        news.img!!,
+                        news.description!!,
+                        news.createdAt!!
+                    )
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,17 +55,18 @@ class TeamLatestNewsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamLatestNewsViewModel::class.java)
-        viewModel.uiState.observe(this, Observer {
-            onNewsResponse(it)
-        })
 
-        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
-        mainViewModel.teamIdLiveData.observe(this, Observer {
-            activity?.toast("Match :${it}")
-            viewModel.teamId = it
-            viewModel.getNews()
-        })
+        if (viewModel.newsList.isEmpty()) {
+            viewModel.uiState.observe(this, Observer {
+                onNewsResponse(it)
+            })
 
+            mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+            mainViewModel.teamIdLiveData.observe(this, Observer {
+                viewModel.teamId = it
+                viewModel.getNews()
+            })
+        }
     }
 
     private fun onNewsResponse(state: MyUiStates) {
@@ -74,7 +91,7 @@ class TeamLatestNewsFragment : Fragment() {
                 newsRv.visibility = View.GONE
             }
             is MyUiStates.Error -> {
-                activity?.snackBar(state.message,rootView)
+                activity?.snackBar(state.message, rootView)
                 loading.visibility = View.GONE
                 newsRv.visibility = View.GONE
             }

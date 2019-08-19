@@ -84,50 +84,28 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tournamentTabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:tabIndicator="@color/colorAccent"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="5dp"
-        app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextAppearance="@style/TabStyle"
-        app:tabTextColor="@color/colorBackground" >
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/order"/>
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/mateches"
-            android:background="@color/colorBackground"/>
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/latestNews"
-            android:background="@color/colorBackground"/>
-
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <fragment
-        android:id="@+id/tournamentSubHost"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tournamentTabs"
-        app:navGraph="@navigation/navgraph" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicator="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorHeight="5dp"
+            android:background="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextAppearance="@style/TabStyle"
+            app:tabTextColor="@color/colorBackground"/>
+
+    </androidx.viewpager.widget.ViewPager>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,7 +25,7 @@ fun Context.changeLanguage() {
     val config = this.resources.configuration
     config.setLocale(locale)
     this.createConfigurationContext(config)
-    this.resources.updateConfiguration(config, this.resources.displayMetrics)
+    Injector.getApplicationContext().createConfigurationContext(config)
 }
 
 fun Context.restartApplication() {

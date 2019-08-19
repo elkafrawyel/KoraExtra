@@ -16,7 +16,7 @@ import com.koraextra.app.ui.mainActivity.team.teamPlayers.TeamPlayersFragment
 
 class MatchViewPagerAdapter(
     fragmentManager: FragmentManager
-) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+) : FragmentStatePagerAdapter(fragmentManager) {
 
     private val fragmentList = listOf(
         MatchEventsFragment(),

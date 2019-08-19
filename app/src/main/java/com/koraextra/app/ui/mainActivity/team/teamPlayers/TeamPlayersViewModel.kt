@@ -26,7 +26,7 @@ class TeamPlayersViewModel : KoraViewModel() {
     val uiState: LiveData<MyUiStates>
         get() = _uiState
 
-    var matchTops: List<PlayerModel>? = null
+    var matchTops: List<PlayerModel> = listOf()
 
     fun getTeamPlayersTopsList() {
         if (NetworkUtils.isConnected()) {

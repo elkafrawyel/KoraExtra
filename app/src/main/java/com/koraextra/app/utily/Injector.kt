@@ -74,7 +74,7 @@ object Injector {
 
     fun getPreferenceHelper() = PreferencesHelper(getApplicationContext())
 
-    private fun getAppDatabase() = AppDatabase.invoke(getApplicationContext())
+    fun getAppDatabase() = AppDatabase.invoke(getApplicationContext())
 
 
     // ============================================= Repos ================================================================

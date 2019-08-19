@@ -39,19 +39,21 @@ class TeamPlayersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(TeamPlayersViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        mainViewModel.leagueIdLiveData.observe(this, Observer {
-            //            activity?.toast("Match :${it.fixtureId}")
-            viewModel.leagueId = it
-        })
-        mainViewModel.teamIdLiveData.observe(this, Observer {
-            //            activity?.toast("Match :${it.fixtureId}")
-            viewModel.teamId = it
-            viewModel.getTeamPlayersTopsList()
-        })
+       if (viewModel.matchTops.isEmpty()){
+           mainViewModel.leagueIdLiveData.observe(this, Observer {
+               //            activity?.toast("Match :${it.fixtureId}")
+               viewModel.leagueId = it
+           })
+           mainViewModel.teamIdLiveData.observe(this, Observer {
+               //            activity?.toast("Match :${it.fixtureId}")
+               viewModel.teamId = it
+               viewModel.getTeamPlayersTopsList()
+           })
 
-        viewModel.uiState.observe(this, Observer {
-            onTopsResponse(it)
-        })
+           viewModel.uiState.observe(this, Observer {
+               onTopsResponse(it)
+           })
+       }
 
 //        val players = ArrayList<String>()
 //        players.add("a")

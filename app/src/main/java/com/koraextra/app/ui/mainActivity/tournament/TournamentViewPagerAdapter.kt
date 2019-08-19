@@ -16,7 +16,7 @@ import com.koraextra.app.ui.mainActivity.tournament.order.TournamentOrderFragmen
 
 class TournamentViewPagerAdapter(
     fragmentManager: FragmentManager
-) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+) : FragmentStatePagerAdapter(fragmentManager) {
 
     private val fragmentList = listOf(
         TournamentOrderFragment(),
@@ -30,20 +30,16 @@ class TournamentViewPagerAdapter(
     override fun getCount(): Int =
         fragmentList.size
 
-    override fun getItemPosition(`object`: Any): Int {
-        return fragmentList.size - count - 1
-    }
-
     override fun getPageTitle(position: Int): String? {
         return when (position) {
             0 -> {
-                MyApp.instance.getString(R.string.latestNews)
+                MyApp.instance.getString(R.string.order)
             }
             1 -> {
                 MyApp.instance.getString(R.string.mateches)
             }
             2 -> {
-                MyApp.instance.getString(R.string.order)
+                MyApp.instance.getString(R.string.latestNews)
             }
             else -> {
                 "كورة اكستراا"

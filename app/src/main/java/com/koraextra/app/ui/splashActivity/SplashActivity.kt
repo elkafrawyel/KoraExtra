@@ -7,9 +7,10 @@ import android.os.Bundle
 import com.koraextra.app.R
 import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.utily.Constants
+import com.koraextra.app.utily.Injector
 import com.koraextra.app.utily.changeLanguage
 import com.koraextra.app.utily.saveLanguage
-
+import org.jetbrains.anko.doAsync
 
 class SplashActivity : AppCompatActivity() {
 
@@ -20,13 +21,16 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         saveLanguage(Constants.Language.ARABIC)
         changeLanguage()
+
+        doAsync{
+            Injector.getAppDatabase().myDao().deleteMatches()
+        }
 
         MainActivity.start(this)
         finish()

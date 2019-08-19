@@ -298,42 +298,28 @@
             android:src="@drawable/egypt" />
     </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/matchTabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline2horizontal"
-        app:tabIndicator="@color/colorAccent"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="5dp"
-        app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextAppearance="@style/TabStyle"
-        app:tabTextColor="@color/colorBackground">
-
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <!--<fragment-->
-    <!--android:id="@+id/fragment_teams"-->
-    <!--android:name="androidx.navigation.fragment.NavHostFragment"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="0dp"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"-->
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-    <!--app:layout_constraintTop_toBottomOf="@id/teamsTabs"-->
-    <!--app:navGraph="@navigation/navgraph" />-->
-
-    <com.duolingo.open.rtlviewpager.RtlViewPager
-        android:id="@+id/view_pager"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/matchTabs" />
+        app:layout_constraintTop_toBottomOf="@id/guideline2horizontal">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicator="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorHeight="5dp"
+            android:background="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextAppearance="@style/TabStyle"
+            app:tabTextColor="@color/colorBackground"/>
+
+    </androidx.viewpager.widget.ViewPager>
+
 </androidx.constraintlayout.motion.widget.MotionLayout>

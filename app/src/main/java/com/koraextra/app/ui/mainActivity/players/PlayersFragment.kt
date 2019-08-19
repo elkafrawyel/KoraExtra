@@ -39,19 +39,14 @@ class PlayersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-//        mainViewModel.playerIdLiveData.observe(this, Observer {
-//            mainViewModel.player= MutableLiveData<PlayerModel>()
-//        })
-//        mainViewModel.player= MutableLiveData<PlayerModel>()
         mainViewModel.playerLiveData.observe(this, Observer {
-//            mainViewModel.playerId = MutableLiveData<Int>()
             val player = it
             playerNameTv.text = player.playerName
             player.number?.let {
                 playerNumberTv.text = player.number.toString()
             }
             player.age?.let {
-                playerAgeTv.text = player.age.toString()+" عام"
+                playerAgeTv.text = player.age.toString() + " عام"
             }
             playerPositionTv.text = player.position.toString()
             playerTeamNameTv.text = player.teamName.toString()
@@ -65,13 +60,13 @@ class PlayersFragment : Fragment() {
         backImage.setOnClickListener {
             findNavController().navigateUp()
         }
+        val pagerAdapter = PlayerViewPagerAdapter(this.childFragmentManager)
+        viewPager.adapter = pagerAdapter
+        viewPager.offscreenPageLimit = 2
 
-        PlayerViewPagerAdapter(fragmentManager!!).also {
-            playerTabs.setupWithViewPager(view_pager)
-            view_pager.adapter = it
-        }
 
     }
+
     fun changeState() {
         val motionLayout = motionLayout as? MotionLayout ?: return
         if (motionLayout.progress > 0.5f) {

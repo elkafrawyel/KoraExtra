@@ -12,13 +12,12 @@ import com.koraextra.app.ui.mainActivity.team.teamPlayers.TeamPlayersFragment
 
 class TeamsViewPagerAdapter(
     fragmentManager: FragmentManager
-) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+) : FragmentStatePagerAdapter(fragmentManager) {
 
     private val fragmentList = listOf(
         TeamMatchesFragment(),
-        TeamLatestNewsFragment(),
-        TeamGroupFragment(),
-        TeamPlayersFragment()
+        TeamPlayersFragment(),
+        TeamLatestNewsFragment()
     )
 
     override fun getItem(position: Int): Fragment =
@@ -27,28 +26,19 @@ class TeamsViewPagerAdapter(
     override fun getCount(): Int =
         fragmentList.size
 
-    override fun getItemPosition(`object`: Any): Int {
-        return fragmentList.size - count - 1
-    }
-
-
-
     override fun getPageTitle(position: Int): String? {
-        when (position) {
+        return when (position) {
             0 -> {
-                return MyApp.instance.getString(R.string.players)
+                MyApp.instance.getString(R.string.mateches)
             }
             1 -> {
-                return MyApp.instance.getString(R.string.order)
+                MyApp.instance.getString(R.string.players)
             }
             2 -> {
-                return MyApp.instance.getString(R.string.latestNews)
-            }
-            3 -> {
-                return MyApp.instance.getString(R.string.mateches)
+                MyApp.instance.getString(R.string.latestNews)
             }
             else -> {
-                return "كورة اكستراا"
+                "كورة اكستراا"
             }
         }
     }

@@ -58,12 +58,10 @@ class TeamFragment : Fragment() {
             viewModel.logo = it
         })
 
-        if (viewModel.opened) {
-            teamsTabs.getTabAt(viewModel.selectedTab)?.select()
-        } else {
-            viewModel.opened = true
-            selectTab(0)
-        }
+        val pagerAdapter = TeamsViewPagerAdapter(this.childFragmentManager)
+        viewPager.adapter = pagerAdapter
+//        viewPager.offscreenPageLimit =  3
+
 
         backImage.setOnClickListener {
             findNavController().navigateUp()
@@ -72,65 +70,6 @@ class TeamFragment : Fragment() {
         teamFavouriteImage.setOnClickListener {
             activity?.toast("Added to your Favourites")
         }
-
-
-        teamsTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (viewModel.selectedFromTabs) {
-
-                    when (tab?.position) {
-                        0 -> selectMatches()
-
-                        1 -> selectLatestNews()
-
-                        2 -> selectPlayers()
-
-                    }
-                    viewModel.selectedTab = tab?.position!!
-                } else {
-                    viewModel.selectedFromTabs = true
-
-                }
-            }
-        })
-    }
-
-
-    private fun selectTab(position: Int) {
-        when (position) {
-            0 -> selectMatches()
-
-            1 -> selectLatestNews()
-
-            2 -> selectPlayers()
-        }
-    }
-
-    private fun selectMatches() {
-//        val bundle = Bundle()
-//        bundle.putInt("teamid", viewModel.id!!)
-//        bundle.putString("name", viewModel.name!!)
-//        bundle.putString("logo", viewModel.logo!!)
-//        activity?.findNavController(R.id.teamSubHost)!!.navigate(R.id.teamMatchesFragment, bundle)
-        activity?.findNavController(R.id.teamSubHost)!!.navigate(R.id.teamMatchesFragment)
-
-    }
-
-    private fun selectLatestNews() {
-        activity?.findNavController(R.id.teamSubHost)!!.navigate(R.id.teamLatestNewsFragment)
-
-    }
-
-    private fun selectPlayers() {
-        activity?.findNavController(R.id.teamSubHost)!!.navigate(R.id.teamPlayersFragment)
 
     }
 
