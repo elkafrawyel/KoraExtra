@@ -55,7 +55,7 @@ class MatchFragment : Fragment() {
 
         val pagerAdapter = MatchViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter
-        viewPager.offscreenPageLimit =  4
+//        viewPager.offscreenPageLimit =  4
 
     }
 

@@ -40,7 +40,6 @@ class TeamFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(TeamViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-
         mainViewModel.teamIdLiveData.observe(this, Observer {
             viewModel.id = it
         })
@@ -48,20 +47,16 @@ class TeamFragment : Fragment() {
         mainViewModel.teamNameLiveData.observe(this, Observer {
             title.text = it
             viewModel.name = it
-
         })
 
         mainViewModel.teamLogoLiveData.observe(this, Observer {
             Glide.with(Injector.getApplicationContext()).load(it)
                 .into(teamImage)
-
             viewModel.logo = it
         })
 
         val pagerAdapter = TeamsViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter
-//        viewPager.offscreenPageLimit =  3
-
 
         backImage.setOnClickListener {
             findNavController().navigateUp()

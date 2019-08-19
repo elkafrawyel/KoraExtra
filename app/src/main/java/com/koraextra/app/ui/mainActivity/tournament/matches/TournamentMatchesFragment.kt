@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -39,13 +41,9 @@ class TournamentMatchesFragment : Fragment() {
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when (view?.id) {
                     R.id.matchItem -> {
-                        try {
-                            val match = (adapter.data as List<MatchModel>)[position]
-                            (activity as MainActivity).openMatchFragment(match.fixtureId!!)
-                        } catch (e: IllegalArgumentException) {
-                            // User tried tapping 2 links at once!
-                            activity?.toast("Can't open Match Fragment!")
-                        }
+                        val match = (adapter.data as List<MatchModel>)[position]
+                        val bundle = bundleOf("fixtureId" to match.fixtureId!!)
+                        activity?.findNavController(R.id.fragment)!!.navigate(R.id.newsFragment, bundle)
                     }
                 }
             }

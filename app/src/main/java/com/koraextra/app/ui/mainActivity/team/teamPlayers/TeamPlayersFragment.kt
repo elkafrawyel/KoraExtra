@@ -18,7 +18,8 @@ import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.snackBarWithAction
 import kotlinx.android.synthetic.main.team_players_fragment.*
 
-class TeamPlayersFragment : Fragment() {
+class TeamPlayersFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListener {
+
 
     companion object {
         fun newInstance() = TeamPlayersFragment()
@@ -26,7 +27,9 @@ class TeamPlayersFragment : Fragment() {
 
     private lateinit var viewModel: TeamPlayersViewModel
     private lateinit var mainViewModel: MainViewModel
-
+    private val adapterPlayers = AdapterPlayers().also {
+        it.onItemChildClickListener = this
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,11 +44,9 @@ class TeamPlayersFragment : Fragment() {
 
        if (viewModel.matchTops.isEmpty()){
            mainViewModel.leagueIdLiveData.observe(this, Observer {
-               //            activity?.toast("Match :${it.fixtureId}")
                viewModel.leagueId = it
            })
            mainViewModel.teamIdLiveData.observe(this, Observer {
-               //            activity?.toast("Match :${it.fixtureId}")
                viewModel.teamId = it
                viewModel.getTeamPlayersTopsList()
            })
@@ -55,18 +56,18 @@ class TeamPlayersFragment : Fragment() {
            })
        }
 
-//        val players = ArrayList<String>()
-//        players.add("a")
-//        players.add("a")
-//        players.add("a")
-//        players.add("a")
-//        players.add("a")
-//
-//        adapterPlayers.replaceData(players)
-//
-//        teamPlayerRv.adapter = adapterPlayers
-//        teamPlayerRv.setHasFixedSize(true)
 
+        teamPlayerRv.adapter = adapterPlayers
+        teamPlayerRv.setHasFixedSize(true)
+    }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        mainViewModel.setPlayer((adapter?.data!![position] as PlayerModel?)!!)
+        when (view?.id) {
+            R.id.player_item -> {
+                activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
+            }
+        }
     }
 
     private fun onTopsResponse(state: MyUiStates?) {
@@ -124,21 +125,10 @@ class TeamPlayersFragment : Fragment() {
     }
 
     private fun onMatchTopsSuccess() {
-        val tops = viewModel.matchTops
-        val adapterPlayers = AdapterPlayers().also {
-            it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter
-                                                                                      , view, position ->
-                mainViewModel.setPlayer((adapter.data[position] as PlayerModel?)!!)
-                when (view?.id) {
-                    R.id.player_item -> {
-                        activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
-                    }
-                }
-            }
-        }
-        adapterPlayers.replaceData(tops!!)
-        teamPlayerRv.adapter = adapterPlayers
-        teamPlayerRv.setHasFixedSize(true)
+        loading.visibility = View.GONE
+        emptyMessageTv.visibility = View.GONE
+        teamPlayerRv.visibility = View.VISIBLE
+        adapterPlayers.replaceData(viewModel.matchTops)
     }
 
 }

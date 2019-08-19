@@ -7,6 +7,9 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import com.koraextra.app.R
 import com.koraextra.app.ui.mainActivity.tournament.TournamentFragmentDirections
+import com.koraextra.app.utily.Constants
+import com.koraextra.app.utily.changeLanguage
+import com.koraextra.app.utily.saveLanguage
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,16 +25,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    fun openMatchFragment(id: Int) {
-        val action =
-            TournamentFragmentDirections.actionTournamentFragmentToMatchFragment(id)
-        findNavController(R.id.fragment).navigate(action)
-    }
+    override fun onResume() {
+        super.onResume()
+        saveLanguage(Constants.Language.ARABIC)
+        changeLanguage()
 
-
-    fun openNewsFragment(title: String, image: String, desc: String,time:String) {
-        val action = TournamentFragmentDirections
-            .actionTournamentFragmentToNewsFragment(title, image, desc,time)
-        findNavController(R.id.fragment).navigate(action)
     }
 }

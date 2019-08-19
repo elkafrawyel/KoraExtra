@@ -7,8 +7,5 @@ class TeamViewModel : ViewModel() {
     var name:String?=null
     var logo:String?=null
 
-
     var opened: Boolean = false
-    var selectedTab: Int = 0
-    var selectedFromTabs: Boolean = true
 }

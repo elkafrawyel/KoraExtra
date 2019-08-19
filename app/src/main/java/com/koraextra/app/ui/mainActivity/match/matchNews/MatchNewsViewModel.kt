@@ -42,6 +42,7 @@ class MatchNewsViewModel : KoraViewModel() {
 //            leagueModel?.leagueId.toString()
             when (val result = getNewsRepo().getMatchNews("4444")) {
                 is DataResource.Success -> {
+                    newsList.clear()
                     newsList.addAll(result.data)
                     withContext(dispatcherProvider.main) {
                         _uiState.value = MyUiStates.Success

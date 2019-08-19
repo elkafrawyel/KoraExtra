@@ -62,7 +62,7 @@ class PlayersFragment : Fragment() {
         }
         val pagerAdapter = PlayerViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter
-        viewPager.offscreenPageLimit = 2
+//        viewPager.offscreenPageLimit = 2
 
 
     }

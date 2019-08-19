@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.KoraNewsModel
@@ -34,12 +36,14 @@ class TeamLatestNewsFragment : Fragment() {
             when (view.id) {
                 R.id.newsViewCl -> {
                     val news = (adapter.data as List<KoraNewsModel>)[position]
-                    (activity as MainActivity).openNewsFragment(
-                        news.title!!,
-                        news.img!!,
-                        news.description!!,
-                        news.createdAt!!
+                    val bundle = bundleOf(
+                        "title" to news.title!!,
+                        "image" to news.img!!,
+                        "desc" to news.description!!,
+                        "time" to news.createdAt!!
                     )
+
+                    activity?.findNavController(R.id.fragment)!!.navigate(R.id.newsFragment, bundle)
                 }
             }
         }
@@ -67,6 +71,9 @@ class TeamLatestNewsFragment : Fragment() {
                 viewModel.getNews()
             })
         }
+
+        newsRv.adapter = adapterNews
+        newsRv.setHasFixedSize(true)
     }
 
     private fun onNewsResponse(state: MyUiStates) {
@@ -82,8 +89,6 @@ class TeamLatestNewsFragment : Fragment() {
 
                 loading.visibility = View.GONE
                 newsRv.visibility = View.VISIBLE
-                newsRv.adapter = adapterNews
-                newsRv.setHasFixedSize(true)
             }
             MyUiStates.LastPage -> {
 

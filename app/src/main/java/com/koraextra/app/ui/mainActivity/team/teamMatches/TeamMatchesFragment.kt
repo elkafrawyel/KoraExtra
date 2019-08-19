@@ -50,13 +50,6 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         if (viewModel.storedMatchesLiveData == null) {
-//            viewModel.storedMatchesLiveData?.observe(this, Observer {
-//                setUpMatches(it)
-//            })
-//
-//        } else {
-//            viewModel.opened = true
-
 
             mainViewModel.teamIdLiveData.observe(this, Observer {
                 viewModel.id = it
@@ -139,6 +132,8 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
                 val bundle = Bundle()
                 bundle.putInt("fixtureId", match.fixtureId!!)
                 activity?.findNavController(R.id.fragment)?.navigate(R.id.matchFragment, bundle)
+                viewModel.storedMatchesLiveData?.removeObserver(this)
+
             }
 
             R.id.homeImg,

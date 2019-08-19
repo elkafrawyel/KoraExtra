@@ -21,8 +21,8 @@ class MatchViewPagerAdapter(
     private val fragmentList = listOf(
         MatchEventsFragment(),
         MatchDetailsFragment(),
-        MatchNewsFragment(),
-        MatchTopsFragment()
+        MatchTopsFragment(),
+        MatchNewsFragment()
     )
 
     override fun getItem(position: Int): Fragment =
@@ -34,16 +34,16 @@ class MatchViewPagerAdapter(
     override fun getPageTitle(position: Int): String? {
         when (position) {
             0 -> {
-                return MyApp.instance.resources.getString(R.string.scorers)
+                return MyApp.instance.resources.getString(R.string.match_events)
             }
             1 -> {
-                return MyApp.instance.resources.getString(R.string.newsPaper)
-            }
-            2 -> {
                 return MyApp.instance.resources.getString(R.string.match_details)
             }
+            2 -> {
+                return MyApp.instance.resources.getString(R.string.players)
+            }
             3 -> {
-                return MyApp.instance.resources.getString(R.string.match_events)
+                return MyApp.instance.resources.getString(R.string.newsPaper)
             }
             else -> {
                 return "كورة اكستراا"

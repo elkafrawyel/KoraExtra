@@ -48,7 +48,7 @@ class TournamentFragment : Fragment() {
 
         val pagerAdapter = TournamentViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter
-        viewPager.offscreenPageLimit =  4
+//        viewPager.offscreenPageLimit =  4
 
     }
 

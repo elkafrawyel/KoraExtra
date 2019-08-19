@@ -39,9 +39,9 @@ class TeamLatestNewsViewModel : KoraViewModel() {
     private fun launchJob(): Job {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
-//            leagueModel?.leagueId.toString()
             when (val result = getNewsRepo().getTeamNews("10")) {
                 is DataResource.Success -> {
+                    newsList.clear()
                     newsList.addAll(result.data)
                     withContext(dispatcherProvider.main) {
                         _uiState.value = MyUiStates.Success
