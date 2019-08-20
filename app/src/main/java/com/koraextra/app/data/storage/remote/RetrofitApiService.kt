@@ -58,6 +58,11 @@ interface RetrofitApiService {
         @Body registerBody: RegisterBody
     ): Deferred<RegisterResponse>
 
+    @POST("api/addToFavorite")
+    fun addToFavoriteAsync(
+        @Body favoriteBody: FavoriteBody
+    ): Deferred<FavoriteResponse>
+
     @POST("api/doLogin")
     fun loginAsync(
         @Body loginBody: LoginBody
