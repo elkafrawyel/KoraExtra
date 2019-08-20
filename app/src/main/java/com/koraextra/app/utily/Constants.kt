@@ -7,8 +7,6 @@ object Constants {
 
     const val howToOpenYourShopUrl = "http://r-z.store/privacyar.php"
 
-
-
     enum class Language(val value: String) {
         ARABIC("ar"),
         ENGLISH("en")
