@@ -9,7 +9,13 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.auth.LoginBody
+import com.koraextra.app.utily.MyUiStates
+import com.koraextra.app.utily.observeEvent
+import com.koraextra.app.utily.snackBar
+import com.koraextra.app.utily.snackBarWithAction
 import kotlinx.android.synthetic.main.login_fragment.*
+import kotlinx.android.synthetic.main.login_fragment.backImage
 
 class LoginFragment : Fragment() {
 
@@ -29,13 +35,16 @@ class LoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        viewModel.uiState.observeEvent(this,{ onLoginResponse(it) })
 
         backImage.setOnClickListener {
             findNavController().navigateUp()
         }
+
         loginMbtn.setOnClickListener {
-            findNavController().navigate(R.id.homeFragment)
+            login()
         }
+
         singUpMbtnLogin.setOnClickListener {
             findNavController().navigate(R.id.signUpFragment)
         }
@@ -43,6 +52,57 @@ class LoginFragment : Fragment() {
         forgetPass.setOnClickListener {
             findNavController().navigate(R.id.forgetPassFragment)
         }
+    }
+
+    private fun onLoginResponse(states: MyUiStates) {
+        when (states) {
+            MyUiStates.Loading -> {
+                loading.visibility = View.VISIBLE
+            }
+            MyUiStates.Success -> {
+                loading.visibility = View.GONE
+                findNavController().navigate(R.id.homeFragment)
+
+            }
+            MyUiStates.LastPage -> {
+            }
+            is MyUiStates.Error -> {
+                loading.visibility = View.GONE
+                activity?.snackBar(states.message, rootView)
+            }
+            MyUiStates.NoConnection -> {
+                loading.visibility = View.GONE
+                activity?.snackBarWithAction(
+                    getString(R.string.refresh),
+                    getString(R.string.noConnectionMessage),
+                    rootView
+                ) {
+                    login()
+                }
+            }
+            MyUiStates.Empty -> {
+
+            }
+        }
+
+    }
+
+    private fun login() {
+        if (email.text.isBlank()) {
+            email.error = getString(R.string.empty_email)
+            return
+        }
+
+        if (password.text.isBlank()) {
+            password.error = getString(R.string.empty_password)
+            return
+        }
+
+        val body = LoginBody(
+            email = email.text.toString(),
+            password = password.text.toString()
+        )
+        viewModel.login(body = body)
     }
 
 }

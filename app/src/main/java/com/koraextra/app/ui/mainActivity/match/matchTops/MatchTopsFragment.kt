@@ -97,7 +97,8 @@ class MatchTopsFragment : Fragment() {
 
                 loading.visibility = View.GONE
                 activity?.snackBarWithAction(
-                    context!!.resources.getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
+                    getString(R.string.noConnectionMessage),
                     matchTopsRootView
                 ) {
                     viewModel.fixtureId?.let {

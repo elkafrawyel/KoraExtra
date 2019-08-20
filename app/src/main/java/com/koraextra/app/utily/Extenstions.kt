@@ -52,15 +52,20 @@ fun Context.snackBar(message: String?, rootView: View) {
     snackBar.show()
 }
 
-fun Context.snackBarWithAction(message: String?, rootView: View,action: () -> Unit) {
-    val snackBar = Snackbar.make(rootView, message!!, Snackbar.LENGTH_LONG)
+fun Context.snackBarWithAction(
+    message: String,
+    actionTitle: String,
+    rootView: View,
+    action: () -> Unit
+) {
+    val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
     val view = snackBar.view
     val textView = view.findViewById<View>(R.id.snackbar_text)
     textView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
 //    snackBar.view.setBackgroundColor(ContextCompat.getColor(rootView.context,android.R.color.white))
 //    = ContextCompat.getColor(rootView.context,android.R.color.white)
     snackBar.duration = 20000
-    snackBar.setAction(getString(R.string.refresh)) {
+    snackBar.setAction(actionTitle) {
         action.invoke()
     }
     snackBar.show()

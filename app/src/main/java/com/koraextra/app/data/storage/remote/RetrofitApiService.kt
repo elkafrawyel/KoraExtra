@@ -4,6 +4,8 @@ import com.koraextra.app.data.models.*
 import com.koraextra.app.data.models.EventsResponse
 import com.koraextra.app.data.models.MatchResponse
 import com.koraextra.app.data.models.PlayersResponse
+import com.koraextra.app.data.models.auth.LoginBody
+import com.koraextra.app.data.models.auth.LoginResponse
 import com.koraextra.app.data.models.auth.RegisterBody
 import com.koraextra.app.data.models.auth.RegisterResponse
 import kotlinx.coroutines.Deferred
@@ -24,7 +26,6 @@ interface RetrofitApiService {
     fun getEventsAsync(
         @Query("go") go: String
     ): Deferred<EventsResponse>
-
 
     @GET("apigo.php")
     fun getMatchTopsAsync(
@@ -47,7 +48,6 @@ interface RetrofitApiService {
         @Query("go") go: String
     ): Deferred<MatchResponse>
 
-
     @GET("apigo.php")
     fun getSeasonsAsync(
         @Query("go") go: String
@@ -57,6 +57,11 @@ interface RetrofitApiService {
     fun registerAsync(
         @Body registerBody: RegisterBody
     ): Deferred<RegisterResponse>
+
+    @POST("api/doLogin")
+    fun loginAsync(
+        @Body loginBody: LoginBody
+    ): Deferred<LoginResponse>
 
     //====================news=============================
     @GET("apigo.php")

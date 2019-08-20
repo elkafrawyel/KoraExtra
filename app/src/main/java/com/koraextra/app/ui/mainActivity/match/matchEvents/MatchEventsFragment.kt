@@ -42,7 +42,7 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
 
 
 
-        mainViewModel.matchLiveData.observe(this,this)
+        mainViewModel.matchLiveData.observe(this, this)
 
         viewModel.uiState.observe(this, Observer {
             onEventsResponse(it)
@@ -82,7 +82,8 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
 
                 loading.visibility = View.GONE
                 activity?.snackBarWithAction(
-                    context!!.resources.getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh)
+                    , getString(R.string.noConnectionMessage),
                     matchEventRootView
                 ) {
                     viewModel.fixtureId?.let {

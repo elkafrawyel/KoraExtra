@@ -30,6 +30,7 @@ class TeamPlayersFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListene
     private val adapterPlayers = AdapterPlayers().also {
         it.onItemChildClickListener = this
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,19 +43,19 @@ class TeamPlayersFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListene
         viewModel = ViewModelProviders.of(this).get(TeamPlayersViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-       if (viewModel.matchTops.isEmpty()){
-           mainViewModel.leagueIdLiveData.observe(this, Observer {
-               viewModel.leagueId = it
-           })
-           mainViewModel.teamIdLiveData.observe(this, Observer {
-               viewModel.teamId = it
-               viewModel.getTeamPlayersTopsList()
-           })
+        if (viewModel.matchTops.isEmpty()) {
+            mainViewModel.leagueIdLiveData.observe(this, Observer {
+                viewModel.leagueId = it
+            })
+            mainViewModel.teamIdLiveData.observe(this, Observer {
+                viewModel.teamId = it
+                viewModel.getTeamPlayersTopsList()
+            })
 
-           viewModel.uiState.observe(this, Observer {
-               onTopsResponse(it)
-           })
-       }
+            viewModel.uiState.observe(this, Observer {
+                onTopsResponse(it)
+            })
+        }
 
 
         teamPlayerRv.adapter = adapterPlayers
@@ -104,7 +105,8 @@ class TeamPlayersFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListene
 
                 loading.visibility = View.GONE
                 activity?.snackBarWithAction(
-                    context!!.resources.getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
+                    getString(R.string.noConnectionMessage),
                     teamPlayerRootView
                 ) {
                     viewModel.teamId?.let {

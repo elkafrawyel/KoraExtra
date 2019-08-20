@@ -73,13 +73,14 @@ class MatchFragment : Fragment() {
             }
             is MyUiStates.Error -> {
 //                loading.visibility = View.GONE
-                activity?.snackBar(state.message,matchRootView)
+                activity?.snackBar(state.message, matchRootView)
             }
             MyUiStates.NoConnection -> {
 //                loading.visibility = View.GONE
                 timer.text = context?.resources?.getString(R.string.noConnectionMessage)
                 activity?.snackBarWithAction(
-                    context!!.resources.getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
+                    getString(R.string.noConnectionMessage),
                     matchRootView
                 ) {
                     viewModel.fixtureId?.let {

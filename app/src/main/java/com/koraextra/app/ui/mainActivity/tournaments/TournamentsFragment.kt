@@ -104,7 +104,7 @@ class TournamentsFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListene
                         viewModel.getLeaguesBySeason(viewModel.seasons[viewModel.currentSeasonPosition].toString())
                     }
                 } else {
-                    if ( viewModel.currentSeasonPosition != position) {
+                    if (viewModel.currentSeasonPosition != position) {
                         viewModel.currentSeasonPosition = position
                         viewModel.getLeaguesBySeason(viewModel.seasons[position].toString())
                     }
@@ -161,7 +161,11 @@ class TournamentsFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListene
                 leaguesTv.visibility = View.GONE
                 seasonsSpinner.visibility = View.GONE
                 leaguesTv.visibility = View.GONE
-                activity?.snackBarWithAction(context?.resources?.getString(R.string.noConnectionMessage), rootView) {
+                activity?.snackBarWithAction(
+                    getString(R.string.refresh),
+                    getString(R.string.noConnectionMessage),
+                    rootView
+                ) {
                     refresh()
                 }
             }

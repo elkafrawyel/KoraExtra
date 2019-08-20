@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootView"
     tools:context=".ui.mainActivity.auth.login.LoginFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -82,8 +83,9 @@
                 android:background="@drawable/auth_bg_rounded"
                 android:drawableStart="@drawable/ic_email_black_24dp"
                 android:drawablePadding="12dp"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:text=""
+                android:id="@+id/email"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@android:color/black" />
 
@@ -102,6 +104,7 @@
                 android:drawablePadding="12dp"
                 android:inputType="textPassword"
                 android:text=""
+                android:id="@+id/password"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@android:color/black" />
 
@@ -213,5 +216,16 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
