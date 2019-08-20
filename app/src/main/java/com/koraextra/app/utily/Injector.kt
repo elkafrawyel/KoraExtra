@@ -44,7 +44,6 @@ object Injector {
                     chain.request().header("Accept-Language") ?: getPreferenceHelper().language
                 )
             }
-
             chain.proceed(request.build())
         }
     }
@@ -86,6 +85,7 @@ object Injector {
     fun getNewsRepo() =               NewsRepo(getApiService())
     fun getLeaguesMatchesRepo() =     LeaguesMatchesRepo(getApiService(), getAppDatabase())
 
+    fun registerRepo()=                   RegisterRepo(getApiService())
 //------------------------------------database-------------------------------
     fun getStoredMatchesRepo() =      StoredMatchesRepo(getAppDatabase())
     fun getStoredMatchEventsRepo() =  StoredMatchEventsRepo(getAppDatabase())

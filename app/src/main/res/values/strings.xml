@@ -71,4 +71,7 @@
     <string name="emptyTops">لا توجد بيانات</string>
     <string name="emptyLeagues">لا توجد بطولات</string>
     <string name="seasons">المواسم</string>
+    <string name="empty_user_name">اسم المستخدم فارغ</string>
+    <string name="empty_email">البريد الالكتروني فارغ</string>
+    <string name="empty_password">حقل كلمة المرور فارغ</string>
 </resources>

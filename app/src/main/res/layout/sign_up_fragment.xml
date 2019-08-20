@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mainActivity.auth.signUp.signUpFragment">
+    android:id="@+id/rootView"
+    tools:context=".ui.mainActivity.auth.signUp.SignUpFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -26,21 +27,20 @@
                 android:src="@drawable/ic_keyboard_backspace_white_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="حساب جديد"
+                android:text="@string/newAccount"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="@android:color/white"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textStyle="bold"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -78,6 +78,7 @@
                 android:textColor="@color/colorText" />
 
             <EditText
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/auth_bg_rounded"
@@ -96,6 +97,7 @@
                 android:textColor="@color/colorText" />
 
             <EditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/auth_bg_rounded"
@@ -114,6 +116,7 @@
                 android:textColor="@color/colorText" />
 
             <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/auth_bg_rounded"
@@ -125,43 +128,53 @@
                 android:textColor="@android:color/black" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/singUpMbtn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:id="@+id/singUpMbtn"
                 android:text="@string/singUp"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@android:color/white"
-                app:backgroundTint="@color/colorPrimary"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                app:backgroundTint="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="18dp"
                 android:layout_gravity="center"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/alreadyHaveAccount"
-                    android:textColor="@color/colorPrimary"/>
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/alreadyHaveAccount"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
                     android:id="@+id/loginTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/login1"
-                    android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
