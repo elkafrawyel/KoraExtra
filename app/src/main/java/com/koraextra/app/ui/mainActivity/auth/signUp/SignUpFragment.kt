@@ -95,7 +95,11 @@ class SignUpFragment : Fragment() {
             }
             MyUiStates.NoConnection -> {
                 loading.visibility = View.GONE
-                activity?.snackBarWithAction(context!!.resources.getString(R.string.noConnectionMessage), rootView) {
+                activity?.snackBarWithAction(
+                    getString(R.string.refresh),
+                    getString(R.string.noConnectionMessage),
+                    rootView
+                ) {
                     register()
                 }
             }

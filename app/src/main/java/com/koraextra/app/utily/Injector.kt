@@ -77,16 +77,19 @@ object Injector {
 
 
     // ============================================= Repos ================================================================
-    fun getMatchesRepo() =            MatchesRepo(getApiService(), getAppDatabase())
-    fun getMatchEventsRepo() =        MatchEventsRepo(getApiService(), getAppDatabase())
-    fun getMatchTopsRepo() =          MatchTopsRepo(getApiService())
-    fun getLeaguesRepo() =            LeaguesRepo(getApiService())
-    fun getSeasonsRepo() =            SeasonsRepo(getApiService())
-    fun getNewsRepo() =               NewsRepo(getApiService())
-    fun getLeaguesMatchesRepo() =     LeaguesMatchesRepo(getApiService(), getAppDatabase())
+    fun getMatchesRepo() = MatchesRepo(getApiService(), getAppDatabase())
 
-    fun registerRepo()=                   RegisterRepo(getApiService())
-//------------------------------------database-------------------------------
-    fun getStoredMatchesRepo() =      StoredMatchesRepo(getAppDatabase())
-    fun getStoredMatchEventsRepo() =  StoredMatchEventsRepo(getAppDatabase())
+    fun getMatchEventsRepo() = MatchEventsRepo(getApiService(), getAppDatabase())
+    fun getMatchTopsRepo() = MatchTopsRepo(getApiService())
+    fun getLeaguesRepo() = LeaguesRepo(getApiService())
+    fun getSeasonsRepo() = SeasonsRepo(getApiService())
+    fun getNewsRepo() = NewsRepo(getApiService())
+    fun getLeaguesMatchesRepo() = LeaguesMatchesRepo(getApiService(), getAppDatabase())
+
+    fun registerRepo() = RegisterRepo(getApiService())
+    fun loginRepo() = LoginRepo(getApiService())
+    //------------------------------------database-------------------------------
+    fun getStoredMatchesRepo() = StoredMatchesRepo(getAppDatabase())
+
+    fun getStoredMatchEventsRepo() = StoredMatchEventsRepo(getAppDatabase())
 }

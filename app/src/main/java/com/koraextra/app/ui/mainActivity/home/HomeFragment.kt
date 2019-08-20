@@ -110,10 +110,9 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 linearHeader.visibility = View.GONE
             else
                 linearHeader.visibility = View.VISIBLE
-
-
         }
 
+        setAuthState()
         navigationView.setNavigationItemSelectedListener(this)
 
         drawerToggleImgBtn.setOnClickListener {
@@ -163,14 +162,13 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     viewModel.getMatchesList()
                     linearHeader.visibility = View.VISIBLE
                 }
-
             }
-
         }
 
         date_tv.setOnClickListener {
             openDatePicker()
         }
+
         dayName_tv.setOnClickListener {
             openDatePicker()
         }
@@ -195,6 +193,15 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
+    }
+
+    private fun setAuthState() {
+        val preferencesHelper = Injector.getPreferenceHelper()
+        if (preferencesHelper.isLoggedIn) {
+            navigationView.menu.getItem(7).title = context?.resources?.getString(R.string.logOut)
+        } else {
+            navigationView.menu.getItem(7).title = context?.resources?.getString(R.string.login)
+        }
     }
 
     private fun getTodayMatches() {
@@ -304,7 +311,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 emptyMessageTv.visibility = View.GONE
 
                 activity?.snackBarWithAction(
-                    context?.resources?.getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
+                    context?.resources?.getString(R.string.noConnectionMessage)!!,
                     homeRootView
                 ) {
                     viewModel.getMatchesList(liveSwitch.isChecked)
@@ -336,14 +344,36 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val preferencesHelper = Injector.getPreferenceHelper()
         when (item.itemId) {
             R.id.nav_notification -> {
-                findNavController().navigate(R.id.notificationsFragment)
+                if (preferencesHelper.isLoggedIn) {
+                    findNavController().navigate(R.id.notificationsFragment)
+                } else {
+                    activity?.snackBarWithAction(
+                        getString(R.string.you_must_login),
+                        getString(R.string.login),
+                        homeRootView
+                    ) {
+                        findNavController().navigate(R.id.loginFragment)
+                    }
+                }
             }
             R.id.nav_favourites -> {
-                findNavController().navigate(R.id.favoritesFragment)
+                if (preferencesHelper.isLoggedIn) {
+                    findNavController().navigate(R.id.favoritesFragment)
+                } else {
+                    activity?.snackBarWithAction(
+                        getString(R.string.you_must_login),
+                        getString(R.string.login),
+                        homeRootView
+                    ) {
+                        findNavController().navigate(R.id.loginFragment)
+                    }
+                }
             }
             R.id.nav_newsPaper -> {
+
                 findNavController().navigate(R.id.latestNewsFragment)
             }
             R.id.nav_champions -> {
@@ -355,10 +385,25 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 findNavController().navigate(R.id.topScorersFragment)
             }
             R.id.nav_settings -> {
-                findNavController().navigate(R.id.settingsFragment)
+                if (preferencesHelper.isLoggedIn) {
+                    findNavController().navigate(R.id.settingsFragment)
+                } else {
+                    activity?.snackBarWithAction(
+                        getString(R.string.you_must_login),
+                        getString(R.string.login),
+                        homeRootView
+                    ) {
+                        findNavController().navigate(R.id.loginFragment)
+                    }
+                }
             }
             R.id.nav_login -> {
-                findNavController().navigate(R.id.loginFragment)
+                if (preferencesHelper.isLoggedIn) {
+                    preferencesHelper.clear()
+                    navigationView.menu.getItem(7).title = context?.resources?.getString(R.string.login)
+                } else {
+                    findNavController().navigate(R.id.loginFragment)
+                }
             }
         }
         viewModel.isSwitchOn = liveSwitch.isChecked
