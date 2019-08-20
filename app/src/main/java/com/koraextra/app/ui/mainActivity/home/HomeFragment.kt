@@ -249,7 +249,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             context!!,
             R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Calendar,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                val date = year.toString() + "-" + String.format("%02d-%02d", (monthOfYear + 1), dayOfMonth)
+                val date = year.toString() + "-" + String.format(Locale("en"),"%02d-%02d", (monthOfYear + 1), dayOfMonth)
 //                activity?.toast(date)
 
 

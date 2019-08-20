@@ -16,6 +16,7 @@ import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.match_fragment.*
+import java.util.*
 
 class MatchFragment : Fragment() {
 
@@ -202,7 +203,12 @@ class MatchFragment : Fragment() {
                         var Seconds = (time / 1000).toInt()
                         val Minutes = Seconds / 60
                         Seconds %= 60
-                        val timerText = String.format("%02d:%02d", Minutes, Seconds)
+                        var timerText=""
+                        if(Minutes>=130){
+                            timerText = "130:00"
+                        }else{
+                            timerText = String.format(Locale("en"),"%02d:%02d", Minutes, Seconds)
+                        }
                         it.text = timerText
                         timerToolbar.text = timerText
                     }

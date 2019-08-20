@@ -10,6 +10,7 @@ import com.koraextra.app.utily.Injector
 import com.koraextra.app.utily.getTimeAgoAsMills
 import com.koraextra.app.utily.getTimeFromMills
 import com.koraextra.app.utily.toast
+import java.util.*
 
 
 class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter<MatchModel, BaseViewHolder>(data) {
@@ -113,7 +114,12 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
                     var Seconds = (time / 1000).toInt()
                     val Minutes = Seconds / 60
                     Seconds = Seconds % 60
-                    val timer2 = String.format("%02d:%02d", Minutes, Seconds)
+                    var timer2=""
+                    if(Minutes>=130){
+                        timer2 = "130:00"
+                    }else{
+                        timer2 = String.format(Locale("en"),"%02d:%02d", Minutes, Seconds)
+                    }
                     it.setText(timer2)
                 }
                 timer.start()
