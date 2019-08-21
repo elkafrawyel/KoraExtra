@@ -50,7 +50,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                                                                                   , view, position ->
 
             viewModel.isSwitchOn = liveSwitch.isChecked
-            val match = (adapter.data as List<MatchModel>)[position]
+            val match = (adapter.data[position] as MatchModel)
             when (view?.id) {
                 R.id.matchItem -> {
                     val action =

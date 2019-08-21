@@ -19,9 +19,11 @@ import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.ui.mainActivity.home.AdapterMatches
+import com.koraextra.app.ui.mainActivity.home.HomeFragmentDirections
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.toast
+import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.tournament_matches_fragment.*
 import kotlinx.android.synthetic.main.tournament_matches_fragment.emptyMessageTv
 import kotlinx.android.synthetic.main.tournament_matches_fragment.loading
@@ -37,16 +39,42 @@ class TournamentMatchesFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private val matchesList: ArrayList<MatchModel> = arrayListOf()
     private val adapterMatches = AdapterMatches(matchesList).also {
-        it.onItemChildClickListener =
-            BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-                when (view?.id) {
-                    R.id.matchItem -> {
-                        val match = (adapter.data as List<MatchModel>)[position]
-                        val bundle = bundleOf("fixtureId" to match.fixtureId!!)
-                        activity?.findNavController(R.id.fragment)!!.navigate(R.id.newsFragment, bundle)
-                    }
+        it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter
+                                                                                  , view, position ->
+            val match = (adapter.data[position] as MatchModel)
+            when (view?.id) {
+                R.id.matchItem -> {
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
+                    val parameters = Bundle()
+                    parameters.putInt("fixtureId", match.fixtureId)
+                    findNavController().navigate(R.id.matchFragment,parameters)
+                }
+
+                R.id.homeImg,
+                R.id.homeName -> {
+                    mainViewModel.setTeamId(match.homeTeamid!!)
+                    mainViewModel.setTeamName(match.homeTeam?.teamName!!)
+                    mainViewModel.setTeamLogo(match.homeTeam.logo!!)
+                    mainViewModel.setTeamFavo(match.homeTeam.favorite!!)
+                    mainViewModel.setLeagueId(match.leagueId!!)
+
+                    findNavController().navigate(R.id.teamFragment)
+                }
+
+                R.id.awayImg,
+                R.id.awayName -> {
+                    mainViewModel.setTeamId(match.awayTeamid!!)
+                    mainViewModel.setTeamName(match.awayTeam?.teamName!!)
+                    mainViewModel.setTeamLogo(match.awayTeam.logo!!)
+                    mainViewModel.setTeamFavo(match.awayTeam.favorite!!)
+                    mainViewModel.setLeagueId(match.leagueId!!)
+
+                    findNavController().navigate(R.id.teamFragment)
+
                 }
             }
+        }
     }
 
     override fun onCreateView(
