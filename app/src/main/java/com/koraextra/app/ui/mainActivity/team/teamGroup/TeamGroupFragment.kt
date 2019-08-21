@@ -17,7 +17,7 @@ class TeamGroupFragment : Fragment() {
     }
 
     private lateinit var viewModel: TeamGroupViewModel
-    private val adapterTeamGroup = AdapterTeamGroup()
+//    private val adapterTeamGroup = AdapterTeamGroup()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +29,17 @@ class TeamGroupFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TeamGroupViewModel::class.java)
-        val group = ArrayList<String>()
-        group.add("a")
-        group.add("a")
-        group.add("a")
-        group.add("a")
-
-
-        adapterTeamGroup.replaceData(group)
-
-        teamGroupRv.adapter = adapterTeamGroup
-        teamGroupRv.setHasFixedSize(true)
+//        val group = ArrayList<String>()
+//        group.add("a")
+//        group.add("a")
+//        group.add("a")
+//        group.add("a")
+//
+//
+//        adapterTeamGroup.replaceData(group)
+//
+//        teamGroupRv.adapter = adapterTeamGroup
+//        teamGroupRv.setHasFixedSize(true)
     }
 
 }

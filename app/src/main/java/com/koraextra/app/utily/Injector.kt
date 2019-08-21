@@ -82,6 +82,7 @@ object Injector {
     fun getMatchEventsRepo() = MatchEventsRepo(getApiService(), getAppDatabase())
     fun getMatchTopsRepo() = MatchTopsRepo(getApiService())
     fun getLeaguesRepo() = LeaguesRepo(getApiService())
+    fun getLeagueTableRepo() = LeagueTableRepo(getApiService())
     fun getSeasonsRepo() = SeasonsRepo(getApiService())
     fun getNewsRepo() = NewsRepo(getApiService())
     fun getLeaguesMatchesRepo() = LeaguesMatchesRepo(getApiService(), getAppDatabase())
