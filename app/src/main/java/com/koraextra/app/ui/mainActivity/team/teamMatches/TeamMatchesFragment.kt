@@ -52,7 +52,7 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
         if (viewModel.storedMatchesLiveData == null) {
 
             mainViewModel.teamIdLiveData.observe(this, Observer {
-                viewModel.id = it
+                viewModel.teamId = it
             })
 
             mainViewModel.teamNameLiveData.observe(this, Observer {
@@ -139,13 +139,15 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
 
             R.id.homeImg,
             R.id.homeName -> {
-                viewModel.id = match.homeTeam?.teamId!!
-                viewModel.name = match.homeTeam.teamName!!
+                viewModel.teamId = match.homeTeamid!!
+                viewModel.name = match.homeTeam?.teamName!!
                 viewModel.logo = match.homeTeam.logo!!
+//                viewModel.favorite = match.homeTeam.favorite!!
 
-                mainViewModel.setTeamId(match.homeTeam.teamId)
+                mainViewModel.setTeamId(match.homeTeamid)
                 mainViewModel.setTeamName(match.homeTeam.teamName)
                 mainViewModel.setTeamLogo(match.homeTeam.logo)
+                mainViewModel.setTeamFavo(match.homeTeam.favorite!!)
                 viewModel.getMatchesList()
                 viewModel.storedMatchesLiveData?.removeObserver(this)
 
@@ -153,13 +155,15 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
 
             R.id.awayImg,
             R.id.awayName -> {
-                viewModel.id = match.homeTeam?.teamId!!
-                viewModel.name = match.homeTeam.teamName!!
+                viewModel.teamId = match.homeTeamid!!
+                viewModel.name = match.homeTeam?.teamName!!
                 viewModel.logo = match.homeTeam.logo!!
+//                viewModel.favorite = match.homeTeam.favorite!!
 
-                mainViewModel.setTeamId(match.awayTeam?.teamId!!)
-                mainViewModel.setTeamName(match.awayTeam.teamName!!)
+                mainViewModel.setTeamId(match.awayTeamid!!)
+                mainViewModel.setTeamName(match.awayTeam?.teamName!!)
                 mainViewModel.setTeamLogo(match.awayTeam.logo!!)
+                mainViewModel.setTeamFavo(match.awayTeam.favorite!!)
                 viewModel.getMatchesList()
                 viewModel.storedMatchesLiveData?.removeObserver(this)
 

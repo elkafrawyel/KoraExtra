@@ -67,6 +67,7 @@
     <string name="live">مباشر</string>
     <string name="kora_extra">Kora Extra</string>
     <string name="no_matches">لا توجد مباريات</string>
+    <string name="no_favorite">لا توجد مفضله</string>
     <string name="noConnectionMessage">لا يوجد اتصال بالانترنت</string>
     <string name="refresh">تحديث</string>
     <string name="not_started">لم تبدأ</string>
@@ -80,6 +81,8 @@
     <string name="empty_password">حقل كلمة المرور فارغ</string>
     <string name="you_must_login">يجب تسجيل الدخول اولا</string>
     <string name="logOut">تسجيل الخروج</string>
+    <string name="teamAddedToFavorite">تم اضافة الفريق الي المفضله</string>
+    <string name="teamRemovedFromFavorite">تم حذف الفريق من المفضله</string>
     <string name="no_leagueTable">لا توجد مجموعات</string>
     <string name="tryAgainLater">حدث خطأ ما حاول مرة اخري لاحقااا</string>
 </resources>

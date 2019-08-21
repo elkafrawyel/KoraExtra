@@ -64,7 +64,7 @@ fun Context.snackBarWithAction(
     textView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
 //    snackBar.view.setBackgroundColor(ContextCompat.getColor(rootView.context,android.R.color.white))
 //    = ContextCompat.getColor(rootView.context,android.R.color.white)
-    snackBar.duration = 20000
+    snackBar.duration = 10000
     snackBar.setAction(actionTitle) {
         action.invoke()
     }

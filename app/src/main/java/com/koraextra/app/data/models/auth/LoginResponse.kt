@@ -9,7 +9,7 @@ data class LoginResponse(
     val id: Int?,
     @field:Json(name = "name")
     val name: String?,
-    @field:Json(name = "api_token")
+    @field:Json(name = "token")
     val token: String?,
     @field:Json(name = "email")
     val email: String?,

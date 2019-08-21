@@ -30,10 +30,8 @@ class StoredMatchesRepo(private val appDatabase: AppDatabase) {
         return DataResource.Success(match)
     }
 
-    fun getStoredTeamMatches(id:Int,name:String,logo:String): DataResource<LiveData<List<MatchModel>>> {
-            val homeAsString = Gson().toJson(AwayTeam(0,logo,id,name))
-            val awayAsString = Gson().toJson(HomeTeam(0,logo,id,name))
-        val match = appDatabase.myDao().getMatchByTeam(homeAsString,awayAsString)
+    fun getStoredTeamMatches(teamId: Int): DataResource<LiveData<List<MatchModel>>> {
+        val match = appDatabase.myDao().getMatchByTeam(teamId)
         return DataResource.Success(match)
     }
 }

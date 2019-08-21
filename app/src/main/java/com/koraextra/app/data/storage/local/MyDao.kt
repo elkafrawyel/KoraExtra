@@ -28,12 +28,18 @@ interface MyDao {
     @Query("SELECT * FROM MatchModel WHERE leagueId = :id")
     fun getMatchByLeagueId(id: Int): LiveData<List<MatchModel>>
 
-    @Query("SELECT * FROM MatchModel WHERE homeTeam = :home OR awayTeam= :away ")
-    fun getMatchByTeam(away: String,home:String): LiveData<List<MatchModel>>
+    @Query("SELECT * FROM MatchModel WHERE awayTeamid = :teamId OR homeTeamid= :teamId ")
+    fun getMatchByTeam(teamId: Int): LiveData<List<MatchModel>>
 
     @Query("SELECT * FROM EventModel WHERE fixtureId =:fixtureId ORDER BY elapsed DESC")
     fun getMatchEvents(fixtureId: Int): LiveData<List<EventModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMatchEvents(item: List<EventModel>)
+
+
+    @Query("UPDATE MatchModel SET homeTeam= :home WHERE homeTeamid = :id")
+    fun updateAwayTeam(id:Int,home: String):Int
+    @Query("UPDATE MatchModel SET awayTeam= :away WHERE awayTeamid = :id")
+    fun updateHomeTeam(id:Int,away: String):Int
 }

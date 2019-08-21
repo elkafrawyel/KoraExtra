@@ -36,6 +36,10 @@ data class MatchModel(
     val goalsAwayTeam: Int? = 0,
     @field:Json(name = "goalsHomeTeam")
     val goalsHomeTeam: Int? = 0,
+    @field:Json(name = "homeTeamid")
+    val homeTeamid: Int? = 0,
+    @field:Json(name = "awayTeamid")
+    val awayTeamid: Int? = 0,
     @field:Json(name = "homeTeam")
     val homeTeam: HomeTeam?,
     @field:Json(name = "league_id")
@@ -70,7 +74,9 @@ data class HomeTeam(
     @field:Json(name = "team_id")
     val teamId: Int?,
     @field:Json(name = "team_name")
-    val teamName: String?
+    val teamName: String?,
+    @field:Json(name = "fav")
+    val favorite: Int?
 )
 
 @Entity
@@ -81,7 +87,9 @@ data class AwayTeam(
     @field:Json(name = "team_id")
     val teamId: Int?,
     @field:Json(name = "team_name")
-    val teamName: String?
+    val teamName: String?,
+    @field:Json(name = "fav")
+    val favorite: Int?
 )
 
 @Entity

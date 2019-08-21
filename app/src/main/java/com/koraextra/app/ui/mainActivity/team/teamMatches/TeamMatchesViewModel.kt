@@ -17,7 +17,7 @@ class TeamMatchesViewModel : KoraViewModel() {
 
     var opened:Boolean = false
 
-    var id:Int?=null
+    var teamId:Int?=null
     var name:String?=null
     var logo:String?=null
     //==============================================================
@@ -44,14 +44,14 @@ class TeamMatchesViewModel : KoraViewModel() {
     private fun launchJob(): Job {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
-            val result: DataResource<Boolean>? = getMatchesRepo().getMatches(getMatchesOfTeam(id!!))
+            val result: DataResource<Boolean>? = getMatchesRepo().getMatches(getMatchesOfTeam(teamId!!))
 
 
             when (result) {
                 is DataResource.Success -> {
                     if (result.data) {
 
-                        when (val databaseResult = getStoredMatches().getStoredTeamMatches(id!!,name!!,logo!!)) {
+                        when (val databaseResult = getStoredMatches().getStoredTeamMatches(teamId!!)) {
                             is DataResource.Success -> {
                                 storedMatchesLiveData = databaseResult.data
                                 withContext(dispatcherProvider.main) {

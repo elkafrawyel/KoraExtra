@@ -52,6 +52,13 @@ class MainViewModel : KoraViewModel() {
         _teamLogo.value = teamLogo
     }
 
+    private var _teamFavo = MutableLiveData<Int>()
+    val teamFavoLiveData: LiveData<Int>
+        get() = _teamFavo
+
+    fun setTeamFavo(teamFavo: Int) {
+        _teamFavo.value = teamFavo
+    }
     private var _leagueId = MutableLiveData<Int>()
     val leagueIdLiveData: LiveData<Int>
         get() = _leagueId

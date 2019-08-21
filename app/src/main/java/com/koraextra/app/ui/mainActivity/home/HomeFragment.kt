@@ -60,9 +60,10 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
                 R.id.homeImg,
                 R.id.homeName -> {
-                    mainViewModel.setTeamId(match.homeTeam?.teamId!!)
-                    mainViewModel.setTeamName(match.homeTeam.teamName!!)
+                    mainViewModel.setTeamId(match.homeTeamid!!)
+                    mainViewModel.setTeamName(match.homeTeam?.teamName!!)
                     mainViewModel.setTeamLogo(match.homeTeam.logo!!)
+                    mainViewModel.setTeamFavo(match.homeTeam.favorite!!)
                     mainViewModel.setLeagueId(match.leagueId!!)
 
                     findNavController().navigate(R.id.teamFragment)
@@ -70,9 +71,10 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
                 R.id.awayImg,
                 R.id.awayName -> {
-                    mainViewModel.setTeamId(match.awayTeam?.teamId!!)
-                    mainViewModel.setTeamName(match.awayTeam.teamName!!)
+                    mainViewModel.setTeamId(match.awayTeamid!!)
+                    mainViewModel.setTeamName(match.awayTeam?.teamName!!)
                     mainViewModel.setTeamLogo(match.awayTeam.logo!!)
+                    mainViewModel.setTeamFavo(match.awayTeam.favorite!!)
                     mainViewModel.setLeagueId(match.leagueId!!)
 
                     findNavController().navigate(R.id.teamFragment)

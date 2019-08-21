@@ -8,18 +8,21 @@ import com.koraextra.app.data.models.auth.LoginBody
 import com.koraextra.app.data.models.auth.LoginResponse
 import com.koraextra.app.data.models.auth.RegisterBody
 import com.koraextra.app.data.models.auth.RegisterResponse
+import com.koraextra.app.utily.Injector
 import kotlinx.coroutines.Deferred
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RetrofitApiService {
 
 
     @GET("apigo.php")
     fun getMatchesAsync(
-        @Query("go") go: String
+        @Query("go") go: String,
+        @Query("api_token") api_token: String = if (Injector.getPreferenceHelper().isLoggedIn) {
+            Injector.getPreferenceHelper().token!!
+        } else {
+            "notRegisted"
+        }
     ): Deferred<MatchResponse>
 
     @GET("apigo.php")
@@ -50,7 +53,12 @@ interface RetrofitApiService {
 
     @GET("apigo.php")
     fun getLeaguesMatchesAsync(
-        @Query("go") go: String
+        @Query("go") go: String,
+        @Query("api_token") api_token: String = if (Injector.getPreferenceHelper().isLoggedIn) {
+            Injector.getPreferenceHelper().token!!
+        } else {
+            "notRegisted"
+        }
     ): Deferred<MatchResponse>
 
     @GET("apigo.php")
@@ -63,9 +71,20 @@ interface RetrofitApiService {
         @Body registerBody: RegisterBody
     ): Deferred<RegisterResponse>
 
+    @GET("api/viewFavorite")
+    fun getFavoriteAsync(
+        @Query("api_token") token: String
+    ): Deferred<FavoritesResponse>
+
     @POST("api/addToFavorite")
     fun addToFavoriteAsync(
         @Body favoriteBody: FavoriteBody
+    ): Deferred<FavoriteResponse>
+
+    @GET("api/deleteFavorite/{id}")
+    fun removeFromFavoriteAsync(
+        @Path("id") id: Int,
+        @Query("api_token") token: String
     ): Deferred<FavoriteResponse>
 
     @POST("api/doLogin")
