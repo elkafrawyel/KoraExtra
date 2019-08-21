@@ -82,8 +82,8 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
 
                 loading.visibility = View.GONE
                 activity?.snackBarWithAction(
-                    getString(R.string.refresh)
-                    , getString(R.string.noConnectionMessage),
+                    getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
                     matchEventRootView
                 ) {
                     viewModel.fixtureId?.let {

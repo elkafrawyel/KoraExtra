@@ -162,8 +162,8 @@ class TournamentsFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListene
                 seasonsSpinner.visibility = View.GONE
                 leaguesTv.visibility = View.GONE
                 activity?.snackBarWithAction(
-                    getString(R.string.refresh),
                     getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
                     rootView
                 ) {
                     refresh()

@@ -103,8 +103,8 @@ data class All(
 class LeagueTableModel : SectionEntity<GroupTeam> {
     var isMore: Boolean = false
 
-    constructor(isHeader: Boolean, headerText: String, isMroe: Boolean) : super(isHeader, headerText) {
-        this.isMore = isMroe
+    constructor(isHeader: Boolean, headerText: String, isMore: Boolean) : super(isHeader, headerText) {
+        this.isMore = isMore
     }
 
     constructor(item: GroupTeam) : super(item)

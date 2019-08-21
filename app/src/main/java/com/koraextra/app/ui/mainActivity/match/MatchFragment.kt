@@ -79,8 +79,8 @@ class MatchFragment : Fragment() {
 //                loading.visibility = View.GONE
                 timer.text = context?.resources?.getString(R.string.noConnectionMessage)
                 activity?.snackBarWithAction(
-                    getString(R.string.refresh),
                     getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
                     matchRootView
                 ) {
                     viewModel.fixtureId?.let {

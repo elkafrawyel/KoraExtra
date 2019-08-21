@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import com.koraextra.app.R
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
+import com.koraextra.app.utily.snackBar
+import com.koraextra.app.utily.snackBarWithAction
 import kotlinx.android.synthetic.main.tournament_order_fragment.*
 
 class TournamentOrderFragment : Fragment() {
@@ -48,9 +50,11 @@ class TournamentOrderFragment : Fragment() {
         when (states) {
             MyUiStates.Loading -> {
                 loading.visibility = View.VISIBLE
+                emptyMessageTv.visibility = View.GONE
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
+                emptyMessageTv.visibility = View.GONE
                 onTableSuccess()
             }
             MyUiStates.LastPage -> {
@@ -58,15 +62,23 @@ class TournamentOrderFragment : Fragment() {
             }
             is MyUiStates.Error -> {
                 loading.visibility = View.GONE
-
+                emptyMessageTv.visibility = View.GONE
+                activity?.snackBar(states.message, rootView)
             }
             MyUiStates.NoConnection -> {
                 loading.visibility = View.GONE
-
+                emptyMessageTv.visibility = View.GONE
+                activity?.snackBarWithAction(
+                    getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
+                    rootView
+                ) {
+                    viewModel.getLeagueTable()
+                }
             }
             MyUiStates.Empty -> {
                 loading.visibility = View.GONE
-
+                emptyMessageTv.visibility = View.VISIBLE
             }
             null -> {
             }

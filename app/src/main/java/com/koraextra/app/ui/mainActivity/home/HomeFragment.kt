@@ -311,8 +311,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 emptyMessageTv.visibility = View.GONE
 
                 activity?.snackBarWithAction(
+                    getString(R.string.noConnectionMessage),
                     getString(R.string.refresh),
-                    context?.resources?.getString(R.string.noConnectionMessage)!!,
                     homeRootView
                 ) {
                     viewModel.getMatchesList(liveSwitch.isChecked)

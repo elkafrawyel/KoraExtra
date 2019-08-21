@@ -107,8 +107,8 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
                 emptyMessageTv.visibility = View.GONE
 
                 activity?.snackBarWithAction(
-                    getString(R.string.refresh),
                     getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
                     root
                 ) {
                     viewModel.getMatchesList()

@@ -73,8 +73,8 @@ class LoginFragment : Fragment() {
             MyUiStates.NoConnection -> {
                 loading.visibility = View.GONE
                 activity?.snackBarWithAction(
-                    getString(R.string.refresh),
                     getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
                     rootView
                 ) {
                     login()
