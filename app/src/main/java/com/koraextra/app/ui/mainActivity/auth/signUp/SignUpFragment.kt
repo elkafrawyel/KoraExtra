@@ -71,7 +71,7 @@ class SignUpFragment : Fragment() {
                 email = email.text.toString(),
                 password = password.text.toString(),
                 confirmPassword = password.text.toString(),
-                firebasetoken = Injector.getPreferenceHelper().fireBaseToken
+                firebasetoken = Injector.getPreferenceHelper().fireBaseToken!!
             )
             viewModel.register(body = body)
         } else {

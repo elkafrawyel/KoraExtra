@@ -1,5 +1,6 @@
 package com.koraextra.app.ui.mainActivity.auth.login
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.auth.LoginBody
@@ -21,6 +28,7 @@ class LoginFragment : Fragment() {
     }
 
     private lateinit var viewModel: LoginViewModel
+    private var mGoogleSignInClient: GoogleSignInClient? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +56,43 @@ class LoginFragment : Fragment() {
 
         forgetPass.setOnClickListener {
             findNavController().navigate(R.id.forgetPassFragment)
+        }
+
+        //================================ Google ======================================
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.server_client_id))
+            .requestEmail()
+            .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(context!!, gso)
+
+        googleMbtn.setOnClickListener {
+            val signInIntent = mGoogleSignInClient!!.signInIntent
+            startActivityForResult(signInIntent, 100)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 100) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            if (account != null)
+                activity?.toast(account.displayName!!)
+            else
+                activity?.toast("Error happened")
+        } catch (e: ApiException) {
+            activity?.toast("Google SignIn Error")
         }
     }
 
@@ -81,7 +126,6 @@ class LoginFragment : Fragment() {
 
             }
         }
-
     }
 
     private fun login() {
@@ -99,7 +143,7 @@ class LoginFragment : Fragment() {
             val body = LoginBody(
                 email = email.text.toString(),
                 password = password.text.toString(),
-                firebasetoken = Injector.getPreferenceHelper().fireBaseToken
+                firebasetoken = Injector.getPreferenceHelper().fireBaseToken!!
             )
             viewModel.login(body = body)
 
