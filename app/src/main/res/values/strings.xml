@@ -1,5 +1,10 @@
 <resources>
     <string name="server_client_id">808582597957-6ca5k9pa4sab9itqm4o4fafbo7a69b6l.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">507437986495212</string>
+    <string name="fb_login_protocol_scheme">fb507437986495212</string>
+
+
+
 
     <string name="app_name">KoraExtra</string>
     <string name="firstName">اسم المتخدم</string>
