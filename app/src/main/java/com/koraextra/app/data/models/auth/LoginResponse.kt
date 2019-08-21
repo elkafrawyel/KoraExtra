@@ -21,5 +21,6 @@ data class LoginResponse(
 
 data class LoginBody(
     private var email: String,
-    private var password: String
+    private var password: String,
+    private var firebasetoken: String
 )

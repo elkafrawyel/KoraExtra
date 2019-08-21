@@ -10,10 +10,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.auth.LoginBody
-import com.koraextra.app.utily.MyUiStates
-import com.koraextra.app.utily.observeEvent
-import com.koraextra.app.utily.snackBar
-import com.koraextra.app.utily.snackBarWithAction
+import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.backImage
 
@@ -35,7 +32,7 @@ class LoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-        viewModel.uiState.observeEvent(this,{ onLoginResponse(it) })
+        viewModel.uiState.observeEvent(this, { onLoginResponse(it) })
 
         backImage.setOnClickListener {
             findNavController().navigateUp()
@@ -98,11 +95,17 @@ class LoginFragment : Fragment() {
             return
         }
 
-        val body = LoginBody(
-            email = email.text.toString(),
-            password = password.text.toString()
-        )
-        viewModel.login(body = body)
+        if (Injector.getPreferenceHelper().fireBaseToken != null) {
+            val body = LoginBody(
+                email = email.text.toString(),
+                password = password.text.toString(),
+                firebasetoken = Injector.getPreferenceHelper().fireBaseToken
+            )
+            viewModel.login(body = body)
+
+        } else {
+            activity?.snackBar(getString(R.string.tryAgainLater), rootView)
+        }
     }
 
 }

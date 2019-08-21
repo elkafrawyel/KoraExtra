@@ -10,10 +10,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.auth.RegisterBody
-import com.koraextra.app.utily.MyUiStates
-import com.koraextra.app.utily.observeEvent
-import com.koraextra.app.utily.snackBar
-import com.koraextra.app.utily.snackBarWithAction
+import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.reset_password_fragment.*
 import kotlinx.android.synthetic.main.sign_up_fragment.*
 import kotlinx.android.synthetic.main.sign_up_fragment.backImage
@@ -68,13 +65,18 @@ class SignUpFragment : Fragment() {
             return
         }
 
-        val body = RegisterBody(
-            name = username.text.toString(),
-            email = email.text.toString(),
-            password = password.text.toString(),
-            confirmPassword = password.text.toString()
-        )
-        viewModel.register(body = body)
+        if (Injector.getPreferenceHelper().fireBaseToken != null) {
+            val body = RegisterBody(
+                name = username.text.toString(),
+                email = email.text.toString(),
+                password = password.text.toString(),
+                confirmPassword = password.text.toString(),
+                firebasetoken = Injector.getPreferenceHelper().fireBaseToken
+            )
+            viewModel.register(body = body)
+        } else {
+            activity?.snackBar(getString(R.string.tryAgainLater), rootView)
+        }
     }
 
     private fun onRegisterResponse(states: MyUiStates) {

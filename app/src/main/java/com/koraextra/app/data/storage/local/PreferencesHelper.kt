@@ -8,6 +8,7 @@ class PreferencesHelper(private val context: Context) {
     companion object {
         private const val IS_LOGGED_IN = "isLoggedIn"
         private const val TOKEN = "token"
+        private const val FIREBASE_TOKEN = "firebase_token"
         private const val ID = "id"
         private const val NAME = "name"
         private const val EMAIL = "email"
@@ -25,6 +26,9 @@ class PreferencesHelper(private val context: Context) {
 
     var token = preference.getString(TOKEN, null)
         set(value) = preference.edit().putString(TOKEN, value).apply()
+
+    var fireBaseToken = preference.getString(FIREBASE_TOKEN, null)
+        set(value) = preference.edit().putString(FIREBASE_TOKEN, value).apply()
 
     var id = preference.getInt(ID, -1)
         set(value) = preference.edit().putInt(ID, value).apply()
@@ -52,7 +56,9 @@ class PreferencesHelper(private val context: Context) {
 
     fun clear() {
         val lang = language
+        val firebaseToken = fireBaseToken
         preference.edit().clear().apply()
         language = lang
+        fireBaseToken = firebaseToken
     }
 }

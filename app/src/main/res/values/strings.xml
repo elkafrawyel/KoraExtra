@@ -4,7 +4,7 @@
     <string name="email">البريد الالكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="singUp">تسجيل حساب جديد</string>
-    <string name="alreadyHaveAccount">امتلك حساب بالعفل, </string>
+    <string name="alreadyHaveAccount">امتلك حساب بالفعل, </string>
     <string name="login">تسجيل الدخول</string>
     <string name="login1">تسجيل دخول</string>
     <string name="newAccount">حساب جديد</string>
@@ -77,4 +77,5 @@
     <string name="you_must_login">يجب تسجيل الدخول اولا</string>
     <string name="logOut">تسجيل الخروج</string>
     <string name="no_leagueTable">لا توجد مجموعات</string>
+    <string name="tryAgainLater">حدث خطأ ما حاول مرة اخري لاحقااا</string>
 </resources>

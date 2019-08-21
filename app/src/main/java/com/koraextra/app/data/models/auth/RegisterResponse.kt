@@ -59,5 +59,6 @@ data class RegisterBody(
     private var name: String,
     private var email: String,
     private var password: String,
-    private var confirmPassword: String
+    private var confirmPassword: String,
+    private var firebasetoken: String
 )
