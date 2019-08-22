@@ -44,34 +44,6 @@ class LatestNewsFragment : Fragment() {
         backImage.setOnClickListener {
             findNavController().navigateUp()
         }
-        newsViewPager.adapter = latestNewsSliderAdapter
-        val mainNews = ArrayList<NewsModel>()
-        mainNews.add(
-            NewsModel(
-                "https://fos.cmb.ac.lk/blog/wp-content/uploads/2019/04/Football.jpg",
-                "صفقة انتقال بيبي إلى آرسنال تمت وموعد الكشف الطبي يتحدد "
-            )
-        )
-        mainNews.add(
-            NewsModel(
-                "https://www.raf.mod.uk/aircadets/raf-aircadets/assets/Image/Football.jpg",
-                "كوتروني يعلن انضمامه إلى وولفرهامبتون "
-            )
-        )
-        mainNews.add(
-            NewsModel(
-                "https://images.performgroup.com/di/library/GOAL/f3/95/football-rule-changes_1sq9naux6zqbf13gxeov5833fa.jpg?t=-2038154983&quality=60&w=1408",
-                "آخر أخبار صفقات وسوق انتقالات ريال مدريد اليوم 29 / 07 / 2019 "
-            )
-        )
-        mainNews.add(
-            NewsModel(
-                "https://images.performgroup.com/di/library/GOAL/7f/ea/willian-chelsea-manchester-united-free-kick_1sx72o7v2m2im1cf1kqvboht0r.jpg?t=-2034903303&quality=60&w=1600",
-                "خاميس ينضم لتدريبات ريال مدريد بعد عامين من الغياب "
-            )
-        )
-
-        latestNewsSliderAdapter.submitList(mainNews)
 
         if (viewModel.opened){
             onSuccess()
@@ -145,6 +117,18 @@ class LatestNewsFragment : Fragment() {
         latestNewsRv.visibility = View.VISIBLE
         latestNewsRv.adapter = adapterNews
         latestNewsRv.setHasFixedSize(true)
+
+
+        newsViewPager.adapter = latestNewsSliderAdapter
+        val mainNews = ArrayList<KoraNewsModel>()
+
+        try {
+            mainNews.addAll(viewModel.newsList.subList(0,5).toMutableList())
+            latestNewsSliderAdapter.submitList(mainNews)
+        }catch (ex :Exception){
+            newsViewPager.visibility = View.GONE
+        }
+
     }
 
     override fun onResume() {

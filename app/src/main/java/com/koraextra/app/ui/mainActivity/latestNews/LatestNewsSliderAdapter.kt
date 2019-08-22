@@ -9,11 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.koraextra.app.R
+import com.koraextra.app.data.models.KoraNewsModel
 import com.koraextra.app.data.models.NewsModel
 
-class LatestNewsSliderAdapter() : PagerAdapter() {
+class LatestNewsSliderAdapter : PagerAdapter() {
 
-    private val newsList = ArrayList<NewsModel>()
+    private val newsList = ArrayList<KoraNewsModel>()
 
     override fun isViewFromObject(view: View, imgv: Any): Boolean {
         return view == imgv as ConstraintLayout
@@ -42,7 +43,7 @@ class LatestNewsSliderAdapter() : PagerAdapter() {
         container.removeView(`object` as View?)
     }
 
-    fun submitList(imagesList: List<NewsModel>) {
+    fun submitList(imagesList: List<KoraNewsModel>) {
         newsList.clear()
         newsList.addAll(imagesList)
         notifyDataSetChanged()
