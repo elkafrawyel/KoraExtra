@@ -3,8 +3,8 @@
     <string name="facebook_app_id">507437986495212</string>
     <string name="fb_login_protocol_scheme">fb507437986495212</string>
 
-    <string name="app_name">KoraExtra</string>
-    <string name="firstName">اسم المتخدم</string>
+    <string name="app_name">KoraGoal</string>
+    <string name="firstName">اسم المستخدم</string>
     <string name="email">البريد الالكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="singUp">تسجيل حساب جديد</string>
