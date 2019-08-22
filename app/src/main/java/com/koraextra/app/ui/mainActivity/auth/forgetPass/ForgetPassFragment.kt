@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.auth.ResetPasswordBody
+import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.forget_pass_fragment.*
 
 class ForgetPassFragment : Fragment() {
@@ -29,11 +31,53 @@ class ForgetPassFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ForgetPassViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.uiState.observeEvent(this, { onResetResponse(it) })
 
-        setEmail.setOnClickListener {
-            findNavController().navigate(R.id.resetPasswordFragment)
+        emailMbtn.setOnClickListener {
+            resetPassword()
         }
+
+    }
+
+    private fun onResetResponse(states: MyUiStates) {
+        when (states) {
+            MyUiStates.Loading -> {
+                loading.visibility = View.VISIBLE
+            }
+            MyUiStates.Success -> {
+                loading.visibility = View.GONE
+                findNavController().navigate(R.id.homeFragment)
+                activity?.toast(getString(R.string.email_sent_message))
+            }
+            MyUiStates.LastPage -> {
+            }
+            is MyUiStates.Error -> {
+                loading.visibility = View.GONE
+                activity?.snackBar(states.message, rootView)
+            }
+            MyUiStates.NoConnection -> {
+                loading.visibility = View.GONE
+                activity?.snackBarWithAction(
+                    getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
+                    rootView
+                ) {
+                    resetPassword()
+                }
+            }
+            MyUiStates.Empty -> {
+
+            }
+        }
+    }
+
+    private fun resetPassword() {
+        if (emailTv.text.isEmpty()) {
+            emailTv.error = getString(R.string.empty_email)
+            return
+        }
+
+        viewModel.resetPassword(ResetPasswordBody(email = emailTv.text.toString()))
     }
 
 }

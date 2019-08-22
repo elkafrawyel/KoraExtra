@@ -86,12 +86,16 @@ object Injector {
     fun getSeasonsRepo() = SeasonsRepo(getApiService())
     fun getNewsRepo() = NewsRepo(getApiService())
     fun getLeaguesMatchesRepo() = LeaguesMatchesRepo(getApiService(), getAppDatabase())
+    fun getNotificationsRepo() = NotificationsRepo(getApiService(), getPreferenceHelper())
 
     fun registerRepo() = RegisterRepo(getApiService())
     fun loginRepo() = LoginRepo(getApiService())
+    fun resetPasswordRepo() = ResetPasswordRepo(getApiService())
     fun favoriteRepo() = FavoriteRepo(getApiService(), getAppDatabase())
 
-    fun saveFirebaseToken() = SaveFireBaseTokenRepo(preferencesHelper = getPreferenceHelper())
+    fun saveFirebaseToken() = SaveFireBaseTokenRepo(getPreferenceHelper())
+    fun getSocialRepo() = SocialLoginRepo(getApiService())
+
     //------------------------------------database-------------------------------
     fun getStoredMatchesRepo() = StoredMatchesRepo(getAppDatabase())
 

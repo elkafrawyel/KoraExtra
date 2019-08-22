@@ -116,6 +116,7 @@ class LoginFragment : Fragment() {
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
+                activity?.toast(getString(R.string.loginSuccess))
                 findNavController().navigate(R.id.homeFragment)
 
             }

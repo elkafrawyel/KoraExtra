@@ -85,4 +85,7 @@
     <string name="teamRemovedFromFavorite">تم حذف الفريق من المفضله</string>
     <string name="no_leagueTable">لا توجد مجموعات</string>
     <string name="tryAgainLater">حدث خطأ ما حاول مرة اخري لاحقااا</string>
+    <string name="email_sent_message">تم ارسال البيانات بنجاح الي بريدك الالكتروني</string>
+    <string name="empry_notifications">لا توجد اشعارات</string>
+    <string name="loginSuccess">تم تسجيل الدخول بنجاح</string>
 </resources>

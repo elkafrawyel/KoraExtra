@@ -2,10 +2,19 @@ package com.koraextra.app.ui.mainActivity
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.NetworkUtils
 import com.koraextra.app.data.models.LeagueModel
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.data.models.PlayerModel
+import com.koraextra.app.data.models.auth.SocialBody
 import com.koraextra.app.ui.KoraViewModel
+import com.koraextra.app.utily.DataResource
+import com.koraextra.app.utily.Event
+import com.koraextra.app.utily.Injector
+import com.koraextra.app.utily.MyUiStates
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel : KoraViewModel() {
 
@@ -17,7 +26,6 @@ class MainViewModel : KoraViewModel() {
         _match.value = match
     }
 
-
     private var _tournament = MutableLiveData<LeagueModel>()
     val tournamentLiveData: LiveData<LeagueModel>
         get() = _tournament
@@ -26,7 +34,6 @@ class MainViewModel : KoraViewModel() {
         _tournament.value = tournament
     }
 
-
     private var _teamId = MutableLiveData<Int>()
     val teamIdLiveData: LiveData<Int>
         get() = _teamId
@@ -34,7 +41,6 @@ class MainViewModel : KoraViewModel() {
     fun setTeamId(teamId: Int) {
         _teamId.value = teamId
     }
-
 
     private var _teamName = MutableLiveData<String>()
     val teamNameLiveData: LiveData<String>
@@ -78,7 +84,6 @@ class MainViewModel : KoraViewModel() {
         this.player.value = player
     }
 
-
     var playerId = MutableLiveData<Int>()
     val playerIdLiveData: LiveData<Int>
         get() = playerId
@@ -87,4 +92,53 @@ class MainViewModel : KoraViewModel() {
         this.playerId.value = playerId
     }
 
+
+    //================================== FaceBook Login ======================
+
+    private var job: Job? = null
+
+    private fun socialRepo() = Injector.getSocialRepo()
+    private fun preferencesHelper() = Injector.getPreferenceHelper()
+
+    private var _uiState = MutableLiveData<Event<MyUiStates>>()
+    val uiState: LiveData<Event<MyUiStates>>
+        get() = _uiState
+
+    fun socialLogin(body: SocialBody) {
+        if (NetworkUtils.isConnected()) {
+            if (job?.isActive == true)
+                return
+            job = launchJob(body)
+        } else {
+            _uiState.value = Event(MyUiStates.NoConnection)
+        }
+    }
+
+    private fun launchJob(body: SocialBody): Job {
+        return scope.launch(dispatcherProvider.io) {
+            withContext(dispatcherProvider.main) { _uiState.value = Event(MyUiStates.Loading) }
+
+            when (val response = socialRepo().login(body)) {
+                is DataResource.Success -> {
+                    withContext(dispatcherProvider.main) {
+                        if (response.data.status!!) {
+//                            preferencesHelper().id = response.data.id!!
+//                            preferencesHelper().name = response.data.name
+//                            preferencesHelper().email = response.data.email
+//                            preferencesHelper().token = response.data.token
+                            preferencesHelper().isLoggedIn = true
+                            _uiState.value = Event(MyUiStates.Success)
+                        } else {
+                            _uiState.value = Event(MyUiStates.Error(response.data.ar!!))
+                        }
+                    }
+                }
+                is DataResource.Error -> {
+                    withContext(dispatcherProvider.main) {
+                        _uiState.value = Event(MyUiStates.Error(response.exception.message!!))
+                    }
+                }
+            }
+        }
+    }
 }

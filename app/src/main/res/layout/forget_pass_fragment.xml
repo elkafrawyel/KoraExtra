@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.mainActivity.auth.forgetPass.ForgetPassFragment">
 
@@ -82,8 +83,9 @@
                 android:background="@drawable/auth_bg_rounded"
                 android:drawableStart="@drawable/ic_email_black_24dp"
                 android:drawablePadding="12dp"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:text=""
+                android:id="@+id/emailTv"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@android:color/black" />
 
@@ -100,7 +102,7 @@
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:id="@+id/setEmail"
+                android:id="@+id/emailMbtn"
                 app:backgroundTint="@color/colorPrimary"
                 app:rippleColor="@android:color/white"/>
 
@@ -108,5 +110,15 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

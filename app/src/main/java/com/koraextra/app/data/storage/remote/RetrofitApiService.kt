@@ -4,10 +4,7 @@ import com.koraextra.app.data.models.*
 import com.koraextra.app.data.models.EventsResponse
 import com.koraextra.app.data.models.MatchResponse
 import com.koraextra.app.data.models.PlayersResponse
-import com.koraextra.app.data.models.auth.LoginBody
-import com.koraextra.app.data.models.auth.LoginResponse
-import com.koraextra.app.data.models.auth.RegisterBody
-import com.koraextra.app.data.models.auth.RegisterResponse
+import com.koraextra.app.data.models.auth.*
 import com.koraextra.app.utily.Injector
 import kotlinx.coroutines.Deferred
 import retrofit2.http.*
@@ -71,6 +68,11 @@ interface RetrofitApiService {
         @Body registerBody: RegisterBody
     ): Deferred<RegisterResponse>
 
+    @POST("api/socialRegister")
+    fun socialRegisterAsync(
+        @Body socialBody: SocialBody
+    ): Deferred<SocialResponse>
+
     @GET("api/viewFavorite")
     fun getFavoriteAsync(
         @Query("api_token") token: String
@@ -91,6 +93,16 @@ interface RetrofitApiService {
     fun loginAsync(
         @Body loginBody: LoginBody
     ): Deferred<LoginResponse>
+
+    @POST("api/resetPassword")
+    fun resetPasswordAsync(
+        @Body resetPasswordBody: ResetPasswordBody
+    ): Deferred<ResetPasswordResponse>
+
+    @GET("api/viewNoti")
+    fun notificationsAsync(
+        @Query("api_token") api_token: String
+    ): Deferred<NotificationsResponse>
 
     //====================news=============================
     @GET("apigo.php")

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
+import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.reset_password_fragment.*
 
 class ResetPasswordFragment : Fragment() {
@@ -29,11 +30,9 @@ class ResetPasswordFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ResetPasswordViewModel::class.java)
-        // TODO: Use the ViewModel
-        resetPass.setOnClickListener {
-            findNavController().navigate(R.id.loginFragment)
-        }
+
     }
+
 
 
 

@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
+import com.koraextra.app.utily.MyUiStates
+import com.koraextra.app.utily.snackBar
 import kotlinx.android.synthetic.main.notifications_fragment.*
 
 class NotificationsFragment : Fragment() {
@@ -29,43 +32,41 @@ class NotificationsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.uiState.observe(this, Observer { onNotificationsResponse(it) })
 
+        viewModel.getNotifiactions()
         backImage.setOnClickListener {
             findNavController().navigateUp()
         }
-        val list = ArrayList<String>()
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
-        list.add("a")
 
-        adapterNotification.replaceData(list)
         notificationRv.adapter = adapterNotification
         notificationRv.setHasFixedSize(true)
+    }
+
+    private fun onNotificationsResponse(states: MyUiStates?) {
+        when (states) {
+            MyUiStates.Loading -> {
+                loading.visibility = View.VISIBLE
+            }
+            MyUiStates.Success -> {
+                loading.visibility = View.GONE
+                adapterNotification.replaceData(viewModel.notificationsList)
+            }
+            is MyUiStates.Error -> {
+                loading.visibility = View.GONE
+                activity?.snackBar(states.message, rootView)
+            }
+            MyUiStates.NoConnection -> {
+
+            }
+            MyUiStates.Empty -> {
+                loading.visibility = View.GONE
+                activity?.snackBar(getString(R.string.empry_notifications), rootView)
+            }
+            null -> {
+
+            }
+        }
     }
 
 }

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.koraextra.app.R
 import com.koraextra.app.data.models.auth.RegisterBody
 import com.koraextra.app.utily.*
-import kotlinx.android.synthetic.main.reset_password_fragment.*
 import kotlinx.android.synthetic.main.sign_up_fragment.*
 import kotlinx.android.synthetic.main.sign_up_fragment.backImage
 

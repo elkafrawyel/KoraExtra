@@ -72,6 +72,7 @@ class FavoritesViewModel : KoraViewModel() {
             }
         }
     }
+
     fun removeTeamToFavorite(item:FavoriteModel,token: String) {
         if (NetworkUtils.isConnected()) {
             if (job?.isActive == true)
