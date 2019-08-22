@@ -69,7 +69,7 @@ object Injector {
         return retrofit.create(RetrofitApiService::class.java)
     }
 
-    private fun getApiService() = create(BASE_URL, getOkHttpClient())
+    fun getApiService() = create(BASE_URL, getOkHttpClient())
 
     fun getPreferenceHelper() = PreferencesHelper(getApplicationContext())
 
