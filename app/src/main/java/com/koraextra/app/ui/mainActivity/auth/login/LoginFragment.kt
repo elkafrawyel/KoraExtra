@@ -20,13 +20,14 @@ import com.google.android.gms.tasks.Task
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.auth.LoginBody
+import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.backImage
 import org.json.JSONObject
 import java.lang.Exception
 
-class LoginFragment : Fragment(), GraphRequest.GraphJSONObjectCallback {
+class LoginFragment : Fragment() {
 
 
     companion object {
@@ -35,8 +36,6 @@ class LoginFragment : Fragment(), GraphRequest.GraphJSONObjectCallback {
 
     private lateinit var viewModel: LoginViewModel
     private var mGoogleSignInClient: GoogleSignInClient? = null
-    var callbackManager: CallbackManager? = null
-    private var faceBookAccessToken: AccessToken? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +65,9 @@ class LoginFragment : Fragment(), GraphRequest.GraphJSONObjectCallback {
             findNavController().navigate(R.id.forgetPassFragment)
         }
 
+        facebookMbtn.setOnClickListener {
+            (activity as MainActivity).loginWithFacebook()
+        }
         //================================ Google ======================================
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -83,76 +85,15 @@ class LoginFragment : Fragment(), GraphRequest.GraphJSONObjectCallback {
             startActivityForResult(signInIntent, 100)
         }
 
-        //============================= FaceBook ========================================
-        callbackManager = CallbackManager.Factory.create()
-        login_button.setPermissions(listOf("email", "public_profile"))
-        LoginManager.getInstance().logOut()
-
-        val accessToken = AccessToken.getCurrentAccessToken()
-        val isLoggedIn = accessToken != null && !accessToken.isExpired
-
-        if (isLoggedIn) {
-            LoginManager.getInstance().logOut()
-        }
-
-        login_button.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                val accessToken = AccessToken.getCurrentAccessToken()
-                val isLoggedIn = accessToken != null && !accessToken.isExpired
-                if (isLoggedIn) {
-                    loadUserProfile(accessToken)
-                } else {
-                    activity?.toast("Facebook login failed")
-                }
-            }
-
-            override fun onCancel() {
-                activity?.toast("Facebook login Cancelled")
-            }
-
-            override fun onError(exception: FacebookException) {
-                activity?.toast("Facebook login failed")
-            }
-        })
-
-        facebookMbtn.setOnClickListener {
-            login_button.performClick()
-        }
-
     }
 
-    private fun loadUserProfile(accessToken: AccessToken?) {
-        val graphRequest = GraphRequest.newMeRequest(accessToken, this)
-        faceBookAccessToken = accessToken
-        val parameters = Bundle()
-        parameters.putString("fields", "first_name,last_name,email,id")
-        graphRequest.parameters = parameters
-        graphRequest.executeAsync()
-    }
 
-    override fun onCompleted(`object`: JSONObject?, response: GraphResponse?) {
-        try {
-            val firstName = `object`!!.get("first_name")
-            val lastName = `object`.get("last_name")
-            val email = `object`.get("email")
-            val id = `object`.get("id")
-            val imageUrl = "https://graph.facebook.com/$id/picture?type=normal"
-            activity?.toast("Done")
-
-//            login("$firstName $lastName", email.toString(), imageUrl, faceBookAccessToken!!.token, "facebook")
-
-        } catch (ex: Exception) {
-
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
-        }else {
-            callbackManager?.onActivityResult(requestCode, resultCode, data)
         }
     }
 

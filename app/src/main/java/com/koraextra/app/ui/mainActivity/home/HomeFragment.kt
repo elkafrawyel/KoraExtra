@@ -195,6 +195,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
+        findNavController().navigate(R.id.loginFragment)
     }
 
     private fun setAuthState() {
