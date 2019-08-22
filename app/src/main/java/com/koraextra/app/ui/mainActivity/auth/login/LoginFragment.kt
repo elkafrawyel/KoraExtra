@@ -181,7 +181,7 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(
                     R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
                         R.id.loginFragment,
-                        true
+                        false
                     ).build()
                 )
             }

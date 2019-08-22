@@ -15,6 +15,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:src="@drawable/app_name_img_2"
+        android:src="@drawable/app_name_img"
         android:layout_gravity="center"/>
 </LinearLayout>

@@ -10,6 +10,9 @@ class PreferencesHelper(private val context: Context) {
         private const val TOKEN = "token"
         private const val FIREBASE_TOKEN = "firebase_token"
         private const val ID = "id"
+        private const val NOTI_STATUS = "notiStatus"
+        private const val NOTI_SOUND = "notiSound"
+        private const val NOTI_MATCH = "notiMatch"
         private const val NAME = "name"
         private const val EMAIL = "email"
         private const val CITY_NAME = "cityName"
@@ -32,6 +35,15 @@ class PreferencesHelper(private val context: Context) {
 
     var id = preference.getInt(ID, -1)
         set(value) = preference.edit().putInt(ID, value).apply()
+
+    var notiStatus = preference.getInt(NOTI_STATUS, 0)
+        set(value) = preference.edit().putInt(NOTI_STATUS, value).apply()
+
+    var notiSound = preference.getInt(NOTI_SOUND, 0)
+        set(value) = preference.edit().putInt(NOTI_SOUND, value).apply()
+
+    var notiMatch = preference.getInt(NOTI_MATCH, 0)
+        set(value) = preference.edit().putInt(NOTI_MATCH, value).apply()
 
     var name = preference.getString(NAME, null)
         set(value) = preference.edit().putString(NAME, value).apply()

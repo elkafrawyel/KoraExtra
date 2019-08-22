@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -19,6 +20,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.koraextra.app.utily.MyUiStates
 import com.google.android.material.navigation.NavigationView
 import com.koraextra.app.R
@@ -30,7 +34,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener,
+class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener,
+    SwipeRefreshLayout.OnRefreshListener,
     Observer<List<MatchModel>> {
 
     override fun onChanged(it: List<MatchModel>?) {
@@ -42,6 +47,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         fun newInstance() = HomeFragment()
     }
 
+    private lateinit var mInterstitialAd: InterstitialAd
     private lateinit var viewModel: HomeViewModel
     private lateinit var mainViewModel: MainViewModel
     private val matchesList: ArrayList<MatchModel> = arrayListOf()
@@ -53,9 +59,15 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             val match = (adapter.data[position] as MatchModel)
             when (view?.id) {
                 R.id.matchItem -> {
-                    val action =
-                        HomeFragmentDirections.actionHomeFragmentToMatchFragment(match.fixtureId!!)
-                    findNavController().navigate(action)
+                    matchId = match.fixtureId!!
+                    if (mInterstitialAd.isLoaded) {
+                        mInterstitialAd.show()
+                    } else {
+                        Log.d("TAG", "The interstitial wasn't loaded yet.")
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToMatchFragment(matchId)
+                        findNavController().navigate(action)
+                    }
                 }
 
                 R.id.homeImg,
@@ -83,7 +95,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
         }
     }
-
+    private var matchId = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -195,6 +207,44 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
+
+
+        adView.loadAd(
+            AdRequest.Builder()
+            .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+                .build()
+        )
+        mInterstitialAd = InterstitialAd(context)
+        mInterstitialAd.adUnitId = "ca-app-pub-7642057802414977/1115862358"
+        mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("5392457EFAD98BBB3676457D618EBB83").build())
+        mInterstitialAd.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdFailedToLoad(errorCode: Int) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the interstitial ad is closed.
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToMatchFragment(matchId)
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun setAuthState() {
@@ -258,7 +308,12 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             context!!,
             R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Picker_Date_Calendar,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                val date = year.toString() + "-" + String.format(Locale("en"),"%02d-%02d", (monthOfYear + 1), dayOfMonth)
+                val date = year.toString() + "-" + String.format(
+                    Locale("en"),
+                    "%02d-%02d",
+                    (monthOfYear + 1),
+                    dayOfMonth
+                )
 //                activity?.toast(date)
 
 
@@ -402,7 +457,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             R.id.nav_login -> {
                 if (preferencesHelper.isLoggedIn) {
                     preferencesHelper.clear()
-                    navigationView.menu.getItem(7).title = context?.resources?.getString(R.string.login)
+                    navigationView.menu.getItem(7).title =
+                        context?.resources?.getString(R.string.login)
                 } else {
                     findNavController().navigate(R.id.loginFragment)
                 }
@@ -419,5 +475,6 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         adapterMatches.notifyDataSetChanged()
         matchesRv.visibility = View.VISIBLE
     }
+
 
 }

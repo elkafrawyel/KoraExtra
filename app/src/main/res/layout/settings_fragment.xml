@@ -74,6 +74,7 @@
                 android:drawablePadding="8dp"/>
 
             <Switch
+                android:id="@+id/notiMatch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
@@ -99,10 +100,10 @@
                 android:drawablePadding="8dp"/>
 
             <Switch
+                android:id="@+id/notiStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
-                android:checked="true"
                 android:padding="12dp"/>
         </LinearLayout>
 
@@ -125,6 +126,7 @@
                 android:drawablePadding="8dp"/>
 
             <Switch
+                android:id="@+id/notiSound"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"

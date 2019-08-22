@@ -89,6 +89,13 @@ interface RetrofitApiService {
         @Query("api_token") token: String
     ): Deferred<FavoriteResponse>
 
+    @GET("api/{name}/{status}")
+    fun settingAsync(
+        @Path("name") name: String,
+        @Path("status") status: Int,
+        @Query("api_token") token: String = Injector.getPreferenceHelper().token!!
+    ): Deferred<SettingResponse>
+
     @POST("api/doLogin")
     fun loginAsync(
         @Body loginBody: LoginBody

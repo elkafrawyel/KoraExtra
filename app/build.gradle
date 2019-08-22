@@ -18,6 +18,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfigs {
+            release {
+                storeFile file("zal.jks")
+                storePassword "zalzal12345"
+                keyAlias "zal"
+                keyPassword "zalzal12345"
+            }
+        }
     }
     buildTypes {
         release {
@@ -100,5 +108,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
 
     implementation 'com.facebook.android:facebook-android-sdk:5.4.0'
+
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+
+
 
 }

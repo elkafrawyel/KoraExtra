@@ -20,7 +20,13 @@ data class RegisterResponse(
     @field:Json(name = "ar")
     val ar: Ar?,
     @field:Json(name = "en")
-    val en: En?
+    val en: En?,
+    @field:Json(name = "noti")
+    val notiStatus: Int?,
+    @field:Json(name = "noti_sound")
+    val notiSound: Int?,
+    @field:Json(name = "noti_match")
+    val notiMatch: Int?
 )
 
 data class En(

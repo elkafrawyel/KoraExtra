@@ -46,6 +46,9 @@ class SignUpViewModel : KoraViewModel() {
                             preferencesHelper().name = response.data.name
                             preferencesHelper().email = response.data.email
                             preferencesHelper().token = response.data.token
+                            preferencesHelper().notiStatus = response.data.notiStatus!!
+                            preferencesHelper().notiSound = response.data.notiSound!!
+                            preferencesHelper().notiMatch = response.data.notiMatch!!
                             preferencesHelper().isLoggedIn = true
                             _uiState.value = Event(MyUiStates.Success)
                         } else {
