@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.blankj.utilcode.util.NetworkUtils
 import com.google.firebase.iid.FirebaseInstanceId
 import com.koraextra.app.R
@@ -33,6 +34,7 @@ class SplashActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 GlobalScope.launch {
                     val token = task.result?.token!!
+                    Log.e("ttttttt",token)
                     Injector.saveFirebaseToken().saveToken(token)
                 }
             }

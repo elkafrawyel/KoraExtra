@@ -14,9 +14,9 @@ data class SocialResponse(
 
 
 data class SocialBody(
-    private var name: String,
-    private var email: String,
-    private var api_token_rule: String,
-    private var api_token: String,
-    private var firebasetoken: String
+    var name: String,
+    var email: String,
+    var api_token_rule: String,
+    var api_token: String,
+    var firebasetoken: String
 )

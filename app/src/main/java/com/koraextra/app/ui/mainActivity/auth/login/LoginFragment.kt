@@ -3,6 +3,7 @@ package com.koraextra.app.ui.mainActivity.auth.login
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,9 @@ import com.google.android.gms.tasks.Task
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.auth.LoginBody
+import com.koraextra.app.data.models.auth.SocialBody
 import com.koraextra.app.ui.mainActivity.MainActivity
+import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.backImage
@@ -35,6 +38,7 @@ class LoginFragment : Fragment() {
     }
 
     private lateinit var viewModel: LoginViewModel
+    private lateinit var mainViewModel: MainViewModel
     private var mGoogleSignInClient: GoogleSignInClient? = null
 
     override fun onCreateView(
@@ -47,8 +51,9 @@ class LoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
         viewModel.uiState.observeEvent(this, { onLoginResponse(it) })
-
+        mainViewModel.uiState.observeEvent(this, { onLoginGoogleResponse(it) })
         backImage.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -87,6 +92,37 @@ class LoginFragment : Fragment() {
 
     }
 
+    private fun onLoginGoogleResponse(states: MyUiStates) {
+        when (states) {
+            MyUiStates.Loading -> {
+                loading.visibility = View.VISIBLE
+            }
+            MyUiStates.Success -> {
+                loading.visibility = View.GONE
+                activity?.toast(getString(R.string.loginSuccess))
+                findNavController().navigate(R.id.homeFragment)
+            }
+            MyUiStates.LastPage -> {
+            }
+            is MyUiStates.Error -> {
+                loading.visibility = View.GONE
+                activity?.snackBar(states.message, rootView)
+            }
+            MyUiStates.NoConnection -> {
+                loading.visibility = View.GONE
+                activity?.snackBarWithAction(
+                    getString(R.string.noConnectionMessage),
+                    getString(R.string.refresh),
+                    rootView
+                ) {
+                    login()
+                }
+            }
+            MyUiStates.Empty -> {
+
+            }
+        }
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -100,13 +136,28 @@ class LoginFragment : Fragment() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            if (account != null)
-                activity?.toast(account.displayName!!)
-            else
+            if (account != null) {
+                if (Injector.getPreferenceHelper().fireBaseToken != null) {
+                    val body =
+                        SocialBody(
+                            name = account.displayName.toString(), email = account.email.toString(),
+                            api_token_rule = "google", api_token = account.idToken!!,
+                            firebasetoken = Injector.getPreferenceHelper().fireBaseToken!!
+                        )
+                    loginWithGoogleData(body)
+                } else {
+                    activity?.toast(getString(R.string.tryAgainLater))
+                }
+            } else
                 activity?.toast("Error happened")
         } catch (e: ApiException) {
+            Log.e("Medo", e.message.toString())
             activity?.toast("Google SignIn Error")
         }
+    }
+
+    private fun loginWithGoogleData(socialBody: SocialBody) {
+        mainViewModel.socialLogin(socialBody)
     }
 
     private fun onLoginResponse(states: MyUiStates) {

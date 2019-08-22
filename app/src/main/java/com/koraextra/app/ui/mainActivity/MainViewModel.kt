@@ -123,9 +123,9 @@ class MainViewModel : KoraViewModel() {
                     withContext(dispatcherProvider.main) {
                         if (response.data.status!!) {
 //                            preferencesHelper().id = response.data.id!!
-//                            preferencesHelper().name = response.data.name
-//                            preferencesHelper().email = response.data.email
-//                            preferencesHelper().token = response.data.token
+                            preferencesHelper().name = body.name
+                            preferencesHelper().email = body.email
+                            preferencesHelper().token = body.api_token
                             preferencesHelper().isLoggedIn = true
                             _uiState.value = Event(MyUiStates.Success)
                         } else {

@@ -3,24 +3,18 @@ package com.koraextra.app.ui.mainActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import com.koraextra.app.R
-import com.koraextra.app.utily.Constants
-import com.koraextra.app.utily.changeLanguage
-import com.koraextra.app.utily.saveLanguage
-import com.koraextra.app.utily.toast
-import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONObject
 import com.koraextra.app.data.models.auth.SocialBody
 import com.koraextra.app.utily.*
+import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
 
@@ -69,7 +63,7 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
 
 
         FacebookSdk.sdkInitialize(applicationContext)
-//        AppEventsLogger.activateApp(this);
+        AppEventsLogger.activateApp(this);
 
         //============================= FaceBook ========================================
         callbackManager = CallbackManager.Factory.create()
