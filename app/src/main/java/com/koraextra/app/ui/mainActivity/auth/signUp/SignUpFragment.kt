@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 
 import com.koraextra.app.R
@@ -85,8 +86,12 @@ class SignUpFragment : Fragment() {
             }
             MyUiStates.Success -> {
                 loading.visibility = View.GONE
-                findNavController().navigate(R.id.homeFragment)
-
+                findNavController().navigate(
+                    R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
+                        R.id.signUpFragment,
+                        true
+                    ).build()
+                )
             }
             MyUiStates.LastPage -> {
             }
