@@ -30,7 +30,8 @@
     <item
         android:id="@+id/nav_TopScorer"
         android:icon="@drawable/podium"
-        android:title="@string/topScorer" />
+        android:title="@string/topScorer"
+        android:visible="false"/>
 
     <item
         android:id="@+id/nav_settings"
