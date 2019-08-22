@@ -182,7 +182,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         previousImg.setOnClickListener {
             changeDay()
         }
-        animateView(homeFragmentAppName)
+//        animateView(homeFragmentAppName)
 
         homeSwipe.setOnRefreshListener(this)
 
