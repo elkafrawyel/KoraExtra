@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdRequest
 import com.koraextra.app.R
 import com.koraextra.app.data.models.KoraNewsModel
 import com.koraextra.app.data.models.NewsModel
@@ -45,6 +46,11 @@ class LatestNewsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("410E806C439261CF851B922E62D371EB")
+                .build()
+        )
         if (viewModel.opened){
             onSuccess()
 

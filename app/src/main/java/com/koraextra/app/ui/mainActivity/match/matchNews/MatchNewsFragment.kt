@@ -31,20 +31,20 @@ class MatchNewsFragment : Fragment(), Observer<MatchModel> {
     private lateinit var mainViewModel: MainViewModel
 
     private val adapterNews = AdapterNews().also {
-            it.setOnItemChildClickListener { adapter, view, position ->
-                when (view.id) {
-                    R.id.newsViewCl -> {
-                        mainViewModel.matchLiveData.removeObserver(this)
-                        val news = (adapter.data as List<KoraNewsModel>)[position]
-                        val bundle = bundleOf(
-                            "title" to news.title!!,
-                            "image" to news.img!!,
-                            "desc" to news.description!!,
-                            "time" to news.createdAt!!
-                        )
+        it.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.newsViewCl -> {
+                    mainViewModel.matchLiveData.removeObserver(this)
+                    val news = (adapter.data as List<KoraNewsModel>)[position]
+                    val bundle = bundleOf(
+                        "title" to news.title!!,
+                        "image" to news.img!!,
+                        "desc" to news.description!!,
+                        "time" to news.createdAt!!
+                    )
 
-                        activity?.findNavController(R.id.fragment)!!.navigate(R.id.newsFragment, bundle)
-                    }
+                    activity?.findNavController(R.id.fragment)!!.navigate(R.id.newsFragment, bundle)
+                }
             }
         }
     }
@@ -56,7 +56,7 @@ class MatchNewsFragment : Fragment(), Observer<MatchModel> {
         return inflater.inflate(R.layout.match_news_fragment, container, false)
     }
 
-    override fun onChanged(it: MatchModel?) {
+    override fun onChanged(it: MatchModel) {
         viewModel.match = it
         viewModel.getNews()
     }
@@ -66,7 +66,7 @@ class MatchNewsFragment : Fragment(), Observer<MatchModel> {
         viewModel = ViewModelProviders.of(this).get(MatchNewsViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        if(viewModel.newsList.isEmpty()) {
+        if (viewModel.newsList.isEmpty()) {
             viewModel.uiState.observe(this, Observer {
                 onNewsResponse(it)
             })

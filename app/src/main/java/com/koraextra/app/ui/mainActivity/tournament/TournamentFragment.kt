@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdRequest
 import com.koraextra.app.R
 import kotlinx.android.synthetic.main.tournament_fragment.*
 
@@ -18,6 +19,7 @@ class TournamentFragment : Fragment() {
     }
 
     private lateinit var viewModel: TournamentViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +36,7 @@ class TournamentFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+
         arguments?.let {
 
             viewModel.tournamentId = TournamentFragmentArgs.fromBundle(it).id
@@ -44,7 +47,14 @@ class TournamentFragment : Fragment() {
 
             Glide.with(context!!).load(image).into(tournamentImage)
 
+
         }
+
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+                .build()
+        )
 
         val pagerAdapter = TournamentViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter

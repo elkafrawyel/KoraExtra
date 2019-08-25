@@ -67,7 +67,6 @@ class TournamentNewsFragment : Fragment() {
                 onNewsResponse(it)
             })
             mainViewModel.tournamentLiveData.observe(this, Observer {
-                activity?.toast("Name ${it.name}")
                 viewModel.leagueModel = it
                 viewModel.getNews()
             })

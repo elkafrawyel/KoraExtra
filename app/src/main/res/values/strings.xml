@@ -47,7 +47,7 @@
     <string name="match_events">احداث المبارة</string>
     <string name="match_details">التفاصيل</string>
     <string name="scorers">الهدافون</string>
-    <string name="champoin">البطوله</string>
+    <string name="champoin">الجولة</string>
     <string name="studium">ملعب المباراة</string>
     <string name="channel">القناة الناقلة</string>
     <string name="commentator">معلق المباراة</string>
@@ -89,4 +89,7 @@
     <string name="empry_notifications">لا توجد اشعارات</string>
     <string name="loginSuccess">تم تسجيل الدخول بنجاح</string>
     <string name="shearApp">مشاركة التطبيق</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

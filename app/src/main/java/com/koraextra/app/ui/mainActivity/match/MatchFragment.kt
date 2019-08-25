@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdRequest
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
@@ -18,7 +19,7 @@ import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.match_fragment.*
 import java.util.*
 
-class MatchFragment : Fragment() {
+class MatchFragment : Fragment(), Observer<MatchModel> {
 
     companion object {
         fun newInstance() = MatchFragment()
@@ -39,7 +40,13 @@ class MatchFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(MatchViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("410E806C439261CF851B922E62D371EB")
+                .build()
+        )
         viewModel.uiState.observe(this, Observer { onMatchResponse(it) })
+
         arguments?.let {
             val fixtureId = MatchFragmentArgs.fromBundle(it).fixtureId
             viewModel.fixtureId = fixtureId
@@ -51,7 +58,7 @@ class MatchFragment : Fragment() {
         }
 
         teamShareImage.setOnClickListener {
-            activity?.toast("Added to your Share")
+
         }
 
         val pagerAdapter = MatchViewPagerAdapter(this.childFragmentManager)
@@ -125,15 +132,16 @@ class MatchFragment : Fragment() {
     }
 
     private fun onMatchStateSuccess() {
-        viewModel.matchLiveData?.observe(this, object : Observer<MatchModel?> {
-            override fun onChanged(it: MatchModel?) {
-                setMatch(it)
-            }
-        })
+        viewModel.matchLiveData?.observe(this, this)
+    }
+
+    override fun onChanged(it: MatchModel?) {
+        setMatch(it)
     }
 
     private fun setMatch(item: MatchModel?) {
         mainViewModel.setMatch(item!!)
+
         viewModel.match = item
         if (item.homeTeam != null && item.awayTeam != null) {
             when (item.statuskey) {
@@ -256,7 +264,8 @@ class MatchFragment : Fragment() {
                         if (Minutes >= 130) {
                             timerText = "130:00"
                         } else {
-                            timerText = String.format(Locale("en"), "%02d:%02d", Minutes, Seconds)
+                            timerText =
+                                String.format(Locale("en"), "%02d:%02d", Minutes, Seconds)
                         }
                         it.text = timerText
                         timerToolbar.text = timerText
@@ -313,7 +322,6 @@ class MatchFragment : Fragment() {
                     matchStatusTv.text = context!!.resources.getString(R.string.not_started)
                 }
                 else -> {
-                    activity?.toast("حاله غير معروفه")
                 }
             }
         }

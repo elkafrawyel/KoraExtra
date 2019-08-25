@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.android.gms.ads.AdRequest
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.FavoriteModel
@@ -43,6 +44,11 @@ class FavoritesFragment : Fragment() {
         viewModel.uiState.observe(this, Observer { OnFavoriteResponse(it) })
         viewModel.uiStateFavo.observe(this, Observer<MyUiStates?> { ofFavoriteRemoved(it) })
 
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+                .build()
+        )
 
         backImage.setOnClickListener {
             findNavController().navigateUp()

@@ -22,6 +22,7 @@ class MainViewModel : KoraViewModel() {
     val matchLiveData: LiveData<MatchModel>
         get() = _match
 
+    var useFirstId = true
     fun setMatch(match: MatchModel) {
         _match.value = match
     }
@@ -65,6 +66,7 @@ class MainViewModel : KoraViewModel() {
     fun setTeamFavo(teamFavo: Int) {
         _teamFavo.value = teamFavo
     }
+
     private var _leagueId = MutableLiveData<Int>()
     val leagueIdLiveData: LiveData<Int>
         get() = _leagueId

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdRequest
 import com.koraextra.app.R
 import com.koraextra.app.data.models.FavoriteBody
 import com.koraextra.app.ui.mainActivity.MainViewModel
@@ -76,6 +77,12 @@ class TeamFragment : Fragment() {
                 )
             }
         })
+
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("410E806C439261CF851B922E62D371EB")
+                .build()
+        )
 
         val pagerAdapter = TeamsViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter

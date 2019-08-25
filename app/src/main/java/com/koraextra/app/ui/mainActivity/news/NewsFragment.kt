@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdRequest
 
 import com.koraextra.app.R
 import kotlinx.android.synthetic.main.news_fragment.*
@@ -33,6 +34,11 @@ class NewsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+                .build()
+        )
         arguments?.let {
             val title = NewsFragmentArgs.fromBundle(it).title
             val image = NewsFragmentArgs.fromBundle(it).image

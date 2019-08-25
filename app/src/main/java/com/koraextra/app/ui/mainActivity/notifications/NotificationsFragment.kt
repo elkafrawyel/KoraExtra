@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdRequest
 
 import com.koraextra.app.R
 import com.koraextra.app.utily.MyUiStates
@@ -34,6 +35,12 @@ class NotificationsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         viewModel.uiState.observe(this, Observer { onNotificationsResponse(it) })
 
+
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+                .build()
+        )
         viewModel.getNotifiactions()
         backImage.setOnClickListener {
             findNavController().navigateUp()

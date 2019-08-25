@@ -42,8 +42,8 @@ class MatchViewModel : KoraViewModel() {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
             when (val databaseResult = getStoredMatches().getStoredMatchById(fixtureId!!)) {
                 is DataResource.Success -> {
-                    matchLiveData = databaseResult.data
                     withContext(dispatcherProvider.main) {
+                        matchLiveData = databaseResult.data
                         _uiState.value = MyUiStates.Success
                     }
                 }

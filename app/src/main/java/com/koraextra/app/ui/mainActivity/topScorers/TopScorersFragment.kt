@@ -34,6 +34,8 @@ class TopScorersFragment : Fragment() {
         backImage.setOnClickListener {
             findNavController().navigateUp()
         }
+
+
         val list = ArrayList<String>()
         list.add("a")
         list.add("a")
@@ -64,7 +66,7 @@ class TopScorersFragment : Fragment() {
         list.add("a")
 
         adapterTopScorer.setOnItemChildClickListener { adapter, view, position ->
-            when(view.id){
+            when (view.id) {
                 R.id.topScorerRoot -> {
                     findNavController().navigate(R.id.playersFragment)
                 }

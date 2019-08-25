@@ -110,6 +110,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
@@ -117,6 +118,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             viewModel.opened = true
             clearObservers()
             getTodayMatches()
+            findNavController().navigate(R.id.fuckFragment)
+
         } else {
 
             dayName_tv.text = activity?.getDayName(viewModel.date!!)
@@ -128,6 +131,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 linearHeader.visibility = View.GONE
             else
                 linearHeader.visibility = View.VISIBLE
+
+
         }
 
         setAuthState()
@@ -216,12 +221,13 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         adView.loadAd(
             AdRequest.Builder()
-                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+                .addTestDevice("410E806C439261CF851B922E62D371EB")
                 .build()
         )
+
         mInterstitialAd = InterstitialAd(context)
         mInterstitialAd.adUnitId = "ca-app-pub-7642057802414977/1115862358"
-        mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("5392457EFAD98BBB3676457D618EBB83").build())
+        mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("410E806C439261CF851B922E62D371EB").build())
         mInterstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
@@ -244,6 +250,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
 
             override fun onAdClosed() {
+                mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("410E806C439261CF851B922E62D371EB").build())
+
                 // Code to be executed when the interstitial ad is closed.
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToMatchFragment(matchId)
@@ -348,8 +356,6 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 emptyMessageTv.visibility = View.GONE
             }
             MyUiStates.Success -> {
-                loading.visibility = View.GONE
-                emptyMessageTv.visibility = View.GONE
 //                clearObservers()
                 viewModel.storedMatchesLiveData?.observe(this@HomeFragment, this)
             }
@@ -463,17 +469,21 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 }
             }
             R.id.nav_shearApp -> {
-                 val appPackageName: String? =context?.getPackageName()
+                val appPackageName: String? = context?.getPackageName()
                 try {
                     startActivity(
-                        Intent (Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=" + appPackageName)
-                    ))
-                } catch (e:java.lang.Exception) {
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + appPackageName)
+                        )
+                    )
+                } catch (e: java.lang.Exception) {
                     startActivity(
-                        Intent (Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)
-                    ));
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)
+                        )
+                    );
                 }
             }
             R.id.nav_login -> {
@@ -496,6 +506,8 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         matchesList.addAll(list)
         adapterMatches.notifyDataSetChanged()
         matchesRv.visibility = View.VISIBLE
+        loading.visibility = View.GONE
+        emptyMessageTv.visibility = View.GONE
     }
 
     private fun getOpenFacebookIntent(): Intent {

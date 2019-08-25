@@ -34,7 +34,8 @@ class MatchEventsViewModel : KoraViewModel() {
     fun getMatchEventsList() {
         if (NetworkUtils.isConnected()) {
             if (job?.isActive == true)
-                return
+                job!!.cancel()
+
             job = launchJob()
         } else {
             _uiState.value = MyUiStates.NoConnection
@@ -44,7 +45,6 @@ class MatchEventsViewModel : KoraViewModel() {
     private fun launchJob(): Job {
         return scope.launch(dispatcherProvider.io) {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
-//            141565
             when (val result = getMatchEventsRepo().getMatchEvents(getEventsOfMatch(fixtureId!!))) {
                 is DataResource.Success -> {
                     if (result.data) {

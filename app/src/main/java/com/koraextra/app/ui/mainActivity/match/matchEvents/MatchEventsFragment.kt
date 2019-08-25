@@ -16,7 +16,6 @@ import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.snackBarWithAction
-import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.match_events_fragment.*
 
 class MatchEventsFragment : Fragment(), Observer<MatchModel> {
@@ -41,13 +40,17 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
         viewModel = ViewModelProviders.of(this).get(MatchEventsViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-
-
         mainViewModel.matchLiveData.observe(this, this)
 
         viewModel.uiState.observe(this, Observer {
             onEventsResponse(it)
         })
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mainViewModel.useFirstId = false
     }
 
     private fun onEventsResponse(states: MyUiStates?) {
@@ -104,12 +107,15 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
         }
     }
 
-    override fun onChanged(it: MatchModel?) {
-        activity?.toast("Match :${it?.fixtureId}")
-        viewModel.homeTeamId = it?.homeTeam?.teamId
-        viewModel.awayTeamId = it?.awayTeam?.teamId
-        viewModel.fixtureId = it?.fixtureId
-        viewModel.getMatchEventsList()
+    override fun onChanged(it: MatchModel) {
+        if (mainViewModel.useFirstId) {
+            viewModel.homeTeamId = it.homeTeam?.teamId
+            viewModel.awayTeamId = it.awayTeam?.teamId
+            viewModel.fixtureId = it.fixtureId
+            viewModel.getMatchEventsList()
+        }else{
+            mainViewModel.useFirstId = true
+        }
     }
 
     private fun onEventsSuccess() {

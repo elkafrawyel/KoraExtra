@@ -206,4 +206,9 @@
         android:name="com.koraextra.app.ui.mainActivity.team.teamPlayers.TeamPlayersFragment"
         android:label="team_players_fragment"
         tools:layout="@layout/team_players_fragment" />
+    <fragment
+        android:id="@+id/fuckFragment"
+        android:name="com.koraextra.app.ui.mainActivity.fuckFragment.FuckFragment"
+        android:label="fragment_fuck"
+        tools:layout="@layout/fragment_fuck" />
 </navigation>

@@ -127,7 +127,6 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
             11, 12, 13, 14, 15, 16, 17 -> {
                 val a: Int = helper.itemViewType
                 val b: Int? = item?.fixtureId
-                mContext.toast("$a - $b")
                 helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
                 helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
                 Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
@@ -138,7 +137,6 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
                 helper.setText(com.koraextra.app.R.id.timeTv, mContext.getTimeFromMills(item?.eventTimestamp!!))
             }
             else -> {
-                mContext.toast("حاله غير معروفه")
             }
         }
     }

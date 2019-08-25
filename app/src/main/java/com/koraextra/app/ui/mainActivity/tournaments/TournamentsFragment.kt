@@ -1,23 +1,20 @@
 package com.koraextra.app.ui.mainActivity.tournaments
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.chad.library.adapter.base.BaseQuickAdapter
-
+import com.google.android.gms.ads.AdRequest
 import com.koraextra.app.R
 import com.koraextra.app.data.models.LeagueModel
-import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
-import com.koraextra.app.ui.mainActivity.home.HomeFragmentDirections
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.snackBarWithAction
@@ -72,6 +69,11 @@ class TournamentsFragment : Fragment(), BaseQuickAdapter.OnItemChildClickListene
             findNavController().navigateUp()
         }
 
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("410E806C439261CF851B922E62D371EB")
+                .build()
+        )
         if (viewModel.opened) {
 //            viewModel.loadSeasons =false
             val seasonsAdapter = ArrayAdapter(context!!, R.layout.simple_spinner_item, viewModel.seasons)

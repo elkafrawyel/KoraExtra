@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdRequest
 
 import com.koraextra.app.R
 import com.koraextra.app.data.models.PlayerModel
@@ -39,6 +40,11 @@ class PlayersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
+        adView.loadAd(
+            AdRequest.Builder()
+                .addTestDevice("410E806C439261CF851B922E62D371EB")
+                .build()
+        )
         mainViewModel.playerLiveData.observe(this, Observer {
             val player = it
             playerNameTv.text = player.playerName
