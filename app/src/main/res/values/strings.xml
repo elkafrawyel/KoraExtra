@@ -88,4 +88,5 @@
     <string name="email_sent_message">تم ارسال البيانات بنجاح الي بريدك الالكتروني</string>
     <string name="empry_notifications">لا توجد اشعارات</string>
     <string name="loginSuccess">تم تسجيل الدخول بنجاح</string>
+    <string name="shearApp">مشاركة التطبيق</string>
 </resources>

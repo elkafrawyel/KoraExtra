@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/header"
+        android:id="@+id/teamRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -38,8 +38,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+
             android:layout_weight="1"
-            android:gravity="end"
+            android:gravity="right"
             android:padding="8dp"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@android:color/black"

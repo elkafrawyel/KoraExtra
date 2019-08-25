@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.koraextra.app.R
+import com.koraextra.app.data.models.LeagueTableModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
@@ -40,7 +43,8 @@ class TournamentOrderFragment : Fragment() {
 
         mainViewModel.tournamentLiveData.observe(this, Observer {
             viewModel.tournament = it
-            viewModel.getLeagueTable()
+            if (viewModel.tableList.size == 0)
+                viewModel.getLeagueTable()
         })
 
 
@@ -88,7 +92,27 @@ class TournamentOrderFragment : Fragment() {
     private fun onTableSuccess() {
 
         leagueTableAdapter =
-            AdapterLeagueTable(R.layout.league_table_item_view, R.layout.table_header_item_view, viewModel.tableList)
+            AdapterLeagueTable(
+                R.layout.league_table_item_view,
+                R.layout.table_header_item_view,
+                viewModel.tableList
+            ).also {
+                it.onItemChildClickListener =
+                    BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                        val groupTeam = ((adapter.data[position]) as LeagueTableModel).t
+                        when (view?.id) {
+                            R.id.teamRow -> {
+                                mainViewModel.setTeamId(groupTeam.teamId!!)
+                                mainViewModel.setTeamName(groupTeam.teamName!!)
+                                mainViewModel.setTeamLogo(groupTeam.logo!!)
+                                mainViewModel.setTeamFavo(groupTeam.favorite)
+                                mainViewModel.setLeagueId(viewModel.tournament?.leagueId!!)
+
+                                findNavController().navigate(R.id.teamFragment)
+                            }
+                        }
+                    }
+            }
 
         tableRv.setHasFixedSize(true)
         tableRv.adapter = leagueTableAdapter

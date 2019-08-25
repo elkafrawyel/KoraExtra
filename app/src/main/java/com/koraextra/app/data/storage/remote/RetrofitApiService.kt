@@ -15,7 +15,7 @@ interface RetrofitApiService {
     @GET("apigo.php")
     fun getMatchesAsync(
         @Query("go") go: String,
-        @Query("api_token") api_token: String = if (Injector.getPreferenceHelper().isLoggedIn) {
+        @Query("api_token") api_token: String = if (Injector.getPreferenceHelper().token!=null) {
             Injector.getPreferenceHelper().token!!
         } else {
             "notRegisted"
@@ -45,13 +45,18 @@ interface RetrofitApiService {
 
     @GET("apigo.php")
     fun getLeaguesTableAsync(
-        @Query("go") go: String
+        @Query("go") go: String,
+        @Query("api_token") api_token: String = if (Injector.getPreferenceHelper().token!=null) {
+            Injector.getPreferenceHelper().token!!
+        } else {
+            "notRegisted"
+        }
     ): Deferred<LeagueTableResponse>
 
     @GET("apigo.php")
     fun getLeaguesMatchesAsync(
         @Query("go") go: String,
-        @Query("api_token") api_token: String = if (Injector.getPreferenceHelper().isLoggedIn) {
+        @Query("api_token") api_token: String = if (Injector.getPreferenceHelper().token!=null) {
             Injector.getPreferenceHelper().token!!
         } else {
             "notRegisted"

@@ -25,6 +25,7 @@ class MatchViewModel : KoraViewModel() {
         get() = _uiState
 
     var matchLiveData: LiveData<MatchModel>? = null
+    var match: MatchModel? = null
 
     fun getMatch() {
         if (NetworkUtils.isConnected()) {

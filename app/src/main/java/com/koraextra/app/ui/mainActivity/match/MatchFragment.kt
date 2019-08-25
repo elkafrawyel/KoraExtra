@@ -58,6 +58,32 @@ class MatchFragment : Fragment() {
         viewPager.adapter = pagerAdapter
 //        viewPager.offscreenPageLimit =  4
 
+
+        linearHomeTeam.setOnClickListener {
+            viewModel.match?.let {
+                mainViewModel.setTeamId(viewModel.match?.homeTeamid!!)
+                mainViewModel.setTeamName(viewModel.match!!.homeTeam?.teamName!!)
+                mainViewModel.setTeamLogo(viewModel.match!!.homeTeam?.logo!!)
+                mainViewModel.setTeamFavo(viewModel.match!!.homeTeam?.favorite!!)
+                mainViewModel.setLeagueId(viewModel.match!!.leagueId!!)
+
+                findNavController().navigate(R.id.teamFragment)
+            }
+
+        }
+        linearAwayTeam.setOnClickListener {
+            viewModel.match?.let {
+                mainViewModel.setTeamId(viewModel.match?.awayTeamid!!)
+                mainViewModel.setTeamName(viewModel.match!!.awayTeam?.teamName!!)
+                mainViewModel.setTeamLogo(viewModel.match!!.awayTeam?.logo!!)
+                mainViewModel.setTeamFavo(viewModel.match!!.awayTeam?.favorite!!)
+                mainViewModel.setLeagueId(viewModel.match!!.leagueId!!)
+
+                findNavController().navigate(R.id.teamFragment)
+            }
+
+        }
+
     }
 
     private fun onMatchResponse(state: MyUiStates?) {
@@ -108,6 +134,7 @@ class MatchFragment : Fragment() {
 
     private fun setMatch(item: MatchModel?) {
         mainViewModel.setMatch(item!!)
+        viewModel.match = item
         if (item.homeTeam != null && item.awayTeam != null) {
             when (item.statuskey) {
                 1, 3 -> {
@@ -132,8 +159,18 @@ class MatchFragment : Fragment() {
                     awayScoreToolbar.text = "-"
 
 
-                    matchStatusTv.setBackgroundColor(ContextCompat.getColor(context!!, android.R.color.white))
-                    matchStatusTv.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                    matchStatusTv.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            android.R.color.white
+                        )
+                    )
+                    matchStatusTv.setTextColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorPrimary
+                        )
+                    )
                     matchStatusTv.text = context!!.resources.getString(R.string.not_started)
                 }
 
@@ -165,8 +202,18 @@ class MatchFragment : Fragment() {
                     timer.text = activity?.getTimeFromMills(item.eventTimestamp!!)
                     timerToolbar.text = activity?.getTimeFromMills(item.eventTimestamp!!)
 
-                    matchStatusTv.setBackgroundColor(ContextCompat.getColor(context!!, android.R.color.darker_gray))
-                    matchStatusTv.setTextColor(ContextCompat.getColor(context!!, android.R.color.white))
+                    matchStatusTv.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            android.R.color.darker_gray
+                        )
+                    )
+                    matchStatusTv.setTextColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            android.R.color.white
+                        )
+                    )
                     matchStatusTv.text = context!!.resources.getString(R.string.match_ended)
 
                 }
@@ -198,25 +245,36 @@ class MatchFragment : Fragment() {
 
 
 
-                    timer.base = SystemClock.elapsedRealtime() - activity?.getTimeAgoAsMills(item.eventTimestamp!!)!!
+                    timer.base =
+                        SystemClock.elapsedRealtime() - activity?.getTimeAgoAsMills(item.eventTimestamp!!)!!
                     timer.setOnChronometerTickListener {
                         val time = SystemClock.elapsedRealtime() - it.base
                         var Seconds = (time / 1000).toInt()
                         val Minutes = Seconds / 60
                         Seconds %= 60
-                        var timerText=""
-                        if(Minutes>=130){
+                        var timerText = ""
+                        if (Minutes >= 130) {
                             timerText = "130:00"
-                        }else{
-                            timerText = String.format(Locale("en"),"%02d:%02d", Minutes, Seconds)
+                        } else {
+                            timerText = String.format(Locale("en"), "%02d:%02d", Minutes, Seconds)
                         }
                         it.text = timerText
                         timerToolbar.text = timerText
                     }
                     timer.start()
 
-                    matchStatusTv.setBackgroundColor(ContextCompat.getColor(context!!, android.R.color.holo_red_dark))
-                    matchStatusTv.setTextColor(ContextCompat.getColor(context!!, android.R.color.white))
+                    matchStatusTv.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            android.R.color.holo_red_dark
+                        )
+                    )
+                    matchStatusTv.setTextColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            android.R.color.white
+                        )
+                    )
                     matchStatusTv.text = context!!.resources.getString(R.string.live)
                 }
                 11, 12, 13, 14, 15, 16, 17 -> {
@@ -240,8 +298,18 @@ class MatchFragment : Fragment() {
                     homeScoreToolbar.text = "-"
                     awayScoreToolbar.text = "-"
 
-                    matchStatusTv.setBackgroundColor(ContextCompat.getColor(context!!, android.R.color.white))
-                    matchStatusTv.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                    matchStatusTv.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            android.R.color.white
+                        )
+                    )
+                    matchStatusTv.setTextColor(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorPrimary
+                        )
+                    )
                     matchStatusTv.text = context!!.resources.getString(R.string.not_started)
                 }
                 else -> {

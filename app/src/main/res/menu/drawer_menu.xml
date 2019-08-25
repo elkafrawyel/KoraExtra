@@ -39,6 +39,11 @@
         android:title="@string/settings" />
 
     <item
+        android:id="@+id/nav_shearApp"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:title="@string/shearApp" />
+
+    <item
         android:id="@+id/nav_login"
         android:icon="@drawable/ic_login"
         android:title="@string/login" />

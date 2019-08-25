@@ -16,6 +16,7 @@ class MatchEventsViewModel : KoraViewModel() {
     var homeTeamId: Int? = null
     var awayTeamId: Int? = null
     var fixtureId: Int? = null
+    var opened:Boolean = false
 
     //==============================================================
     private var job: Job? = null

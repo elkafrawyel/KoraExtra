@@ -52,7 +52,9 @@ data class GroupTeam(
     @field:Json(name = "lastUpdate")
     val lastUpdate: String?,
     @field:Json(name = "forme")
-    val forme: Any?
+    val forme: Any?,
+    @field:Json(name = "fav")
+    val favorite: Int=0
 )
 
 data class Away(

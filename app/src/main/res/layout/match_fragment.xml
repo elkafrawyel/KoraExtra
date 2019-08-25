@@ -74,7 +74,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/linearHomeTeam">
 
                     <ImageView
                         android:id="@+id/homeImg"
@@ -170,7 +171,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/linearAwayTeam">
 
                     <ImageView
                         android:id="@+id/awayImg"

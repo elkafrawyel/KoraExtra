@@ -16,6 +16,7 @@ import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.snackBarWithAction
+import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.match_events_fragment.*
 
 class MatchEventsFragment : Fragment(), Observer<MatchModel> {
@@ -104,7 +105,7 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
     }
 
     override fun onChanged(it: MatchModel?) {
-        //            activity?.toast("Match :${it.fixtureId}")
+        activity?.toast("Match :${it?.fixtureId}")
         viewModel.homeTeamId = it?.homeTeam?.teamId
         viewModel.awayTeamId = it?.awayTeam?.teamId
         viewModel.fixtureId = it?.fixtureId
@@ -123,15 +124,19 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
             }
             events.addAll(it)
             if (events.size > 0)
-                events.add(events.size, EventModel("", 0, "", "", 0, 0, "", "", 0, viewModel.fixtureId, 0))
+                events.add(
+                    events.size,
+                    EventModel("", 0, "", "", 0, 0, "", "", 0, viewModel.fixtureId, 0)
+                )
 
             val adapterMatchEvents = AdapterMatchEvents(events).also {
-                it.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-                    mainViewModel.setplayerId((adapter.data[position] as EventModel?)!!.playerId!!)
-                    mainViewModel.matchLiveData.removeObserver(this)
-                    if (view.id == R.id.PlayerName)
-                        activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
-                }
+                it.onItemChildClickListener =
+                    BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+                        mainViewModel.setplayerId((adapter.data[position] as EventModel?)!!.playerId!!)
+                        mainViewModel.matchLiveData.removeObserver(this)
+                        if (view.id == R.id.PlayerName)
+                            activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
+                    }
             }
             matchEventsRv.adapter = adapterMatchEvents
             matchEventsRv.setHasFixedSize(true)

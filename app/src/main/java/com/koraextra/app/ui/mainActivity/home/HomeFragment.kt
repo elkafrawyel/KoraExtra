@@ -2,7 +2,10 @@ package com.koraextra.app.ui.mainActivity.home
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +15,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.browser.customtabs.CustomTabsClient.getPackageName
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -154,10 +158,11 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         drawerLayout.drawerElevation = 0f
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
-        val socialItemId = 8
+        val socialItemId = 9
         val viewClicked = navigationView.menu.getItem(socialItemId).actionView
         viewClicked.findViewById<LinearLayout>(R.id.facebookView).setOnClickListener {
-            activity?.toast("Facebook")
+            //            activity?.toast("Facebook")
+            startActivity(getOpenFacebookIntent())
             drawerLayout.closeDrawer(GravityCompat.START)
         }
         liveSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -211,7 +216,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         adView.loadAd(
             AdRequest.Builder()
-            .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
                 .build()
         )
         mInterstitialAd = InterstitialAd(context)
@@ -250,9 +255,9 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     private fun setAuthState() {
         val preferencesHelper = Injector.getPreferenceHelper()
         if (preferencesHelper.isLoggedIn) {
-            navigationView.menu.getItem(7).title = context?.resources?.getString(R.string.logOut)
+            navigationView.menu.getItem(8).title = context?.resources?.getString(R.string.logOut)
         } else {
-            navigationView.menu.getItem(7).title = context?.resources?.getString(R.string.login)
+            navigationView.menu.getItem(8).title = context?.resources?.getString(R.string.login)
         }
     }
 
@@ -263,10 +268,12 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         dayName_tv.text = activity?.getDayName(date!!)
         date_tv.text = activity?.getDateStringFromString(date!!)
         // get normal matches with above date
+        clearObservers()
         viewModel.getMatchesList()
     }
 
     override fun onRefresh() {
+        clearObservers()
         viewModel.getMatchesList(liveSwitch.isChecked)
         homeSwipe.isRefreshing = false
 
@@ -286,7 +293,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         viewModel.date = dateString
         dayName_tv.text = activity?.getDayName(dateString)
         date_tv.text = activity?.getDateStringFromString(dateString)
-//        clearObservers()
+        clearObservers()
         viewModel.getMatchesList()
     }
 
@@ -372,6 +379,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     getString(R.string.refresh),
                     homeRootView
                 ) {
+                    clearObservers()
                     viewModel.getMatchesList(liveSwitch.isChecked)
                 }
             }
@@ -454,6 +462,20 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     }
                 }
             }
+            R.id.nav_shearApp -> {
+                 val appPackageName: String? =context?.getPackageName()
+                try {
+                    startActivity(
+                        Intent (Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=" + appPackageName)
+                    ))
+                } catch (e:java.lang.Exception) {
+                    startActivity(
+                        Intent (Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)
+                    ));
+                }
+            }
             R.id.nav_login -> {
                 if (preferencesHelper.isLoggedIn) {
                     preferencesHelper.clear()
@@ -476,5 +498,17 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         matchesRv.visibility = View.VISIBLE
     }
 
+    private fun getOpenFacebookIntent(): Intent {
+
+        try {
+            context?.packageManager!!.getPackageInfo("com.facebook.katana", 0);
+            return Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/2487675394583898"));
+        } catch (e: Exception) {
+            return Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.facebook.com/KoooraGoalLive/")
+            );
+        }
+    }
 
 }

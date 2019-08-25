@@ -48,9 +48,13 @@ class PlayersFragment : Fragment() {
             player.age?.let {
                 playerAgeTv.text = player.age.toString() + " عام"
             }
-            playerPositionTv.text = player.position.toString()
+            player.position?.let {
+                playerPositionTv.text = player.position.toString()
+            }
             playerTeamNameTv.text = player.teamName.toString()
-            playerNationNameTv.text = player.nationality.toString()
+            player.nationality?.let {
+                playerNationNameTv.text = player.nationality.toString()
+            }
 
 
             Glide.with(this).load(player.playerimage).into(playerImg)
