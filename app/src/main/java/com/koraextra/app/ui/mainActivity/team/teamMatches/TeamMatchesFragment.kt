@@ -71,6 +71,7 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
 
         matchesRv.adapter = adapterMatches
         matchesRv.setHasFixedSize(true)
+
     }
 
 

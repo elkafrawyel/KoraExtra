@@ -42,8 +42,8 @@ class MatchDetailsFragment : Fragment() {
             val date:String = activity?.getDateFromMills(match?.eventTimestamp!!)!!
 
             roundTv.text = match?.round.toString()
+            champoinTv.text = match?.league_name.toString()
             venueTv.text = match?.venue.toString()
-
             timeTv.text = time
             dateTv.text = date
 

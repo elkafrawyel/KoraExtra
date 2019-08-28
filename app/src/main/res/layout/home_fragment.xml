@@ -16,6 +16,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/emptyMessageTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_matches"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="0dp"
@@ -41,6 +64,43 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <ImageView
+                        android:id="@+id/homeFragmentLogo"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/logo"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/liveSwitch"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@id/homeFragmentAppName"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/homeFragmentSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_search_white_24dp"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Switch
+                        android:id="@+id/liveSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:text="@string/live"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textColor="@android:color/white"
+                        android:theme="@style/switchStyle"
+                        app:layout_constraintBottom_toBottomOf="@id/homeFragmentSearch"
+                        app:layout_constraintEnd_toStartOf="@id/homeFragmentSearch"
+                        app:layout_constraintTop_toTopOf="@id/homeFragmentSearch" />
+
                     <TextView
                         android:id="@+id/homeFragmentAppName"
                         android:layout_width="wrap_content"
@@ -58,43 +118,6 @@
                         app:layout_constraintStart_toEndOf="@id/drawerToggleImgBtn"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/homeFragmentLogo"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/logo"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/liveSwitch"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toEndOf="@id/homeFragmentAppName"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Switch
-                        android:id="@+id/liveSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:padding="8dp"
-                        android:text="@string/live"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="@android:color/white"
-                        android:theme="@style/switchStyle"
-                        app:layout_constraintBottom_toBottomOf="@id/homeFragmentSearch"
-                        app:layout_constraintEnd_toStartOf="@id/homeFragmentSearch"
-                        app:layout_constraintTop_toTopOf="@id/homeFragmentSearch" />
-
-                    <ImageView
-                        android:id="@+id/homeFragmentSearch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:src="@drawable/ic_search_white_24dp"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
@@ -102,7 +125,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/adView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -117,6 +140,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/previousImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/previous" />
+
+                    <ImageView
+                        android:id="@+id/nextImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/next" />
 
                     <TextView
                         android:id="@+id/date_tv"
@@ -143,22 +179,9 @@
                         android:gravity="center"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        tools:text="الاربعاء"
                         android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="@android:color/black" />
-
-                    <ImageView
-                        android:id="@+id/previousImg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/previous" />
-
-                    <ImageView
-                        android:id="@+id/nextImg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/next" />
+                        android:textColor="@android:color/black"
+                        tools:text="الاربعاء" />
                 </LinearLayout>
 
                 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -183,28 +206,6 @@
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/emptyMessageTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_matches"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
             <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView"
                 android:layout_width="wrap_content"
@@ -215,9 +216,8 @@
                 ads:adUnitId="ca-app-pub-7642057802414977/5294780512"
                 ads:layout_constraintBottom_toBottomOf="parent"
                 ads:layout_constraintEnd_toEndOf="parent"
-                ads:layout_constraintStart_toStartOf="parent"
-                />
-<!--            ca-app-pub-7642057802414977/5294780512-->
+                ads:layout_constraintStart_toStartOf="parent" />
+            <!--            ca-app-pub-7642057802414977/5294780512-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -232,10 +232,6 @@
         app:itemIconTint="@color/colorTextOnViewWhite"
         app:itemTextColor="@color/colorTextOnViewWhite"
         app:menu="@menu/drawer_menu" />
-
-
-
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

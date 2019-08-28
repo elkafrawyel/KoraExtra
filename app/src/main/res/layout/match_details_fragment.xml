@@ -66,6 +66,41 @@
 
             />
         <TextView
+            android:id="@+id/champoinTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1.5"
+            android:background="@android:color/white"
+            tools:text="مبارة ودية"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:gravity="center"
+            android:maxLines="1"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="@string/round"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:drawableStart="@drawable/champions_dark"
+            android:gravity="center"
+
+            />
+        <TextView
             android:id="@+id/roundTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

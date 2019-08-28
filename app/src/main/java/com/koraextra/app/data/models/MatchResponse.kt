@@ -44,6 +44,8 @@ data class MatchModel(
     val homeTeam: HomeTeam?,
     @field:Json(name = "league_id")
     val leagueId: Int?,
+    @field:Json(name = "league_name")
+    val league_name: String?,
     @field:Json(name = "referee")
     val referee: String?,
     @field:Json(name = "round")
