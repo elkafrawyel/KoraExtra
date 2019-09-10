@@ -13,6 +13,7 @@ class AdapterNews : BaseQuickAdapter<KoraNewsModel, BaseViewHolder>(R.layout.new
         helper.addOnClickListener(R.id.newsViewCl)
         helper.setText(R.id.newsTime,item.createdAt)
         helper.setText(R.id.newsContent,item.description)
+        helper.setText(R.id.newsTitleTv,item.title)
         Glide.with(mContext).load(item.img).into(helper.getView(R.id.newsImage))
 
 

@@ -21,8 +21,7 @@ class MatchViewPagerAdapter(
     private val fragmentList = listOf(
         MatchEventsFragment(),
         MatchDetailsFragment(),
-        MatchTopsFragment(),
-        MatchNewsFragment()
+        MatchTopsFragment()
     )
 
     override fun getItem(position: Int): Fragment =
@@ -41,9 +40,6 @@ class MatchViewPagerAdapter(
             }
             2 -> {
                 return MyApp.instance.resources.getString(R.string.players)
-            }
-            3 -> {
-                return MyApp.instance.resources.getString(R.string.newsPaper)
             }
             else -> {
                 return "كورة اكستراا"

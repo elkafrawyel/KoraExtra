@@ -3,15 +3,9 @@ package com.koraextra.app.ui.mainActivity.tournament
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.PagerAdapter
 import com.koraextra.app.MyApp
 import com.koraextra.app.R
-import com.koraextra.app.ui.mainActivity.team.teamLatestNews.TeamLatestNewsFragment
-import com.koraextra.app.ui.mainActivity.team.teamMatches.TeamMatchesFragment
-import com.koraextra.app.ui.mainActivity.team.teamGroup.TeamGroupFragment
-import com.koraextra.app.ui.mainActivity.team.teamPlayers.TeamPlayersFragment
 import com.koraextra.app.ui.mainActivity.tournament.matches.TournamentMatchesFragment
-import com.koraextra.app.ui.mainActivity.tournament.news.TournamentNewsFragment
 import com.koraextra.app.ui.mainActivity.tournament.order.TournamentOrderFragment
 
 class TournamentViewPagerAdapter(
@@ -20,8 +14,7 @@ class TournamentViewPagerAdapter(
 
     private val fragmentList = listOf(
         TournamentOrderFragment(),
-        TournamentMatchesFragment(),
-        TournamentNewsFragment()
+        TournamentMatchesFragment()
     )
 
     override fun getItem(position: Int): Fragment =
@@ -37,9 +30,6 @@ class TournamentViewPagerAdapter(
             }
             1 -> {
                 MyApp.instance.getString(R.string.mateches)
-            }
-            2 -> {
-                MyApp.instance.getString(R.string.latestNews)
             }
             else -> {
                 "كورة اكستراا"
