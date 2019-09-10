@@ -5,15 +5,19 @@ import android.widget.Chronometer
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.utily.Injector
 import com.koraextra.app.utily.getTimeAgoAsMills
 import com.koraextra.app.utily.getTimeFromMills
 import com.koraextra.app.utily.toast
+import kotlinx.android.synthetic.main.home_fragment.*
 import java.util.*
 
 
-class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter<MatchModel, BaseViewHolder>(data) {
+class AdapterMatches(data: MutableList<MatchModel>?) :
+    BaseMultiItemQuickAdapter<MatchModel, BaseViewHolder>(data) {
 
 
     init {
@@ -41,6 +45,9 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
         addItemType(16, com.koraextra.app.R.layout.match_ended_item_view)
         addItemType(17, com.koraextra.app.R.layout.match_ended_item_view)
 
+
+        addItemType(99, com.koraextra.app.R.layout.match_adds_item_view)
+
     }
 
     override fun convert(helper: BaseViewHolder?, item: MatchModel?) {
@@ -62,7 +69,10 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
                 Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
                     .into(helper.getView(com.koraextra.app.R.id.awayImg))
 
-                helper.setText(com.koraextra.app.R.id.timeTv, mContext.getTimeFromMills(item?.eventTimestamp!!))
+                helper.setText(
+                    com.koraextra.app.R.id.timeTv,
+                    mContext.getTimeFromMills(item?.eventTimestamp!!)
+                )
             }
 
             2, 8, 9 -> {
@@ -83,7 +93,10 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
                     helper.setText(com.koraextra.app.R.id.awayScore, "0")
                 }
                 helper.setText(com.koraextra.app.R.id.matchTitleTv, item?.status!!)
-                helper.setText(com.koraextra.app.R.id.timeTv, mContext.getTimeFromMills(item.eventTimestamp!!))
+                helper.setText(
+                    com.koraextra.app.R.id.timeTv,
+                    mContext.getTimeFromMills(item.eventTimestamp!!)
+                )
 
             }
             4, 5, 6, 7, 10, 18, 19 -> {
@@ -108,17 +121,29 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
 
 
                 val timer = helper.getView<Chronometer>(com.koraextra.app.R.id.timer)
-                timer.base = SystemClock.elapsedRealtime() - mContext.getTimeAgoAsMills(item.eventTimestamp!!)
+                timer.base =
+                    SystemClock.elapsedRealtime() - mContext.getTimeAgoAsMills(item.eventTimestamp!!)
                 timer.setOnChronometerTickListener {
-                    val time = SystemClock.elapsedRealtime() - it.base
+                    var time = SystemClock.elapsedRealtime() - it.base
+                    val minute = 60 * 1000
+                    if (time > (minute * 45).toLong()) {
+                        val breakTime = time - (minute * 45).toLong()
+                        if (breakTime < (minute * 15)) {
+                            time -= breakTime
+                        } else {
+                            time -= (minute * 15)
+                        }
+                    }
+
                     var Seconds = (time / 1000).toInt()
                     val Minutes = Seconds / 60
                     Seconds = Seconds % 60
-                    var timer2=""
-                    if(Minutes>=130){
-                        timer2 = "130:00"
-                    }else{
-                        timer2 = String.format(Locale("en"),"%02d:%02d", Minutes, Seconds)
+
+                    var timer2 = ""
+                    if (Minutes >= 120) {
+                        timer2 = "120:00"
+                    } else {
+                        timer2 = String.format(Locale("en"), "%02d:%02d", Minutes, Seconds)
                     }
                     it.setText(timer2)
                 }
@@ -134,7 +159,17 @@ class AdapterMatches(data: MutableList<MatchModel>?) : BaseMultiItemQuickAdapter
                 Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
                     .into(helper.getView(com.koraextra.app.R.id.awayImg))
 
-                helper.setText(com.koraextra.app.R.id.timeTv, mContext.getTimeFromMills(item?.eventTimestamp!!))
+                helper.setText(
+                    com.koraextra.app.R.id.timeTv,
+                    mContext.getTimeFromMills(item?.eventTimestamp!!)
+                )
+            }
+            99->{
+                helper.getView<AdView>(com.koraextra.app.R.id.matchAdView).loadAd(
+                    AdRequest.Builder()
+                        .addTestDevice("410E806C439261CF851B922E62D371EB")
+                        .build()
+                )
             }
             else -> {
             }

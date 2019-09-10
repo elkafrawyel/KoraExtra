@@ -61,7 +61,7 @@ data class MatchModel(
     @field:Json(name = "venue")
     val venue: String?,
     @field:Json(name = "statuskey")
-    val statuskey: Int
+    var statuskey: Int
 ) : MultiItemEntity {
     override fun getItemType(): Int {
         return statuskey

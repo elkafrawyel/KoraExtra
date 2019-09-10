@@ -50,11 +50,11 @@ class TournamentFragment : Fragment() {
 
         }
 
-        adView.loadAd(
-            AdRequest.Builder()
-                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
-                .build()
-        )
+//        adView.loadAd(
+//            AdRequest.Builder()
+//                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
+//                .build()
+//        )
 
         val pagerAdapter = TournamentViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter

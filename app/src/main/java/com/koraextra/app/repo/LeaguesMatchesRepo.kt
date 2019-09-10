@@ -7,10 +7,12 @@ import com.koraextra.app.data.storage.remote.RetrofitApiService
 import com.koraextra.app.utily.DataResource
 import com.koraextra.app.utily.Injector
 import com.koraextra.app.utily.safeApiCall
+import java.util.ArrayList
 
 class LeaguesMatchesRepo(
     private val retrofitApiService: RetrofitApiService,
-    private val appDatabase: AppDatabase) {
+    private val appDatabase: AppDatabase
+) {
 
     suspend fun getLeagueMatches(go: String): DataResource<Boolean> {
         return safeApiCall(
@@ -23,12 +25,20 @@ class LeaguesMatchesRepo(
         val response = retrofitApiService.getLeaguesMatchesAsync(go).await()
         return if (response.response?.count!! > 0) {
             val matches = response.response.matchModels
-            appDatabase.myDao().insertMatches(matches as List<MatchModel>)
+            val matchesList: ArrayList<MatchModel> = arrayListOf()
+            for (i in matches!!.indices) {
+                matches[i]?.let { matchesList.add(it) }
+                if ((i+2) % 6 == 0) {
+                    matches[i]?.let {
+                        it.statuskey = 99
+                        matchesList.add(it)
+                    }
+                }
+            }
+            appDatabase.myDao().insertMatches(matchesList)
             DataResource.Success(true)
         } else {
             DataResource.Success(false)
         }
     }
-
-
 }
