@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.koraextra.app.R
+import com.koraextra.app.data.models.MatchModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -134,5 +135,19 @@ fun Context.getTimeAgoAsMills(time: Long): Long {
     }
     val now = System.currentTimeMillis()
     return now - time
+}
 
+fun Context.addAddsToArray(matches: List<MatchModel>): ArrayList<MatchModel> {
+    val matchesList: ArrayList<MatchModel> = arrayListOf()
+    for (i in matches!!.indices) {
+        if ((i) % 5 == 0) {
+            matches[i]?.let {
+                val match = it.copy()
+                match.statuskey = 99
+                matchesList.add(match)
+            }
+        }
+        matches[i]?.let { matchesList.add(it) }
+    }
+    return matchesList
 }

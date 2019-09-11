@@ -40,11 +40,11 @@ class PlayersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        adView.loadAd(
-            AdRequest.Builder()
-                .addTestDevice("410E806C439261CF851B922E62D371EB")
-                .build()
-        )
+//        adView.loadAd(
+//            AdRequest.Builder()
+//                .addTestDevice("410E806C439261CF851B922E62D371EB")
+//                .build()
+//        )
         mainViewModel.playerLiveData.observe(this, Observer {
             val player = it
             playerNameTv.text = player.playerName

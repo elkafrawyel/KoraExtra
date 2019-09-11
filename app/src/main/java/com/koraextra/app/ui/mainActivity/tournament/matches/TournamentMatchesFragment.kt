@@ -21,6 +21,7 @@ import com.koraextra.app.ui.mainActivity.MainViewModel
 import com.koraextra.app.ui.mainActivity.home.AdapterMatches
 import com.koraextra.app.ui.mainActivity.home.HomeFragmentDirections
 import com.koraextra.app.utily.MyUiStates
+import com.koraextra.app.utily.addAddsToArray
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -162,7 +163,7 @@ class TournamentMatchesFragment : Fragment() {
 
     private fun setUpMatches(list: List<MatchModel>) {
         matchesList.clear()
-        matchesList.addAll(list)
+        activity?.addAddsToArray(list)?.let { matchesList.addAll(it) }
 
         adapterMatches.notifyDataSetChanged()
         tournamentMatchesRv.visibility = View.VISIBLE

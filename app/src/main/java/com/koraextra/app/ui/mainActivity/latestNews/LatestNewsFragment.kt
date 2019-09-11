@@ -48,7 +48,7 @@ class LatestNewsFragment : Fragment() {
 
         adView.loadAd(
             AdRequest.Builder()
-                .addTestDevice("410E806C439261CF851B922E62D371EB")
+                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
                 .build()
         )
         if (viewModel.opened){

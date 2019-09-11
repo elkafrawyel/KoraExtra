@@ -78,11 +78,11 @@ class TeamFragment : Fragment() {
             }
         })
 
-        adView.loadAd(
-            AdRequest.Builder()
-                .addTestDevice("410E806C439261CF851B922E62D371EB")
-                .build()
-        )
+//        adView.loadAd(
+//            AdRequest.Builder()
+//                .addTestDevice("410E806C439261CF851B922E62D371EB")
+//                .build()
+//        )
 
         val pagerAdapter = TeamsViewPagerAdapter(this.childFragmentManager)
         viewPager.adapter = pagerAdapter

@@ -10,22 +10,23 @@ apply plugin: "androidx.navigation.safeargs"
 
 apply plugin: 'com.google.gms.google-services'
 android {
+    signingConfigs {
+        release {
+            storeFile file("zal.jks")
+            storePassword "zalzal12345"
+            keyAlias "zal"
+            keyPassword "zalzal12345"
+        }
+    }
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.koraextra.app"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfigs {
-            release {
-                storeFile file("zal.jks")
-                storePassword "zalzal12345"
-                keyAlias "zal"
-                keyPassword "zalzal12345"
-            }
-        }
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {

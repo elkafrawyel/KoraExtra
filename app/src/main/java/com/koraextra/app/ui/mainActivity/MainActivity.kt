@@ -2,12 +2,17 @@ package com.koraextra.app.ui.mainActivity
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.facebook.*
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.koraextra.app.R
@@ -15,6 +20,8 @@ import com.koraextra.app.data.models.auth.SocialBody
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
+import java.security.MessageDigest
+import java.util.*
 
 class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
 
@@ -30,40 +37,12 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
     var callbackManager: CallbackManager? = null
     private var faceBookAccessToken: AccessToken? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.uiState.observeEvent(this, { onFaceBookLoginResponse(it) })
-    }
-
-    private fun onFaceBookLoginResponse(states: MyUiStates) {
-        when (states) {
-            MyUiStates.Loading -> {
-            }
-            MyUiStates.Success -> {
-                toast(getString(R.string.loginSuccess))
-                findNavController(R.id.fragment).navigate(R.id.homeFragment)
-            }
-            MyUiStates.LastPage -> {
-            }
-            is MyUiStates.Error -> {
-                snackBar(states.message, rootView)
-            }
-            MyUiStates.NoConnection -> {
-            }
-            MyUiStates.Empty -> {
-
-            }
-        }
-    }
-
-    private fun loginWithFaceBookData(body: SocialBody) {
-        viewModel.socialLogin(body = body)
-
-
-        FacebookSdk.sdkInitialize(applicationContext)
-        AppEventsLogger.activateApp(this);
 
         //============================= FaceBook ========================================
         callbackManager = CallbackManager.Factory.create()
@@ -99,6 +78,39 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
 
     }
 
+    private fun onFaceBookLoginResponse(states: MyUiStates) {
+        when (states) {
+            MyUiStates.Loading -> {
+            }
+            MyUiStates.Success -> {
+                toast(getString(R.string.loginSuccess))
+                findNavController(R.id.fragment).navigate(
+                    R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
+                        R.id.loginFragment,
+                        false
+                    ).build()
+                )
+            }
+            MyUiStates.LastPage -> {
+            }
+            is MyUiStates.Error -> {
+                snackBar(states.message, rootView)
+            }
+            MyUiStates.NoConnection -> {
+            }
+            MyUiStates.Empty -> {
+
+            }
+        }
+    }
+
+    private fun loginWithFaceBookData(body: SocialBody) {
+        viewModel.socialLogin(body = body)
+
+
+
+    }
+
     fun loginWithFacebook() {
         login_button.performClick()
     }
@@ -111,7 +123,6 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
         graphRequest.parameters = parameters
         graphRequest.executeAsync()
     }
-
     override fun onCompleted(`object`: JSONObject?, response: GraphResponse?) {
         try {
             val firstName = `object`!!.get("first_name")
@@ -124,7 +135,7 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
                 val body =
                     SocialBody(
                         name = firstName.toString(), email = email.toString(),
-                        api_token_rule = "facebook", api_token = "",
+                        api_token_rule = "facebook", api_token = faceBookAccessToken!!.token,
                         firebasetoken = Injector.getPreferenceHelper().fireBaseToken!!
                     )
                 loginWithFaceBookData(body)
@@ -150,4 +161,21 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
             callbackManager?.onActivityResult(requestCode, resultCode, data)
         }
     }
+
+
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun generateSSHKey(context: Context){
+//        try {
+//            val info = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
+//            for (signature in info.signatures) {
+//                val md = MessageDigest.getInstance("SHA")
+//                md.update(signature.toByteArray())
+//                val hashKey = String(Base64.getEncoder().encode(md.digest()))
+//                Log.i("AppLog", "key:$hashKey")
+//            }
+//        } catch (e: Exception) {
+//            Log.e("AppLog", "error:", e)
+//        }
+//
+//    }
 }

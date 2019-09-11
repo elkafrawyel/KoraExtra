@@ -219,15 +219,15 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         matchesRv.setHasFixedSize(true)
 
 
-        adView.loadAd(
-            AdRequest.Builder()
-                .addTestDevice("410E806C439261CF851B922E62D371EB")
-                .build()
-        )
+//        adView.loadAd(
+//            AdRequest.Builder()
+//                .addTestDevice("410E806C439261CF851B922E62D371EB")
+//                .build()
+//        )
 
         mInterstitialAd = InterstitialAd(context)
         mInterstitialAd.adUnitId = "ca-app-pub-7642057802414977/1115862358"
-        mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("410E806C439261CF851B922E62D371EB").build())
+        mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("5392457EFAD98BBB3676457D618EBB83").build())
         mInterstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
@@ -250,7 +250,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
 
             override fun onAdClosed() {
-                mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("410E806C439261CF851B922E62D371EB").build())
+                mInterstitialAd.loadAd(AdRequest.Builder().addTestDevice("5392457EFAD98BBB3676457D618EBB83").build())
 
                 // Code to be executed when the interstitial ad is closed.
                 val action =
@@ -503,7 +503,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     private fun setUpMatches(list: List<MatchModel>) {
         matchesList.clear()
-        matchesList.addAll(list)
+        activity?.addAddsToArray(list)?.let { matchesList.addAll(it) }
         adapterMatches.notifyDataSetChanged()
         matchesRv.visibility = View.VISIBLE
         loading.visibility = View.GONE

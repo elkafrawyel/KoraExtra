@@ -175,7 +175,7 @@ class TeamMatchesFragment : Fragment(), Observer<List<MatchModel>>, BaseQuickAda
     private fun setUpMatches(list: List<MatchModel>) {
 
         matchesList.clear()
-        matchesList.addAll(list)
+        activity?.addAddsToArray(list)?.let { matchesList.addAll(it) }
         adapterMatches.notifyDataSetChanged()
         loading.visibility = View.GONE
         emptyMessageTv.visibility = View.GONE

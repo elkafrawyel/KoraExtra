@@ -25,17 +25,7 @@ class LeaguesMatchesRepo(
         val response = retrofitApiService.getLeaguesMatchesAsync(go).await()
         return if (response.response?.count!! > 0) {
             val matches = response.response.matchModels
-            val matchesList: ArrayList<MatchModel> = arrayListOf()
-            for (i in matches!!.indices) {
-                matches[i]?.let { matchesList.add(it) }
-                if ((i+2) % 6 == 0) {
-                    matches[i]?.let {
-                        it.statuskey = 99
-                        matchesList.add(it)
-                    }
-                }
-            }
-            appDatabase.myDao().insertMatches(matchesList)
+            appDatabase.myDao().insertMatches(matches as List<MatchModel>)
             DataResource.Success(true)
         } else {
             DataResource.Success(false)

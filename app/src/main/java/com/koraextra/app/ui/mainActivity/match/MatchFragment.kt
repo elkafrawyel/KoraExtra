@@ -42,7 +42,7 @@ class MatchFragment : Fragment(), Observer<MatchModel> {
 
         adView.loadAd(
             AdRequest.Builder()
-                .addTestDevice("410E806C439261CF851B922E62D371EB")
+                .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
                 .build()
         )
         viewModel.uiState.observe(this, Observer { onMatchResponse(it) })
@@ -256,7 +256,16 @@ class MatchFragment : Fragment(), Observer<MatchModel> {
                     timer.base =
                         SystemClock.elapsedRealtime() - activity?.getTimeAgoAsMills(item.eventTimestamp!!)!!
                     timer.setOnChronometerTickListener {
-                        val time = SystemClock.elapsedRealtime() - it.base
+                        var time = SystemClock.elapsedRealtime() - it.base
+                        val minute = 60 * 1000
+                        if (time > (minute * 45).toLong()) {
+                            val breakTime = time - (minute * 45).toLong()
+                            if (breakTime < (minute * 15)) {
+                                time -= breakTime
+                            } else {
+                                time -= (minute * 15)
+                            }
+                        }
                         var Seconds = (time / 1000).toInt()
                         val Minutes = Seconds / 60
                         Seconds %= 60
