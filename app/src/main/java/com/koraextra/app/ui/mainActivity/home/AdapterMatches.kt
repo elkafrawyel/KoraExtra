@@ -16,8 +16,12 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import java.util.*
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import android.R
+import android.view.View
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdListener
+
+
 
 
 
@@ -179,11 +183,30 @@ class AdapterMatches(data: MutableList<MatchModel>?) :
                 )
             }
             99->{
-                helper.getView<AdView>(com.koraextra.app.R.id.matchAdView).loadAd(
+                val adView:AdView = helper.getView<AdView>(com.koraextra.app.R.id.matchAdView)
+
+                adView.loadAd(
                     AdRequest.Builder()
                         .addTestDevice("5392457EFAD98BBB3676457D618EBB83")
                         .build()
                 )
+
+                adView.adListener = object : AdListener() {
+
+                    override fun onAdClosed() {}
+
+                    override fun onAdFailedToLoad(error: Int) {
+                        adView.visibility = View.GONE
+                    }
+
+                    override fun onAdLeftApplication() {}
+
+                    override fun onAdOpened() {}
+
+                    override fun onAdLoaded() {
+                        adView.visibility = View.VISIBLE
+                    }
+                }
             }
             else -> {
             }

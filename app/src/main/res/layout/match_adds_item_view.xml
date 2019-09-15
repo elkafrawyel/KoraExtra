@@ -7,17 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dp_10"
     android:orientation="vertical"
-    app:cardCornerRadius="@dimen/dp_10"
-    android:minHeight="105dp">
-
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    app:cardCornerRadius="@dimen/dp_10">
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/matchAdView"
@@ -25,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="@dimen/dp_4"
-        ads:adSize="LARGE_BANNER"
+        ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-7642057802414977/5294780512"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"

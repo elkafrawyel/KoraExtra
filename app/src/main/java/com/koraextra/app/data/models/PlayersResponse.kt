@@ -72,7 +72,7 @@ data class PlayerModel(
     val teamimage: String?
 ) {
     override fun toString(): String {
-        return league!!
+        return league ?: ""
     }
 }
 

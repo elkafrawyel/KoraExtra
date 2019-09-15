@@ -16,7 +16,10 @@ class AdapterPlayers: BaseQuickAdapter<PlayerModel, BaseViewHolder>(R.layout.pla
 
             helper.setText(R.id.playerOrder_tv,it.toString())
         }
-        helper.setText(R.id.playerNameTv,item.playerName.toString())
+        item.playerName.let {
+
+            helper.setText(R.id.playerNameTv,item.playerName)
+        }
         helper.setText(R.id.playerNationTv,item.teamName!!.toString())
         helper.setText(R.id.player_goals_tv,item.goals?.total!!.toString())
         helper.setText(R.id.playerFreeKiksScoredTv,item.penalty?.success!!.toString())
