@@ -128,6 +128,9 @@ class MainViewModel : KoraViewModel() {
                             preferencesHelper().name = body.name
                             preferencesHelper().email = body.email
                             preferencesHelper().token = body.api_token
+                            preferencesHelper().notiStatus = response.data.notiStatus!!
+                            preferencesHelper().notiSound = response.data.notiSound!!
+                            preferencesHelper().notiMatch = response.data.notiMatch!!
                             preferencesHelper().isLoggedIn = true
                             _uiState.value = Event(MyUiStates.Success)
                         } else {

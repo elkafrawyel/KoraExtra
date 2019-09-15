@@ -8,12 +8,12 @@ import com.koraextra.app.data.models.MatchModel
 @Dao
 interface MyDao {
 
-    @Query("SELECT * FROM MatchModel ORDER BY eventTimestamp")
+    @Query("SELECT * FROM MatchModel ORDER BY idStart")
     fun getMatches(): LiveData<List<MatchModel>>
-    @Query("SELECT * FROM MatchModel WHERE eventDate LIKE :date")
+    @Query("SELECT * FROM MatchModel WHERE eventDate LIKE :date ORDER BY idStart")
     fun getMatches(date: String): LiveData<List<MatchModel>>
 
-    @Query("SELECT * FROM MatchModel WHERE statuskey IN (:types)")
+    @Query("SELECT * FROM MatchModel WHERE statuskey IN (:types) ORDER BY idStart")
     fun getLiveMatches(types: Array<Int>): LiveData<List<MatchModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,10 +25,10 @@ interface MyDao {
     @Query("SELECT * FROM MatchModel WHERE fixtureId = :id")
     fun getMatchById(id: Int): LiveData<MatchModel>
 
-    @Query("SELECT * FROM MatchModel WHERE leagueId = :id")
+    @Query("SELECT * FROM MatchModel WHERE leagueId = :id ORDER BY idStart")
     fun getMatchByLeagueId(id: Int): LiveData<List<MatchModel>>
 
-    @Query("SELECT * FROM MatchModel WHERE awayTeamid = :teamId OR homeTeamid= :teamId ")
+    @Query("SELECT * FROM MatchModel WHERE awayTeamid = :teamId OR homeTeamid= :teamId ORDER BY idStart ")
     fun getMatchByTeam(teamId: Int): LiveData<List<MatchModel>>
 
     @Query("SELECT * FROM EventModel WHERE fixtureId =:fixtureId ORDER BY elapsed DESC")

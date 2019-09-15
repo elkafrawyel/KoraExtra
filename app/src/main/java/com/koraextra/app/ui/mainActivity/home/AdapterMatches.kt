@@ -14,6 +14,12 @@ import com.koraextra.app.utily.getTimeFromMills
 import com.koraextra.app.utily.toast
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.util.*
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import android.R
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
+
+
 
 
 class AdapterMatches(data: MutableList<MatchModel>?) :
@@ -60,13 +66,19 @@ class AdapterMatches(data: MutableList<MatchModel>?) :
             com.koraextra.app.R.id.awayName
         )
 
+        val options = RequestOptions()
+            .fitCenter()
+            .timeout(10 * 60 * 1000)
+            .placeholder(com.koraextra.app.R.drawable.logo)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .priority(Priority.HIGH)
         when (helper?.itemViewType) {
             1, 3 -> {
                 helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
                 helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
-                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.homeImg))
-                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.awayImg))
 
                 helper.setText(
@@ -78,9 +90,9 @@ class AdapterMatches(data: MutableList<MatchModel>?) :
             2, 8, 9 -> {
                 helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
                 helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
-                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.homeImg))
-                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.awayImg))
                 if (item?.goalsHomeTeam != null) {
                     helper.setText(com.koraextra.app.R.id.homeScore, item.goalsHomeTeam.toString())
@@ -100,11 +112,13 @@ class AdapterMatches(data: MutableList<MatchModel>?) :
 
             }
             4, 5, 6, 7, 10, 18, 19 -> {
+
+
                 helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
                 helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
-                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.homeImg))
-                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.awayImg))
                 if (item?.goalsHomeTeam != null) {
                     helper.setText(com.koraextra.app.R.id.homeScore, item.goalsHomeTeam.toString())
@@ -154,9 +168,9 @@ class AdapterMatches(data: MutableList<MatchModel>?) :
                 val b: Int? = item?.fixtureId
                 helper.setText(com.koraextra.app.R.id.homeName, item?.homeTeam?.teamName)
                 helper.setText(com.koraextra.app.R.id.awayName, item?.awayTeam?.teamName)
-                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.homeTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.homeImg))
-                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo)
+                Glide.with(Injector.getApplicationContext()).load(item?.awayTeam?.logo).apply(options)
                     .into(helper.getView(com.koraextra.app.R.id.awayImg))
 
                 helper.setText(

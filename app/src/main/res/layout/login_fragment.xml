@@ -213,7 +213,8 @@
                     android:textAppearance="?attr/textAppearanceBody1"
                     app:backgroundTint="@color/colorGoogle"
                     app:icon="@drawable/google"
-                    app:iconGravity="textStart" />
+                    app:iconGravity="textStart"
+                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

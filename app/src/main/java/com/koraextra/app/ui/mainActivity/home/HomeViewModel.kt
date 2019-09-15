@@ -11,6 +11,8 @@ import com.koraextra.app.utily.Injector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeViewModel : KoraViewModel() {
 
@@ -45,7 +47,8 @@ class HomeViewModel : KoraViewModel() {
             withContext(dispatcherProvider.main) { _uiState.value = MyUiStates.Loading }
             val result: DataResource<Boolean>?
             result = if (isLive) {
-                getMatchesRepo().getMatches(getLiveMatches())
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
+                getMatchesRepo().getMatches(getMatchesOfDate(sdf.format(Date())))
             } else {
                 getMatchesRepo().getMatches(getMatchesOfDate(date!!))
             }

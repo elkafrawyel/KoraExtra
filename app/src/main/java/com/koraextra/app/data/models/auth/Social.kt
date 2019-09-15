@@ -9,7 +9,13 @@ data class SocialResponse(
     @field:Json(name = "en")
     val en: String?,
     @field:Json(name = "ar")
-    val ar: String?
+    val ar: String?,
+    @field:Json(name = "noti")
+    val notiStatus: Int?,
+    @field:Json(name = "noti_sound")
+    val notiSound: Int?,
+    @field:Json(name = "noti_match")
+    val notiMatch: Int?
 )
 
 

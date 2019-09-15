@@ -60,6 +60,8 @@ data class MatchModel(
     val statusShort: String?,
     @field:Json(name = "venue")
     val venue: String?,
+    @field:Json(name = "idstart")
+    var idStart: Int,
     @field:Json(name = "statuskey")
     var statuskey: Int
 ) : MultiItemEntity {

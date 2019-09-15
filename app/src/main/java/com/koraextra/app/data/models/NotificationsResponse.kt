@@ -23,3 +23,8 @@ data class NotificationModel(
     @field:Json(name = "updated_at")
     val updatedAt: String?
 )
+
+data class FireTokenRespons(
+    @field:Json(name = "status")
+    val status: String?
+)

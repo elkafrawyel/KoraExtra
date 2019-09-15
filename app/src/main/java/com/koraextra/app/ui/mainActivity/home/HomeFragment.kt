@@ -32,6 +32,7 @@ import com.google.android.material.navigation.NavigationView
 import com.koraextra.app.R
 import com.koraextra.app.data.models.MatchModel
 import com.koraextra.app.ui.mainActivity.MainViewModel
+import com.koraextra.app.ui.splashActivity.SplashActivity
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.text.SimpleDateFormat
@@ -406,7 +407,11 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private fun onStoredMatchesChanged(matchesList: List<MatchModel>) {
-        setUpMatches(matchesList)
+        if(matchesList.isNotEmpty()) {
+            setUpMatches(matchesList)
+        }else{
+            onEmpty()
+        }
     }
 
     private fun animateView(image: View) {
@@ -491,6 +496,9 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     preferencesHelper.clear()
                     navigationView.menu.getItem(7).title =
                         context?.resources?.getString(R.string.login)
+
+                    SplashActivity.start(context!!)
+                    activity?.finish()
                 } else {
                     findNavController().navigate(R.id.loginFragment)
                 }

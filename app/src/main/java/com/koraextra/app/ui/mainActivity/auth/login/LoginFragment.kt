@@ -26,6 +26,7 @@ import com.koraextra.app.data.models.auth.LoginBody
 import com.koraextra.app.data.models.auth.SocialBody
 import com.koraextra.app.ui.mainActivity.MainActivity
 import com.koraextra.app.ui.mainActivity.MainViewModel
+import com.koraextra.app.ui.splashActivity.SplashActivity
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.backImage
@@ -178,12 +179,14 @@ class LoginFragment : Fragment() {
                 loading.visibility = View.GONE
                 activity?.toast(getString(R.string.loginSuccess))
 
-                findNavController().navigate(
-                    R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
-                        R.id.loginFragment,
-                        false
-                    ).build()
-                )
+//                findNavController().navigate(
+//                    R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
+//                        R.id.loginFragment,
+//                        false
+//                    ).build()
+//                )
+                SplashActivity.start(context!!)
+                activity?.finish()
             }
             MyUiStates.LastPage -> {
             }

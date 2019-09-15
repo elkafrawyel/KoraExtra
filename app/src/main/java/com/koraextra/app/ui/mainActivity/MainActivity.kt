@@ -17,6 +17,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.koraextra.app.R
 import com.koraextra.app.data.models.auth.SocialBody
+import com.koraextra.app.ui.splashActivity.SplashActivity
 import com.koraextra.app.utily.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
@@ -43,7 +44,6 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.uiState.observeEvent(this, { onFaceBookLoginResponse(it) })
-
         //============================= FaceBook ========================================
         callbackManager = CallbackManager.Factory.create()
         login_button.setPermissions(listOf("email", "public_profile"))
@@ -84,12 +84,14 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
             }
             MyUiStates.Success -> {
                 toast(getString(R.string.loginSuccess))
-                findNavController(R.id.fragment).navigate(
-                    R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
-                        R.id.loginFragment,
-                        false
-                    ).build()
-                )
+//                findNavController(R.id.fragment).navigate(
+//                    R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
+//                        R.id.loginFragment,
+//                        false
+//                    ).build()
+//                )
+                SplashActivity.start(this)
+                finish()
             }
             MyUiStates.LastPage -> {
             }

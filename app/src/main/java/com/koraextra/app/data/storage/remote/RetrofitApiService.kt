@@ -116,6 +116,11 @@ interface RetrofitApiService {
         @Query("api_token") api_token: String
     ): Deferred<NotificationsResponse>
 
+    @GET("registertoken.php")
+    fun saveTokenAsync(
+        @Query("firebasetoken") api_token: String
+    ): Deferred<FireTokenRespons>
+
     //====================news=============================
     @GET("apigo.php")
     fun getAllNewsAsync(

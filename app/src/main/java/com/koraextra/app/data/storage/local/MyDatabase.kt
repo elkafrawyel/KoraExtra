@@ -1,15 +1,21 @@
 package com.koraextra.app.data.storage.local
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.koraextra.app.data.models.EventModel
 import com.koraextra.app.data.models.MatchModel
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.annotation.NonNull
+import androidx.room.migration.Migration
+
+
 
 @Database(
-entities = [MatchModel::class, EventModel::class], version = 1
+entities = [MatchModel::class, EventModel::class], version = 2
 )@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -27,6 +33,16 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context,
             AppDatabase::class.java, "mydatabasea.db"
-        ).build()
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
+
+        val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE MatchModel add COLUMN idStart Integer NOT NULL DEFAULT 0")
+                Log.d("VROM", "Migration")
+            }
+        }
     }
+
 }

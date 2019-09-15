@@ -94,7 +94,7 @@ object Injector {
     fun favoriteRepo() = FavoriteRepo(getApiService(), getAppDatabase())
     fun settingRepo() = SettingRepo(getApiService())
 
-    fun saveFirebaseToken() = SaveFireBaseTokenRepo(getPreferenceHelper())
+    fun saveFirebaseToken() = SaveFireBaseTokenRepo(getPreferenceHelper(),getApiService())
     fun getSocialRepo() = SocialLoginRepo(getApiService())
 
     //------------------------------------database-------------------------------
