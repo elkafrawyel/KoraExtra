@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity(), GraphRequest.GraphJSONObjectCallback {
     var callbackManager: CallbackManager? = null
     private var faceBookAccessToken: AccessToken? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
