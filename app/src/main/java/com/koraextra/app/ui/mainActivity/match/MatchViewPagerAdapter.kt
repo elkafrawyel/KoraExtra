@@ -9,6 +9,7 @@ import com.koraextra.app.ui.mainActivity.match.matchDetails.MatchDetailsFragment
 import com.koraextra.app.ui.mainActivity.match.matchEvents.MatchEventsFragment
 import com.koraextra.app.ui.mainActivity.match.matchNews.MatchNewsFragment
 import com.koraextra.app.ui.mainActivity.match.matchTops.MatchTopsFragment
+import com.koraextra.app.ui.mainActivity.match.videos.MatchVideosFragment
 import com.koraextra.app.ui.mainActivity.team.teamLatestNews.TeamLatestNewsFragment
 import com.koraextra.app.ui.mainActivity.team.teamMatches.TeamMatchesFragment
 import com.koraextra.app.ui.mainActivity.team.teamGroup.TeamGroupFragment
@@ -21,7 +22,8 @@ class MatchViewPagerAdapter(
     private val fragmentList = listOf(
         MatchEventsFragment(),
         MatchDetailsFragment(),
-        MatchTopsFragment()
+        MatchTopsFragment(),
+        MatchVideosFragment()
     )
 
     override fun getItem(position: Int): Fragment =
@@ -40,6 +42,9 @@ class MatchViewPagerAdapter(
             }
             2 -> {
                 return MyApp.instance.resources.getString(R.string.players)
+            }
+            3 -> {
+                return MyApp.instance.resources.getString(R.string.videos)
             }
             else -> {
                 return "كورة اكستراا"

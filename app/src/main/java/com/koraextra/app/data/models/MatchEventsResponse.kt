@@ -40,6 +40,8 @@ data class EventModel(
     val teamId: Int?,
     @field:Json(name = "teamName")
     val teamName: String?,
+    @field:Json(name = "youtube")
+    val youtube: String?,
     @field:Json(name = "type")
     val type: String?,
 

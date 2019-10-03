@@ -164,7 +164,7 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         drawerLayout.drawerElevation = 0f
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
-        val socialItemId = 9
+        val socialItemId = 7
         val viewClicked = navigationView.menu.getItem(socialItemId).actionView
         viewClicked.findViewById<LinearLayout>(R.id.facebookView).setOnClickListener {
             //            activity?.toast("Facebook")
@@ -264,9 +264,9 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     private fun setAuthState() {
         val preferencesHelper = Injector.getPreferenceHelper()
         if (preferencesHelper.isLoggedIn) {
-            navigationView.menu.getItem(8).title = context?.resources?.getString(R.string.logOut)
+            navigationView.menu.getItem(6).title = context?.resources?.getString(R.string.logOut)
         } else {
-            navigationView.menu.getItem(8).title = context?.resources?.getString(R.string.login)
+            navigationView.menu.getItem(6).title = context?.resources?.getString(R.string.login)
         }
     }
 
@@ -422,19 +422,19 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val preferencesHelper = Injector.getPreferenceHelper()
         when (item.itemId) {
-            R.id.nav_notification -> {
-                if (preferencesHelper.isLoggedIn) {
-                    findNavController().navigate(R.id.notificationsFragment)
-                } else {
-                    activity?.snackBarWithAction(
-                        getString(R.string.you_must_login),
-                        getString(R.string.login),
-                        homeRootView
-                    ) {
-                        findNavController().navigate(R.id.loginFragment)
-                    }
-                }
-            }
+//            R.id.nav_notification -> {
+//                if (preferencesHelper.isLoggedIn) {
+//                    findNavController().navigate(R.id.notificationsFragment)
+//                } else {
+//                    activity?.snackBarWithAction(
+//                        getString(R.string.you_must_login),
+//                        getString(R.string.login),
+//                        homeRootView
+//                    ) {
+//                        findNavController().navigate(R.id.loginFragment)
+//                    }
+//                }
+//            }
             R.id.nav_favourites -> {
                 if (preferencesHelper.isLoggedIn) {
                     findNavController().navigate(R.id.favoritesFragment)
@@ -448,10 +448,10 @@ class HomeFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     }
                 }
             }
-            R.id.nav_newsPaper -> {
-
-                findNavController().navigate(R.id.latestNewsFragment)
-            }
+//            R.id.nav_newsPaper -> {
+//
+//                findNavController().navigate(R.id.latestNewsFragment)
+//            }
             R.id.nav_champions -> {
                 findNavController().navigate(
                     R.id.tournamentsFragment

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.koraextra.app.R
 import com.koraextra.app.data.models.EventModel
@@ -17,9 +16,10 @@ import com.koraextra.app.utily.MyUiStates
 import com.koraextra.app.utily.snackBar
 import com.koraextra.app.utily.snackBarWithAction
 import kotlinx.android.synthetic.main.match_events_fragment.*
+import android.content.Intent
+import android.net.Uri
 
 class MatchEventsFragment : Fragment(), Observer<MatchModel> {
-
 
     companion object {
         fun newInstance() = MatchEventsFragment()
@@ -113,7 +113,7 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
             viewModel.awayTeamId = it.awayTeam?.teamId
             viewModel.fixtureId = it.fixtureId
             viewModel.getMatchEventsList()
-        }else{
+        } else {
             mainViewModel.useFirstId = true
         }
     }
@@ -132,16 +132,41 @@ class MatchEventsFragment : Fragment(), Observer<MatchModel> {
             if (events.size > 0)
                 events.add(
                     events.size,
-                    EventModel("", 0, "", "", 0, 0, "", "", 0, viewModel.fixtureId, 0)
+                    EventModel(
+                        "",
+                        0,
+                        "",
+                        "",
+                        0,
+                        0,
+                        "",
+                        "",
+                        "",
+                        0,
+                        viewModel.fixtureId,
+                        0
+                    )
                 )
 
             val adapterMatchEvents = AdapterMatchEvents(events).also {
                 it.onItemChildClickListener =
-                    BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-                        mainViewModel.setplayerId((adapter.data[position] as EventModel?)!!.playerId!!)
-                        mainViewModel.matchLiveData.removeObserver(this)
-                        if (view.id == R.id.PlayerName)
-                            activity?.findNavController(R.id.fragment)?.navigate(R.id.playersFragment)
+                    BaseQuickAdapter.OnItemChildClickListener { adapter
+                                                                , view
+                                                                , position ->
+                        when(view.id){
+                            R.id.eventItem ->{
+                                val event = (adapter.data as List<EventModel>)[position]
+                                if (event.youtube!=""){
+                                    context!!.startActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse(event.youtube)
+                                        )
+                                    )
+
+                                }
+                            }
+                        }
                     }
             }
             matchEventsRv.adapter = adapterMatchEvents

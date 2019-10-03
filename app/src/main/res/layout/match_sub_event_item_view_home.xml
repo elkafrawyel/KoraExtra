@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/eventItem"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
@@ -23,11 +24,20 @@
         android:gravity="center"
         tools:text="محمد صلاح"
         app:layout_constraintStart_toEndOf="@id/eventImg"
-        app:layout_constraintTop_toTopOf="@id/linear"
+        app:layout_constraintTop_toBottomOf="@id/playVideo"
         app:layout_constraintBottom_toBottomOf="@id/linear"
         app:layout_constraintEnd_toStartOf="@id/linear"
         android:textColor="@android:color/black"
         android:layout_marginEnd="12dp"/>
+    <ImageView
+        android:id="@+id/playVideo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/play"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/PlayerName"
+        app:layout_constraintEnd_toEndOf="@id/PlayerName" />
 
     <TextView
         android:id="@+id/eventName"
@@ -51,12 +61,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <View
             android:layout_width="1dp"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:background="@android:color/black" />
-
         <TextView
             android:id="@+id/eventElapsed"
             android:layout_width="wrap_content"
@@ -67,5 +77,6 @@
             android:text="15"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="@android:color/black" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -141,6 +141,12 @@ interface RetrofitApiService {
     ): Deferred<List<KoraNewsModel>>
 
     @GET("apigo.php")
+    fun getMatchVideosAsync(
+        @Query("go") go: String,
+        @Query("match_id") matchId: String
+    ): Deferred<MatchVideosResponse>
+
+    @GET("apigo.php")
     fun getTeamNewsAsync(
         @Query("go") go: String,
         @Query("team_id") teamId: String

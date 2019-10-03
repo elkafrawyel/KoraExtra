@@ -4,6 +4,7 @@ import com.koraextra.app.utily.DataResource
 import com.koraextra.app.utily.safeApiCall
 import com.koraextra.app.R
 import com.koraextra.app.data.models.KoraNewsModel
+import com.koraextra.app.data.models.MatchVideosResponse
 import com.koraextra.app.data.storage.remote.RetrofitApiService
 import com.koraextra.app.utily.Injector
 
@@ -46,6 +47,19 @@ class NewsRepo(private val retrofitApiService: RetrofitApiService) {
 
     private suspend fun newsMatchCall(MatchId: String): DataResource<List<KoraNewsModel>> {
         val response = retrofitApiService.getMatchNewsAsync(go, MatchId).await()
+        return DataResource.Success(response)
+    }
+
+    //    Match Videos
+    suspend fun getMatchVideos( MatchId: String): DataResource<MatchVideosResponse> {
+        return safeApiCall(
+            call = { matchVideosCall(MatchId) },
+            errorMessage = Injector.getApplicationContext().getString(R.string.error_general)
+        )
+    }
+
+    private suspend fun matchVideosCall(MatchId: String): DataResource<MatchVideosResponse> {
+        val response = retrofitApiService.getMatchVideosAsync("/videosnow", MatchId).await()
         return DataResource.Success(response)
     }
 
